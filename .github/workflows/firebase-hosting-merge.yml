@@ -11,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: firebase experiments:enable webframeworks
       - run: npm ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -19,3 +18,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AMRITA_WEBSITE }}'
           channelId: live
           projectId: amrita-website
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
