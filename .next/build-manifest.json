@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/JHpJ8xF8k9FL9JIsQybrn/_buildManifest.js",
-    "static/JHpJ8xF8k9FL9JIsQybrn/_ssgManifest.js"
+    "static/NFC-xirMp3wisqhQYYsVO/_buildManifest.js",
+    "static/NFC-xirMp3wisqhQYYsVO/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -16,7 +16,7 @@
       "static/chunks/main-ac344eb87244516d.js",
       "static/chunks/562-1d2687f3c5f4ae7e.js",
       "static/css/fa9fc5510fcacdd0.css",
-      "static/chunks/pages/index-43dde92259254940.js"
+      "static/chunks/pages/index-e0bc44965e867658.js"
     ],
     "/_app": [
       "static/chunks/webpack-8fa1640cc84ba8fe.js",
