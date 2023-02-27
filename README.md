@@ -1,2 +1,1 @@
-# personalwebsite
-My personal website, including my blog, resume, and other information about me.
+This is a starter template for [Learn Next.js](https://nextjs.org/learn).
