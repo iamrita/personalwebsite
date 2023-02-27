@@ -24,7 +24,7 @@ export default function Home( {allPostsData }) {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p> Hi! My name is Jason. I recently graduated from Stanford, where I studied Computer Science and Psychology. I love reading, writing, and Rihanna. 
+        <p> Hi! My name is Amrita. I recently graduated from Stanford, where I studied Computer Science and Psychology. I love reading, writing, and Rihanna. 
           I currently live in San Francisco, California. You can find me on <a href="https://twitter.com/iamrita98">Twitter</a>.
         </p>
 
