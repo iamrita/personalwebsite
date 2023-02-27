@@ -18,5 +18,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AMRITA_WEBSITE }}'
           channelId: live
           projectId: amrita-website
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks
+       
