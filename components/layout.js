@@ -1,7 +1,7 @@
 import styles from './layout.module.css';
 import Head from 'next/head';
 import utilStyles from '../styles/utils.module.css'
-import Image from 'next/image'
+// import Image from 'next/image'
 import Link from 'next/link';
 
 
@@ -27,27 +27,30 @@ export default function Layout({ children, home }) {
         <header className={styles.header}>
             {home ? (
                 <>
-                    <Image
+                   {/* <Image
                         priority
                         src="/images/profile.jpg"
                         className={utilStyles.borderCircle}
                         height={175}
                         width={144}
                         alt=""
-                    />
+            />*/}
+            <img src = "/images/profile.jpg" alt="amritapic"/>
                     <h1 className={utilStyles.heading2Xl}>{name}</h1>
                 </>
             ) : (
                 <>
                     <Link href="/">
-                        <Image
+                     {/*  <Image
                             priority
                             src="/images/profile.jpg"
                             className={utilStyles.borderCircle}
                             height={130}
                             width={108}
                             alt=""
-                        />
+            />*/}
+                        <img src = "/images/profile.jpg" alt="amritapic"/>
+
                     </Link>
                     <h2 className={utilStyles.headingLg}>
                         <Link href="/" className={utilStyles.colorInherit}>
