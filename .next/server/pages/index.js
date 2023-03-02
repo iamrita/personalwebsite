@@ -56,7 +56,7 @@ function Home({ allPostsData  }) {
                 className: (_styles_utils_module_css__WEBPACK_IMPORTED_MODULE_6___default().headingMd),
                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
                     children: [
-                        " Hi! My name is Amrita. I recently graduated from Stanford, where I studied Computer Science and Psychology. I love reading, writing, and Rihanna. I currently live in San Francisco, California. You can find me on ",
+                        " Hi! My name is Amrita. I recently graduated from Stanford University, where I studied Computer Science and Psychology. I love reading, writing, and Rihanna. I currently live in San Francisco, California. You can find me on ",
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
                             href: "https://twitter.com/iamrita98",
                             children: "Twitter"

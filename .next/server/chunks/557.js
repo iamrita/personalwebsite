@@ -121,6 +121,7 @@ function Layout({ children , home  }) {
                     children: [
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_2___default()), {
                             priority: true,
+                            unoptimized: true,
                             src: "/images/profile.jpg",
                             className: (_styles_utils_module_css__WEBPACK_IMPORTED_MODULE_5___default().borderCircle),
                             height: 175,
@@ -138,7 +139,9 @@ function Layout({ children , home  }) {
                             href: "/",
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_image__WEBPACK_IMPORTED_MODULE_2___default()), {
                                 priority: true,
+                                unoptimized: true,
                                 src: "/images/profile.jpg",
+                                g: true,
                                 className: (_styles_utils_module_css__WEBPACK_IMPORTED_MODULE_5___default().borderCircle),
                                 height: 130,
                                 width: 108,
