@@ -17,28 +17,28 @@ export async function getStaticProps() {
   }
 }
 
-export default function Home( {allPostsData }) {
+export default function Home({ allPostsData }) {
   return (
     <Layout home>
       <Head>
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p> Hi! My name is <a href="https://www.linkedin.com/in/amritavenkatraman/">Amrita</a>. I recently graduated from Stanford University, where I studied Computer Science and Psychology. I love reading, writing, and Rihanna. 
-          I currently live in San Francisco, California. You can find me on <a href="https://twitter.com/iamrita98">Twitter</a> or check out my <a href="/files/resume_feb_2023.pdf" download>resume</a>.
+        <p> Hi! My name is <a href="https://www.linkedin.com/in/amritavenkatraman/">Amrita</a>. I recently graduated from Stanford University, where I studied Computer Science and Psychology. I love reading, writing, and Rihanna.
+          I currently live in San Francisco, California. You can find me on <a href="https://twitter.com/iamrita98">Twitter</a> or check out my <a href="/files/resume_feb_2023.pdf" download>resume</a>. You can also read <Link href={`/posts/thoughts`}>more</Link> about how I built this website.
         </p>
 
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
-          {allPostsData.map(({id, date, title}) => (
+          {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-             <Link href={`/posts/${id}`}>{title}</Link>
-             <br/>
-             <small className={utilStyles.lightText}>
-              <Date dateString={date}/>
-             </small>
+              <Link href={`/posts/${id}`}>{title}</Link>
+              <br />
+              <small className={utilStyles.lightText}>
+                <Date dateString={date} />
+              </small>
             </li>
           ))}
         </ul>
