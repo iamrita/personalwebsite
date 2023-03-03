@@ -1,1 +1,1 @@
-This contains the source code for the personal website of Amrita Venkatraman.
+This contains the source code for my [website](amritav.com).
