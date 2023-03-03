@@ -35,36 +35,8 @@ export default function Layout({ children, home }) {
                         alt=""
                     />
                     <h1 className={utilStyles.heading2Xl}>{name}</h1>
-                </>
-            ) : (
-                <>
-                    <Link href="/">
-                        <Image
-                            priority
-                            unoptimized
-                            src="/images/profile.jpg" g
-                            className={utilStyles.borderCircle}
-                            height={130}
-                            width={108}
-                            alt=""
-                        />
 
-                    </Link>
-                    {/* <h2 className={utilStyles.headingLg}>
-                        <Link href="/" className={utilStyles.colorInherit}>
-                            {name}
-                        </Link>
-            </h2>*/}
-                </>
-            )}
-        </header>
-        <main>{children}</main>
-        {!home && (
-            <div className={styles.backToHome}>
-                <Link href="/"> Back To Home </Link>
-            </div>
-        )}
-        <div className={styles.row}>
+                    <div className={styles.row}>
             <a className={styles.column} href="https://github.com/iamrita">
                 <Image
                     priority
@@ -106,5 +78,37 @@ export default function Layout({ children, home }) {
                 />
         </a>
         </div>
+
+
+                </>
+            ) : (
+                <>
+                    <Link href="/">
+                        <Image
+                            priority
+                            unoptimized
+                            src="/images/profile.jpg" g
+                            className={utilStyles.borderCircle}
+                            height={130}
+                            width={108}
+                            alt=""
+                        />
+
+                    </Link>
+                    {/* <h2 className={utilStyles.headingLg}>
+                        <Link href="/" className={utilStyles.colorInherit}>
+                            {name}
+                        </Link>
+            </h2>*/}
+                </>
+            )}
+        </header>
+        <main>{children}</main>
+        {!home && (
+            <div className={styles.backToHome}>
+                <Link href="/"> Back To Home </Link>
+            </div>
+        )}
+      
     </div>);
 }
