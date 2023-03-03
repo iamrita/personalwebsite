@@ -35,6 +35,51 @@ export default function Layout({ children, home }) {
                         alt=""
                     />
                     <h1 className={utilStyles.heading2Xl}>{name}</h1>
+
+                    <div className={styles.row}>
+            <a className={styles.column} href="https://github.com/iamrita">
+                <Image
+                    priority
+                    unoptimized
+                    src="/images/github.png"
+                    height={20}
+                    width={20}
+                    alt=""
+                />
+            </a>
+            <a className={styles.column} href="mailto: amritav.ca@gmail.com">
+                <Image
+                    priority
+                    unoptimized
+                    src="/images/email.png"
+                    height={20}
+                    width={20}
+                    alt=""
+                />
+            </a>
+            <a className = {styles.column} href="https://www.linkedin.com/in/amritavenkatraman/">
+                <Image
+                    priority
+                    unoptimized
+                    src="/images/linkedin.png"
+                    height={20}
+                    width={20}
+                    alt=""
+                />
+            </a>
+            <a className = {styles.column} href="https://twitter.com/iamrita98">
+                <Image
+                    priority
+                    unoptimized
+                    src="/images/twitter.png"
+                    height={20}
+                    width={20}
+                    alt=""
+                />
+        </a>
+        </div>
+
+
                 </>
             ) : (
                 <>
@@ -50,7 +95,7 @@ export default function Layout({ children, home }) {
                         />
 
                     </Link>
-                   {/* <h2 className={utilStyles.headingLg}>
+                    {/* <h2 className={utilStyles.headingLg}>
                         <Link href="/" className={utilStyles.colorInherit}>
                             {name}
                         </Link>
@@ -59,11 +104,11 @@ export default function Layout({ children, home }) {
             )}
         </header>
         <main>{children}</main>
-
         {!home && (
             <div className={styles.backToHome}>
                 <Link href="/"> Back To Home </Link>
             </div>
         )}
+      
     </div>);
 }
