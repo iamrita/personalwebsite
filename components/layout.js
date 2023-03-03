@@ -10,7 +10,7 @@ export const siteTitle = "Amrita's Blog";
 export default function Layout({ children, home }) {
     return (<div className={styles.container}>
         <Head>
-            <link rel="icon" href="/favicon.ico" />
+            <link rel="icon" href="/umbrella.ico" />
             <meta
                 name="description"
                 content="Amrita's musings"
