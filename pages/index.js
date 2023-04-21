@@ -27,9 +27,13 @@ export default function Home({ allPostsData }) {
           {" "}
           Hi! My name is <Link href={`/posts/about`}>Amrita</Link>. I recently
           graduated from Stanford University, where I studied Computer Science
-          and Psychology. I currently live in San Francisco, California where I
-          spend my time reading, sewing, and going out dancing. You can find me
-          on <a href="https://twitter.com/iamrita98">Twitter</a> or check out my{" "}
+          and Psychology. I currently live in San Francisco, California and love
+          to spend my time reading, sewing, and going out dancing. I also
+          volunteer at the San Francisco Tenants Union, where I help tenants
+          learn about their rights against eviction and displacement. When I'm
+          not working or volunteering, I'm attempting to triangulate Rihanna's
+          location on any given night. You can find me on{" "}
+          <a href="https://twitter.com/iamrita98">Twitter</a> or check out my{" "}
           <a href="/files/resume_feb_2023.pdf" download>
             resume
           </a>
