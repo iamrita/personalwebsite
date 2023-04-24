@@ -2,6 +2,7 @@
 title: 'On Depression'
 date: '2019-12-17'
 ---
+_Written when I was a senior at Stanford._
 
 At the start of the quarter, I promised many of my friends that I would make a blog post during winter break compiling all my notes together from PSYCH 234: Understanding Depression.
 

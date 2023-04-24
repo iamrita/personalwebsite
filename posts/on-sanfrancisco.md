@@ -19,7 +19,7 @@ The third reason, and probably the biggest, is that I am surrounded by friends h
 
 There's a running joke among my friends, fed by my own histrionics and antics, that I hate New York City. The reason behind it is pretty justified: people in San Francisco love telling you how much they want to move to New York. And I'll concede to a couple things: yes, New York has better public transportation, and yes, people dress better and there's more professional diversity. I don't know if it's easier to make friends there or to date, because I've heard mixed reviews about both, but it definitely is nice that things are open later (giving more opportunities for the aforementioned social interactions). 
 
-But when I'm in New York, even just for a couple days, I very often find myself missing San Francisco. Maybe it's because I grew up near there. Maybe it's because I haven't travelled enough. Maybe it's because I am romanticizing my first big girl job and big girl apartment. Maybe it's because I just love my friends here so fucking much.
+But when I'm in New York, even just for a couple days, I very often find myself missing San Francisco. Maybe it's because I grew up near there. Maybe it's because I haven't travelled enough. Maybe it's because I am romanticizing my first big girl job and big girl apartment. Maybe it's because I just love my friends here so much.
 
 Whatever it is, it's home. Happy (almost) one year to my favorite city in the world. 
 
