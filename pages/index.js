@@ -25,9 +25,10 @@ export default function Home({ allPostsData }) {
       <section className={utilStyles.headingMd}>
         <p>
           {" "}
-          Hi! My name is <Link href={`/posts/about`}>Amrita</Link>. I recently
-          graduated from Stanford University, where I studied Computer Science
-          and Psychology. I currently live in San Francisco, California and love
+          Hi! My name is <Link href={`/posts/about`}>Amrita</Link>. I am currently a software engineer at 
+          Maven Clinic, where I work on improving health outcomes for women, particularly women of color who face
+          numerous obstacles during pregnancy and childbirth.<n></n>
+          I currently live in San Francisco, California and love
           to spend my time reading, sewing, and going out dancing. I also
           volunteer at the San Francisco Tenants Union, where I help tenants
           learn about their rights against eviction and displacement. When I'm
