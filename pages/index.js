@@ -28,8 +28,7 @@ export default function Home({ allPostsData }) {
           Hi! My name is <Link href={`/posts/about`}>Amrita</Link>. I am currently a software engineer at 
           Maven Clinic, where I work on improving health outcomes for women, particularly women of color who face
           numerous obstacles during pregnancy and childbirth.<n></n>
-          I currently live in San Francisco, California and love
-          to spend my time reading, sewing, and going out dancing. I also
+          I currently live in San Francisco, California and work at Maven Clinic, a virtual clinic for women and families. I also
           volunteer at the San Francisco Tenants Union, where I help tenants
           learn about their rights against eviction and displacement. When I'm
           not working or volunteering, I'm attempting to triangulate Rihanna's
