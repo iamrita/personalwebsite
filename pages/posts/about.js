@@ -10,7 +10,7 @@ export default function About() {
         </Head>
         <article>
             <h1 className={utilStyles.headingXl}>About Me</h1>
-            <div className={utilStyles.lightText}>
+            <div>
                 <p>Generally, I am a creator. When I was a kid, I loved writing stories and building worlds: something that has
                     stayed with me as an adult but manifests itself now in different ways. In the same vein that I love to design and sew my own clothes,
                     I also enjoy brainstorming and developing web and mobile applications. My goal is to use my experience and knowledge
