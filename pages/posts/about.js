@@ -6,7 +6,7 @@ import utilStyles from '../../styles/utils.module.css'
 export default function About() {
     return <Layout>
         <Head>
-            <title>Using Next.js</title>
+            <title>About me</title>
         </Head>
         <article>
             <h1 className={utilStyles.headingXl}>About Me</h1>
@@ -22,19 +22,19 @@ export default function About() {
                 </p>
                 <h1 className={utilStyles.headingMd}>Books</h1>
                 <ul>
-                    <li>Tomorrow, and Tomorrow, and Tomorrow by Gabrielle Zevin</li>
+                    <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
                     <li>Different by Franz de Waal</li>
                     <li>Maximum City by Suketu Mehta</li>
                     <li>Unaccustomed Earth by Jhumpa Lahiri</li>
                     <li>You're the Only One I've Told by Dr. Meera Shah</li>
                     <li>Homegoing by Yaa Gyasi</li>
                     <li>The Vanishing Half by Brit Bennett</li>
+                    <li>Pachinko by Min Jin Lee</li>
 
 
                 </ul>
                 <h1 className={utilStyles.headingMd}>TV Shows</h1>
                 <ul><li>Severance (Apple TV)</li>
-                    <li>The Last of Us (HBO Max)</li>
                     <li>Bojack Horseman (Netflix)</li>
                     <li>Atlanta (Hulu)</li>
                     <li>Insecure (HBO Max)</li>
@@ -49,6 +49,7 @@ export default function About() {
                     <li>The Sound of Metal</li>
                     <li>Pride and Prejudice</li>
                     <li>Zindagi Na Milegi Dobara</li>
+                    <li>A Real Pain</li>
 
 
                 </ul>
