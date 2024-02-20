@@ -309,8 +309,8 @@ export default function About() {
                 <h1 className={utilStyles.headingAbout}>Movies</h1>
                 <ul><li>The Farewell</li>
                     <li>Marcel the Shell With Shoes On</li>
-                    <li>The Sound of Metal</li>
-                    <li>Pride and Prejudice (Kiera Knightley version)</li>
+                    <li>Spotlight</li>
+                    <li>Pride and Prejudice (Keira Knightley version)</li>
                     <li>Zindagi Na Milegi Dobara</li>
                     <li>A Real Pain</li>
                 </ul>
