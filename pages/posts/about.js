@@ -106,7 +106,7 @@ const localEdition = {
 }
 
 const noeValleyBakery = {
-    name: "Noe Valley Bakery - ask for the Milky Way Bomb! (and go their on your birthday for free treats)",
+    name: "Noe Valley Bakery - ask for the Milky Way Bomb! (and go there on your birthday for free treats)",
     coords: {
         lat: 37.755188262266095,
         lng: -122.43301709046229
