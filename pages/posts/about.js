@@ -208,7 +208,6 @@ export default function About() {
 
     const handleCategoryChange = (event) => {
         const category = event.target.value
-        console.log(category)
         switch (category) {
             case "Restaurants":
                 setMarkers(restaurants.map(restaurant => (
@@ -239,8 +238,6 @@ export default function About() {
                     (<Marker key={bakery.name} position={bakery.coords} title={bakery.name} />)))
                 break;
         }
-        console.log(markers)
-
         setSelectedCategory(category)
     };
 

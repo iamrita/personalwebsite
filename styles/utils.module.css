@@ -2,7 +2,7 @@
   font-family: 'Domaine Display';
   src: url(/fonts/test-domaine-display-black.woff2) format('woff2');
   /* Add more formats if necessary */
-  font-weight: normal;
+  font-weight: bold;
   font-style: normal;
 }
 
@@ -11,7 +11,7 @@
   src: url(/fonts/test-domaine-text-bold.woff2) format('woff2');
   /* Add more formats if necessary */
   font-weight: normal;
-  font-style: normal;
+  font-style: italic;
 }
 
 .heading2Xl {
@@ -33,12 +33,14 @@
 }
 
 .headingLg {
+  font-family: 'Domaine Text';
   font-size: 1.5rem;
   line-height: 1.4;
   margin: 1rem 0;
 }
 
 .headingMd {
+  font-family: 'Domaine Text';
   font-size: 1.2rem;
   line-height: 1.5;
 }
