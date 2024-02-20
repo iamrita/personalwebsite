@@ -32,7 +32,7 @@ export default function Home({ allPostsData }) {
           not working or volunteering, I'm attempting to triangulate Rihanna's
           location on any given night. You can find me on{" "}
           <a href="https://twitter.com/iamrita98">Twitter</a> or check out my{" "}
-          <a href="/files/resume_feb_2023.pdf" download>
+          <a href="/files/resume_feb_2024.pdf" download>
             resume
           </a>
           .
