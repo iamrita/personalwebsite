@@ -5,7 +5,65 @@ import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/ap
 import { useState, useEffect } from 'react';
 import { ca } from 'date-fns/locale';
 
-
+const mapStyles = {
+    retro: [
+        {
+            "featureType": "all",
+            "elementType": "labels.text",
+            "stylers": [
+                {
+                    "color": "#878787"
+                }
+            ]
+        },
+        {
+            "featureType": "all",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+                {
+                    "visibility": "off"
+                }
+            ]
+        },
+        {
+            "featureType": "landscape",
+            "elementType": "all",
+            "stylers": [
+                {
+                    "color": "#f9f5ed"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "all",
+            "stylers": [
+                {
+                    "color": "#f5f5f5"
+                }
+            ]
+        },
+        {
+            "featureType": "road.highway",
+            "elementType": "geometry.stroke",
+            "stylers": [
+                {
+                    "color": "#c9c9c9"
+                }
+            ]
+        },
+        {
+            "featureType": "water",
+            "elementType": "all",
+            "stylers": [
+                {
+                    "color": "#aee0f4"
+                }
+            ]
+        }
+    ]
+  };
+  
 const khanfectionsCoords = {
     name: "Khanfections - best breakfast sandwich in the city",
     coords: {
@@ -132,8 +190,8 @@ const folioBooks = {
     }
 }
 const bars = [abvCoords, localEdition, snug]
-const restaurants = [mangroveCoords, khanfectionsCoords, sliceHouseCoords, norcina, noodleHouse, kingThai]
-const bakeries = [noeValleyBakery]
+const restaurants = [mangroveCoords, sliceHouseCoords, norcina, noodleHouse, kingThai]
+const bakeries = [noeValleyBakery, khanfectionsCoords]
 const bookstores = [booksmith, greenAppleBooks, folioBooks]
 const parks = [tankHill, alamoSquarePark, buenaVistaPark]
 
@@ -226,6 +284,7 @@ export default function About() {
                         mapContainerStyle={{ width: '100%', height: '400px' }}
                         center={sliceHouseCoords.coords}
                         zoom={13}
+                        options={{ styles: mapStyles.retro}}
                     >
                         {markers}
                     </GoogleMap>
