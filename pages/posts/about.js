@@ -1,6 +1,14 @@
 import Layout from '../../components/layout'
 import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css'
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+
+
+// Golden Gate Bridge coordinates
+const goldenGateBridgeCoords = {
+    lat: 37.8199,
+    lng: -122.4783
+};
 
 
 export default function About() {
@@ -8,6 +16,8 @@ export default function About() {
         <Head>
             <title>About me</title>
         </Head>
+        {/* Google Map */}
+
         <article>
             <h1 className={utilStyles.headingXl}>About Me</h1>
             <div className={utilStyles.aboutText}>
@@ -20,6 +30,17 @@ export default function About() {
                     <a href="https://sftu.org/"> San Francisco Tenants Union </a> and I am on the board of <a href="https://afutureforeverychild.org/">AFEC</a>, an international non-profit.
                     I also am an avid reader, and love watching TV shows and movies, especially with friends. I've listed some of my favorites below.
                 </p>
+                <LoadScript
+                    googleMapsApiKey="AIzaSyBmhvvC_jgOxYKGFRLOwfdPEwQhbAMJz8E"
+                >
+                    <GoogleMap
+                        mapContainerStyle={{ width: '100%', height: '400px' }}
+                        center={goldenGateBridgeCoords}
+                        zoom={13}
+                    >
+                        <Marker position={goldenGateBridgeCoords} />
+                    </GoogleMap>
+                </LoadScript>
                 <h1 className={utilStyles.headingMd}>Books</h1>
                 <ul>
                     <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
