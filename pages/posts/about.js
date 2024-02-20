@@ -2,69 +2,113 @@ import Layout from '../../components/layout'
 import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 const khanfectionsCoords = {
-    lat: 37.759030942158205,
-    lng: -122.41532890548739
+    name: "Khanfections",
+    coords: {
+        lat: 37.759030942158205,
+        lng: -122.41532890548739
+    }
 };
 
 const sliceHouseCoords = {
-    lat: 37.770024841643355,
-    lng: -122.4475607321787
+    name: "Slice House",
+    coords: {
+        lat: 37.770024841643355,
+        lng: -122.4475607321787
+    }
 }
 
 const abvCoords = {
-    lat: 37.76513838250822,
-    lng: -122.42358938984957
+    name: "ABV",
+    coords: {
+        lat: 37.76513838250822,
+        lng: -122.42358938984957
+    }
 }
 
 const mangroveCoords = {
-    lat: 37.77271180605459,
-    lng: -122.43696055916676
+    name: "Mangrove Kitchen",
+    coords: {
+        lat: 37.77271180605459,
+        lng: -122.43696055916676
+    }
 
 }
 
 const localEdition = {
-    lat: 37.78786315864519, 
-    lng: -122.40322230519006
+    name: "Local Edition",
+    coords: {
+        lat: 37.78786315864519,
+        lng: -122.40322230519006
+    }
 }
 
 const noeValleyBakery = {
     lat: 37.755188262266095,
-    lng:  -122.43301709046229
+    lng: -122.43301709046229
 }
 
 const kingThai = {
-    lat: 37.78350061284428, 
-    lng: -122.4630054573192
+    name: "King Thai #2",
+    coords: {
+        lat: 37.78350061284428,
+        lng: -122.4630054573192
+    }
 }
 const snug = {
-    lat: 37.7910500340529, 
-    lng: -122.43440703217813
+    name: "The Snug",
+    coords: {
+        lat: 37.7910500340529,
+        lng: -122.43440703217813
+    }
 }
 const noodleHouse = {
-    lat: 37.76357161286133, 
-    lng: -122.4778375186852
+    name: "Kevin and Chris's Noodle House",
+    coords: {
+        lat: 37.76357161286133,
+        lng: -122.4778375186852
+    }
 }
 const norcina = {
-    lat: 37.80032105259278, 
-    lng: -122.43964357265975
+    name: "Norcina",
+    coords: {
+        lat: 37.80032105259278,
+        lng: -122.43964357265975
+    }
 }
-const bars = [abvCoords, localEdition]
-const restaurants = [mangroveCoords, khanfectionsCoords, sliceHouseCoords]
+const bars = [abvCoords, localEdition, snug]
+const restaurants = [mangroveCoords, khanfectionsCoords, sliceHouseCoords, norcina, noodleHouse]
 
 
 export default function About() {
-    const [infoWindowOpen, setInfoWindowOpen] = useState(false);
+    const [selectedCategory, setSelectedCategory] = useState('');
+    const [markers, setMarkers] = useState([]);
 
-    const handleMarkerClick = () => {
-        setInfoWindowOpen(true);
-    };
+    useEffect(() => {
+        setMarkers(restaurants.map(restaurant => (
+            <Marker key={restaurant.name} position={restaurant.coords} title={restaurant.name} />
+        )));
+    }, []);
 
-    const handleInfoWindowClose = () => {
-        setInfoWindowOpen(false);
+    const handleCategoryChange = (event) => {
+        const category = event.target.value
+
+        if (category === "Restaurants") {
+            setMarkers(restaurants.map(restaurant => (
+                <Marker key={restaurant.name} position={restaurant.coords} title={restaurant.name} />
+            )));
+        } else if (category === "Bars") {
+            setMarkers(bars.map(bar => (
+                <Marker key={bar.name} position={bar.coords} title={bar.name} />
+            )
+
+            ))
+        }
+
+        setSelectedCategory(category)
     };
 
 
@@ -87,27 +131,23 @@ export default function About() {
                     I also am an avid reader, and love watching TV shows and movies, especially with friends. I've listed some of my favorites below.
                 </p>
                 <h1 className={utilStyles.headingMd}>My favorite places in SF</h1>
+
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <label htmlFor="restaurantFilter"></label>
+                    <select id="restaurantFilter" value={selectedCategory} onChange={handleCategoryChange}>
+                        <option value="Restaurants">Restaurants</option>
+                        <option value="Bars">Bars</option>
+                    </select>
+                </div>
                 <LoadScript
                     googleMapsApiKey="AIzaSyBmhvvC_jgOxYKGFRLOwfdPEwQhbAMJz8E"
                 >
                     <GoogleMap
                         mapContainerStyle={{ width: '100%', height: '400px' }}
-                        center={sliceHouseCoords}
+                        center={sliceHouseCoords.coords}
                         zoom={13}
                     >
-                        <Marker
-                            position={khanfectionsCoords}
-                            title="Khanfections"/>
-                        <Marker position={sliceHouseCoords} title="Slice House" />
-                        <Marker position={abvCoords} title="ABV" />
-                        <Marker position={mangroveCoords} title="Mangrove Kitchen" />
-                        <Marker position={localEdition} title="Local Edition"/>
-                        <Marker position={noeValleyBakery} title="Noe Valley Bakery"/>
-                        <Marker position={kingThai} title="King Thai #2"/>
-                        <Marker position={snug} title="The Snug"/>
-                        <Marker position={noodleHouse} title="Kevin and Chris's Noodle House"/>
-                        <Marker position={norcina} title="Norcina"/>
-
+                        {markers}
                     </GoogleMap>
                 </LoadScript>
                 <h1 className={utilStyles.headingMd}>Books</h1>
