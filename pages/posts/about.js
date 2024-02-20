@@ -249,7 +249,7 @@ export default function About() {
                 <p>Below, I've compiled a list of my favorites - places, books, TV shows, music, and movies. I try to keep them updated when I can. Please
                     contact me if you'd like to geek out over anything listed together!
                 </p>
-                <h1 className={utilStyles.headingMd}>Places in San Francisco</h1>
+                <h1 className={utilStyles.headingAbout}>Places in San Francisco</h1>
                 <p>Use the dropdown below to filter based on category, and hover over the pin to see the name and my comments!</p>
 
                 <div style={{ display: 'flex', alignItems: 'center' ,  marginBottom: '10px',}}>
@@ -286,7 +286,7 @@ export default function About() {
                         {markers}
                     </GoogleMap>
                 </LoadScript>
-                <h1 className={utilStyles.headingMd}>Books</h1>
+                <h1 className={utilStyles.headingAbout}>Books</h1>
                 <ul>
                     <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
                     <li>Different by Franz de Waal</li>
@@ -298,7 +298,7 @@ export default function About() {
                     <li>Pachinko by Min Jin Lee</li>
                 </ul>
 
-                <h1 className={utilStyles.headingMd}>TV Shows</h1>
+                <h1 className={utilStyles.headingAbout}>TV Shows</h1>
                 <ul><li>Severance (Apple TV)</li>
                     <li>Bojack Horseman (Netflix)</li>
                     <li>Atlanta (Hulu)</li>
@@ -306,7 +306,7 @@ export default function About() {
                     <li>Chernobyl (HBO Max)</li>
                 </ul>
 
-                <h1 className={utilStyles.headingMd}>Movies</h1>
+                <h1 className={utilStyles.headingAbout}>Movies</h1>
                 <ul><li>The Farewell</li>
                     <li>Marcel the Shell With Shoes On</li>
                     <li>The Sound of Metal</li>
@@ -316,7 +316,7 @@ export default function About() {
                 </ul>
 
 
-                <h1 className={utilStyles.headingMd}>Albums</h1>
+                <h1 className={utilStyles.headingAbout}>Albums</h1>
                 <ul><li>Ctrl by SZA</li>
                     <li>Nothing Like the Sun by Sting</li>
                     <li>The Miseducation of Lauryn Hill by Lauryn Hill</li>

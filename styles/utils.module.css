@@ -40,6 +40,11 @@
 }
 
 .headingMd {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.headingAbout {
   font-family: 'Domaine Text';
   font-size: 1.2rem;
   line-height: 1.5;
