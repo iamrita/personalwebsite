@@ -4,66 +4,9 @@ import utilStyles from '../../styles/utils.module.css'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 import { ca } from 'date-fns/locale';
+import MapComponent from '../../components/MapComponent';
 
-const mapStyles = {
-    retro: [
-        {
-            "featureType": "all",
-            "elementType": "labels.text",
-            "stylers": [
-                {
-                    "color": "#878787"
-                }
-            ]
-        },
-        {
-            "featureType": "all",
-            "elementType": "labels.text.stroke",
-            "stylers": [
-                {
-                    "visibility": "off"
-                }
-            ]
-        },
-        {
-            "featureType": "landscape",
-            "elementType": "all",
-            "stylers": [
-                {
-                    "color": "#f9f5ed"
-                }
-            ]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "all",
-            "stylers": [
-                {
-                    "color": "#f5f5f5"
-                }
-            ]
-        },
-        {
-            "featureType": "road.highway",
-            "elementType": "geometry.stroke",
-            "stylers": [
-                {
-                    "color": "#c9c9c9"
-                }
-            ]
-        },
-        {
-            "featureType": "water",
-            "elementType": "all",
-            "stylers": [
-                {
-                    "color": "#aee0f4"
-                }
-            ]
-        }
-    ]
-  };
-  
+
 const khanfectionsCoords = {
     name: "Khanfections - best breakfast sandwich in the city",
     coords: {
@@ -251,41 +194,9 @@ export default function About() {
                 </p>
                 <h1 className={utilStyles.headingAbout}>Places in San Francisco</h1>
                 <p>Use the dropdown below to filter based on category, and hover over the pin to see the name and my comments!</p>
+             
+                <MapComponent/>
 
-                <div style={{ display: 'flex', alignItems: 'center' ,  marginBottom: '10px',}}>
-                    <label htmlFor="restaurantFilter"></label>
-                    <select id="restaurantFilter" value={selectedCategory} onChange={handleCategoryChange}
-                         style={{
-                            padding: '8px 30px 8px 12px', /* Adjusted padding on the right side */
-                            fontSize: '16px',
-                            borderRadius: '4px',
-                            border: '1px solid #ccc',
-                            backgroundColor: '#fff',
-                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                            appearance: 'none',
-                            backgroundImage: `url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>')`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'right 10px center'
-                          }}>
-                        <option value="Restaurants">Restaurants</option>
-                        <option value="Bars">Bars</option>
-                        <option value="Parks">Parks</option>
-                        <option value="Bookstores">Bookstores</option>
-                        <option value="Bakeries">Bakeries</option>
-                    </select>
-                </div>
-                <LoadScript
-                    googleMapsApiKey="AIzaSyBmhvvC_jgOxYKGFRLOwfdPEwQhbAMJz8E"
-                >
-                    <GoogleMap
-                        mapContainerStyle={{ width: '100%', height: '400px' }}
-                        center={sliceHouseCoords.coords}
-                        zoom={13}
-                        options={{ styles: mapStyles.retro}}
-                    >
-                        {markers}
-                    </GoogleMap>
-                </LoadScript>
                 <h1 className={utilStyles.headingAbout}>Books</h1>
                 <ul>
                     <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
