@@ -1,9 +1,11 @@
-import Layout from '../../components/layout'
+import Layout, {siteTitle} from '../../components/layout'
 import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 import { ca } from 'date-fns/locale';
+import Link from "next/link";
+
 
 const mapStyles = {
     retro: [
@@ -243,12 +245,16 @@ export default function About() {
 
 
     return <Layout>
+           <Head>
+        <title>About</title>
+      </Head>
         <article>
             <h1 className={utilStyles.headingXl}>About Me</h1>
             <div className={utilStyles.aboutText}>
                 <p>Below, I've compiled a list of my favorites - places, books, TV shows, music, and movies. I try to keep them updated when I can. Please
                     contact me if you'd like to geek out over anything listed together!
                 </p>
+                <p>I also love to play <Link href={`/posts/connections`}>Connections</Link>. This is a part of my website that I'm working on that is a work in progress.</p>
                 <h1 className={utilStyles.headingAbout}>Places in San Francisco</h1>
                 <p>Use the dropdown below to filter based on category, and hover over the pin to see the name and my comments!</p>
 

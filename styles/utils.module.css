@@ -75,3 +75,39 @@
 .aboutText {
   color: black
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.square {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: lightgray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.buttons .square {
+  width: 48%;
+  background-color: white
+;
+}
+
+.clicked {
+  background-color: black; /* Dark gray background when clicked */
+  color: white; /* White text when clicked */
+}
