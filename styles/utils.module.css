@@ -111,3 +111,23 @@
   background-color: black; /* Dark gray background when clicked */
   color: white; /* White text when clicked */
 }
+
+.submissionAnimation {
+  animation: moveTop 2s forwards;
+}
+
+@keyframes moveTop {
+  0% {
+      transform: translateY(0);
+  }
+  100% {
+      transform: translateY(-150px); /* Adjust this value based on your grid's height */
+  }
+}
+
+.backgroundRectangle {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
