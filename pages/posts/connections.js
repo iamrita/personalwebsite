@@ -3,6 +3,12 @@ import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css';
 import { useState, useEffect } from 'react';
 
+/**
+ * Issues to Fix:
+ * 1. When the user is finished, the rectangles auto order in easiest to hardest. Should
+ *   keep the order that the user solved it in. 
+ * 2. Getting words from text file. 
+ */
 
 const words = [
     'cornea', 'flounder', 'salmon', 'iris',
@@ -22,15 +28,15 @@ function containSameElements(arr1, arr2) {
 }
 
 function formatTextFile(dataString) {
-       // Split the string into lines
-       const lines = dataString.split('\n');
-       // Extract words from the first line
-       const wordsLine = lines[0].trim();
-       // Split the words line by colon and get the words part
-       const wordsArray = wordsLine.split(': ')[1].split(',');
-       // Trim each word and remove any empty strings
-       const words = wordsArray.map(word => word.trim()).filter(word => word !== '');
-       return words;
+    // Split the string into lines
+    const lines = dataString.split('\n');
+    // Extract words from the first line
+    const wordsLine = lines[0].trim();
+    // Split the words line by colon and get the words part
+    const wordsArray = wordsLine.split(': ')[1].split(',');
+    // Trim each word and remove any empty strings
+    const words = wordsArray.map(word => word.trim()).filter(word => word !== '');
+    return words;
 }
 
 export default function Connections() {
@@ -57,6 +63,8 @@ export default function Connections() {
     const [showDifficultRectangle, setShowDifficultRectangle] = useState(false);
 
     const [submissionAnimation, setSubmissionAnimation] = useState(false);
+    const [mistakeAnimation, setMistakeAnimation] = useState(false);
+
     const [selectedWords, setSelectedWords] = useState([])
 
     // useEffect(() => {
@@ -70,19 +78,28 @@ export default function Connections() {
     //         console.error(error);
     //       }
     //     };
-    
+
     //     fetchData();
     //   }, []);
 
 
 
+    // TIL logigng and state change don't always happen in the sequence you think 
     // shouldn't be able to click more than four words
     const handleClick = (index, word) => {
-        const newClickedSquares = [...clickedSquares];
-        newClickedSquares[index] = !newClickedSquares[index];
-        setClickedSquares(newClickedSquares);
-        const newSelectedWords = [...new Set([...selectedWords, word])]; // Add the clicked word to the selected words array and remove duplicates
-        setSelectedWords(newSelectedWords);
+        if (selectedWords.length <= 3 || clickedSquares[index]) {
+            const newClickedSquares = [...clickedSquares];
+            let newSelectedWords = [...selectedWords]
+            newClickedSquares[index] = !newClickedSquares[index];
+            if (newClickedSquares[index]) {
+                newSelectedWords = [...selectedWords, word]; // Add the clicked word to the selected words array and remove duplicates
+
+            } else {
+                newSelectedWords = newSelectedWords.filter(w => w !== word)
+            }
+            setClickedSquares(newClickedSquares)
+            setSelectedWords(newSelectedWords);
+        }
     };
 
     const handleShuffle = (index) => {
@@ -153,10 +170,13 @@ export default function Connections() {
 
         } else {
             setMistakes(mistakes - 1);
+            setMistakeAnimation(true)
+            setTimeout(() => {
+                setMistakeAnimation(false);
+                setClickedSquares(Array(16).fill(false))
+                setSelectedWords([])
+            }, 1000);
             console.log(`You've got ${mistakes} chances left.`);
-            setClickedSquares(Array(16).fill(false))
-            setSelectedWords([])
-
         }
 
 
@@ -165,17 +185,22 @@ export default function Connections() {
 
     const squares = unSubmittedSquares.map((word, index) => {
         const isAtTop = index < 4; // Assuming each row has 4 squares
-      
+
         return (
-          <div
-            key={index}
-            className={`${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} ${clickedSquares[index] && submissionAnimation && !isAtTop ? utilStyles.submissionAnimation : ''}`}
-            onClick={() => handleClick(index, word)}
-          >
-            {word}
-          </div>
+            <div
+                key={index}
+                className={`
+                ${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} 
+                ${clickedSquares[index] && submissionAnimation && !isAtTop ? utilStyles.submissionAnimation : ''} 
+                ${clickedSquares[index] && mistakeAnimation ? utilStyles.mistakeAnimation : ''}`}
+                onClick={() =>
+                    handleClick(index, word)
+                }
+            >
+                {word}
+            </div>
         );
-      });
+    });
 
     const circles = Array.from({ length: mistakes }, (_, index) => (
         <div key={index} className={utilStyles.circle}></div>
@@ -207,7 +232,7 @@ export default function Connections() {
                 )}
                 {showDifficultRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundDifficult}`}>
-                         <div style={{}}>Closed compound words</div>
+                        <div style={{}}>Closed compound words</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(difficult)}</div>
                     </div>
                 )}
