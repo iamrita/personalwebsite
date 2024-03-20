@@ -8,6 +8,13 @@ import { useState, useEffect } from 'react';
  * 1. When the user is finished, the rectangles auto order in easiest to hardest. Should
  *   keep the order that the user solved it in. 
  * 2. Getting words from text file. 
+ * 3. 1 away, and letting you know if you guessed already. 
+ * 
+ * 
+ * Future improvements
+ * 1. Tracking what peopple guess 
+ * 2. Having an archive on the page of previous days 
+ * 3. being able to go to previous days by url routing 
  */
 
 const words = [
@@ -84,7 +91,15 @@ export default function Connections() {
 
 
 
-    // TIL logigng and state change don't always happen in the sequence you think 
+    function clearBoard(showRectangle) {
+        setSubmissionAnimation(false);
+        showRectangle(true);
+        const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
+        setUnsubmittedSquares(remainingWords)
+        setClickedSquares(Array(16).fill(false))
+        setSelectedWords([])
+    }
+    // TIL logging and state change don't always happen in the sequence you think 
     // shouldn't be able to click more than four words
     const handleClick = (index, word) => {
         if (selectedWords.length <= 3 || clickedSquares[index]) {
@@ -124,48 +139,28 @@ export default function Connections() {
             console.log("You got easy!")
             setSubmissionAnimation(true);
             setTimeout(() => {
-                setSubmissionAnimation(false);
-                setShowEasyRectangle(true);
-                const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
-                setUnsubmittedSquares(remainingWords)
-                setClickedSquares(Array(16).fill(false))
-                setSelectedWords([])
+                clearBoard(setShowEasyRectangle)
             }, 2000);
 
         } else if (containSameElements(selectedWords, medium)) {
             console.log("You got medium!")
             setSubmissionAnimation(true);
             setTimeout(() => {
-                setSubmissionAnimation(false);
-                setShowMediumRectangle(true);
-                const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
-                setUnsubmittedSquares(remainingWords)
-                setClickedSquares(Array(16).fill(false))
-                setSelectedWords([])
+                clearBoard(setShowMediumRectangle)
             }, 2000);
 
         } else if (containSameElements(selectedWords, hard)) {
             console.log("You got hard!")
             setSubmissionAnimation(true);
             setTimeout(() => {
-                setSubmissionAnimation(false);
-                setShowHardRectangle(true);
-                const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
-                setUnsubmittedSquares(remainingWords)
-                setClickedSquares(Array(16).fill(false))
-                setSelectedWords([])
+                clearBoard(setShowHardRectangle)
             }, 2000);
 
         } else if (containSameElements(selectedWords, difficult)) {
             console.log("You got difficult!")
             setSubmissionAnimation(true);
             setTimeout(() => {
-                setSubmissionAnimation(false);
-                setShowDifficultRectangle(true);
-                const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
-                setUnsubmittedSquares(remainingWords)
-                setClickedSquares(Array(16).fill(false))
-                setSelectedWords([])
+               clearBoard(setShowDifficultRectangle)
             }, 2000);
 
         } else {
