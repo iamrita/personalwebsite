@@ -120,6 +120,7 @@
   0% {
       transform: translateY(0);
   }
+
   100% {
       transform: translateY(-150px); /* Adjust this value based on your grid's height */
   }
@@ -158,4 +159,19 @@
   text-align: center;
   flex-direction: column;
 
+}
+
+.circleContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: gray; /* Change color as needed */
+  margin-right: 5px; /* Adjust spacing between circles */
+  margin-top:20px;
+  margin-inline: 10px;
 }

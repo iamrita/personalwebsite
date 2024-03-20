@@ -1,7 +1,8 @@
 import Layout from "../../components/layout";
 import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 
 const words = [
     'cornea', 'flounder', 'salmon', 'iris',
@@ -20,6 +21,18 @@ function containSameElements(arr1, arr2) {
     return arr1.sort().join(',') === arr2.sort().join(',')
 }
 
+function formatTextFile(dataString) {
+       // Split the string into lines
+       const lines = dataString.split('\n');
+       // Extract words from the first line
+       const wordsLine = lines[0].trim();
+       // Split the words line by colon and get the words part
+       const wordsArray = wordsLine.split(': ')[1].split(',');
+       // Trim each word and remove any empty strings
+       const words = wordsArray.map(word => word.trim()).filter(word => word !== '');
+       return words;
+}
+
 export default function Connections() {
     function toDisplay(arr) {
         let x = ""
@@ -32,9 +45,11 @@ export default function Connections() {
         return strippedStr
     }
 
+    const [data, setData] = useState([])
     const [clickedSquares, setClickedSquares] = useState(Array(16).fill(false));
     const [unSubmittedSquares, setUnsubmittedSquares] = useState(words)
-    const [mistakes, setMistakes] = useState(3);
+
+    const [mistakes, setMistakes] = useState(4);
     const [showEasyRectangle, setShowEasyRectangle] = useState(false);
     const [showMediumRectangle, setShowMediumRectangle] = useState(false);
     const [showHardRectangle, setShowHardRectangle] = useState(false);
@@ -43,6 +58,22 @@ export default function Connections() {
 
     const [submissionAnimation, setSubmissionAnimation] = useState(false);
     const [selectedWords, setSelectedWords] = useState([])
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //       try {
+    //         const response = await fetch('/api/data');
+    //         const { data } = await response.json();
+    //         console.log(data)
+    //         setData(formatTextFile(data));
+    //       } catch (error) {
+    //         console.error(error);
+    //       }
+    //     };
+    
+    //     fetchData();
+    //   }, []);
+
 
 
     // shouldn't be able to click more than four words
@@ -60,7 +91,7 @@ export default function Connections() {
 
     const handleSubmit = () => {
         console.log(selectedWords);
-        if (mistakes == 0) {
+        if (mistakes == 1) {
             setSubmissionAnimation(true);
             setTimeout(() => {
                 setSubmissionAnimation(false);
@@ -135,11 +166,15 @@ export default function Connections() {
     const squares = unSubmittedSquares.map((word, index) => (
         <div
             key={index}
-            className={`${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} ${submissionAnimation ? utilStyles.submissionAnimation : ''}`}
+            className={`${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} ${clickedSquares[index] && submissionAnimation ? utilStyles.submissionAnimation : ''}`}
             onClick={() => handleClick(index, word)}
         >
             {word}
         </div>
+    ));
+
+    const circles = Array.from({ length: mistakes }, (_, index) => (
+        <div key={index} className={utilStyles.circle}></div>
     ));
 
     return (
@@ -174,6 +209,9 @@ export default function Connections() {
                 )}
                 <div className={utilStyles.grid}>
                     {squares}
+                </div>
+                <div className={utilStyles.circleContainer}>
+                    {circles}
                 </div>
                 <div className={utilStyles.buttons}>
                     <button className={utilStyles.square} onClick={handleSubmit}>Submit</button>

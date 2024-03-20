@@ -1,0 +1,5 @@
+words: cornea,flounder,salmon,iris,catfish,tilapia,breakfast,thrash,tuna,retina,haircut,struggle,airplane,lens,flail,eyeball
+easy: catfish,salmon,tilapia,tuna
+medium: cornea,iris,lens,retina
+hard: flail,flounder,thrash,struggle
+difficult: airplane,breakfast,haircut,eyeball
