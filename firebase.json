@@ -6,5 +6,23 @@
       "**/.*",
       "**/node_modules/**"
     ]
-  }
+  },
+  "functions": [
+    {
+      "source": "functions/contributions",
+      "codebase": "contra",
+      "rewrites": [
+        {
+          "source": "/api/contributions",
+          "function": "app"
+        }
+      ],
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log"
+      ]
+    }
+  ]
 }

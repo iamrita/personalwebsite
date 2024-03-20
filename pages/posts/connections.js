@@ -65,6 +65,7 @@ export default function Connections() {
 
     const [data, setData] = useState([])
     const [clickedSquares, setClickedSquares] = useState(Array(16).fill(false));
+
     const [unSubmittedSquares, setUnsubmittedSquares] = useState(words)
 
     const [mistakes, setMistakes] = useState(4);
@@ -76,6 +77,13 @@ export default function Connections() {
 
     const [submissionAnimation, setSubmissionAnimation] = useState(false);
     const [mistakeAnimation, setMistakeAnimation] = useState(false);
+    if (mistakeAnimation) {
+        console.log("hello")
+    }                
+    
+    else {
+        console.log("goodbye")
+    }
 
     const [selectedWords, setSelectedWords] = useState([])
 
@@ -165,7 +173,7 @@ export default function Connections() {
             console.log("You got difficult!")
             setSubmissionAnimation(true);
             setTimeout(() => {
-               clearBoard(setShowDifficultRectangle)
+                clearBoard(setShowDifficultRectangle)
             }, 2000);
 
         } else {
