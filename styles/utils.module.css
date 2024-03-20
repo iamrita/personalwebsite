@@ -79,12 +79,12 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 1vw;
 }
 
 .square {
   width: 100%;
-  padding: 10px;
+  padding: 1vw;
   border-radius: 10px;
   background-color: lightgray;
   display: flex;
@@ -128,16 +128,16 @@
 
 .backgroundEasy {
   background-color: rgb(249, 223, 109);
-  padding: 10px;
-  margin-bottom:10px;
+  padding: 1vw;
+  margin-bottom:1vw;
   text-align: center;
   flex-direction: column;
 }
 
 .backgroundMedium {
   background-color: rgb(160, 195, 90);
-  padding: 10px;
-  margin-bottom:10px;
+  padding: 1vw;
+  margin-bottom:1vw;
   text-align: center;
   flex-direction: column;
 
@@ -145,8 +145,8 @@
 
 .backgroundHard {
   background-color: rgb(176, 196, 239);
-  padding: 10px;
-  margin-bottom:10px;
+  padding: 1vw;
+  margin-bottom:1vw;
   text-align: center;
   flex-direction: column;
 
@@ -154,8 +154,8 @@
 
 .backgroundDifficult {
   background-color: rgb(186, 129, 197);
-  padding: 10px;
-  margin-bottom:10px;
+  padding: 1vw;
+  margin-bottom:1vw;
   text-align: center;
   flex-direction: column;
 
