@@ -10,33 +10,42 @@ const words = [
     'airplane', 'lens', 'flail', 'eyeball'
 ];
 
-const easy =['catfish', 'salmon', 'tilapia', 'tuna']
-const medium =['cornea', 'iris', 'lens', 'retina']
-const hard =['flail', 'flounder', 'thrash', 'struggle']
-const difficult=['airplane','breakfast', 'haircut', 'eyeball']
+const easy = ['catfish', 'salmon', 'tilapia', 'tuna']
+const medium = ['cornea', 'iris', 'lens', 'retina']
+const hard = ['flail', 'flounder', 'thrash', 'struggle']
+const difficult = ['airplane', 'breakfast', 'haircut', 'eyeball']
 
-const mapSubmission = (submission) => {
-    let arr = []
-    for (let i = 0; i < 16; i++) {
-        if (submission[i]) {
-            arr.push(words[i])
-        }
-    }
-    return arr
-}
 
 function containSameElements(arr1, arr2) {
-    return arr1.sort().join(',')=== arr2.sort().join(',')
+    return arr1.sort().join(',') === arr2.sort().join(',')
 }
 
 export default function Connections() {
+    function toDisplay(arr) {
+        let x = ""
+        for (let i = 0; i < arr.length; i++) {
+            x += arr[i] + ", "
+
+        }
+        const strippedStr = x.slice(0, -2);
+        console.log(strippedStr)
+        return strippedStr
+    }
+
     const [clickedSquares, setClickedSquares] = useState(Array(16).fill(false));
     const [unSubmittedSquares, setUnsubmittedSquares] = useState(words)
     const [mistakes, setMistakes] = useState(3);
-    const [showBackgroundRectangle, setShowBackgroundRectangle] = useState(false);
+    const [showEasyRectangle, setShowEasyRectangle] = useState(false);
+    const [showMediumRectangle, setShowMediumRectangle] = useState(false);
+    const [showHardRectangle, setShowHardRectangle] = useState(false);
+
+    const [showDifficultRectangle, setShowDifficultRectangle] = useState(false);
+
     const [submissionAnimation, setSubmissionAnimation] = useState(false);
     const [selectedWords, setSelectedWords] = useState([])
 
+
+    // shouldn't be able to click more than four words
     const handleClick = (index, word) => {
         const newClickedSquares = [...clickedSquares];
         newClickedSquares[index] = !newClickedSquares[index];
@@ -50,27 +59,77 @@ export default function Connections() {
     };
 
     const handleSubmit = () => {
-        const submission = mapSubmission(clickedSquares);
         console.log(selectedWords);
-
-        if (containSameElements(selectedWords, easy) ||
-            containSameElements(selectedWords, difficult) ||
-            containSameElements(selectedWords, hard) ||
-            containSameElements(selectedWords, medium)) {
-            console.log("You got one!")
+        if (mistakes == 0) {
             setSubmissionAnimation(true);
             setTimeout(() => {
                 setSubmissionAnimation(false);
-                setShowBackgroundRectangle(true);
+                setShowEasyRectangle(true);
+                setShowMediumRectangle(true);
+                setShowDifficultRectangle(true);
+                setShowHardRectangle(true);
+                setUnsubmittedSquares([])
+            }, 2000);
+        }
+
+        if (containSameElements(selectedWords, easy)) {
+            console.log("You got easy!")
+            setSubmissionAnimation(true);
+            setTimeout(() => {
+                setSubmissionAnimation(false);
+                setShowEasyRectangle(true);
                 const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
                 setUnsubmittedSquares(remainingWords)
                 setClickedSquares(Array(16).fill(false))
                 setSelectedWords([])
             }, 2000);
+
+        } else if (containSameElements(selectedWords, medium)) {
+            console.log("You got medium!")
+            setSubmissionAnimation(true);
+            setTimeout(() => {
+                setSubmissionAnimation(false);
+                setShowMediumRectangle(true);
+                const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
+                setUnsubmittedSquares(remainingWords)
+                setClickedSquares(Array(16).fill(false))
+                setSelectedWords([])
+            }, 2000);
+
+        } else if (containSameElements(selectedWords, hard)) {
+            console.log("You got hard!")
+            setSubmissionAnimation(true);
+            setTimeout(() => {
+                setSubmissionAnimation(false);
+                setShowHardRectangle(true);
+                const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
+                setUnsubmittedSquares(remainingWords)
+                setClickedSquares(Array(16).fill(false))
+                setSelectedWords([])
+            }, 2000);
+
+        } else if (containSameElements(selectedWords, difficult)) {
+            console.log("You got difficult!")
+            setSubmissionAnimation(true);
+            setTimeout(() => {
+                setSubmissionAnimation(false);
+                setShowDifficultRectangle(true);
+                const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
+                setUnsubmittedSquares(remainingWords)
+                setClickedSquares(Array(16).fill(false))
+                setSelectedWords([])
+            }, 2000);
+
         } else {
             setMistakes(mistakes - 1);
             console.log(`You've got ${mistakes} chances left.`);
+            setClickedSquares(Array(16).fill(false))
+            setSelectedWords([])
+
         }
+
+
+
     };
 
     const squares = unSubmittedSquares.map((word, index) => (
@@ -89,9 +148,28 @@ export default function Connections() {
                 <title>Connections</title>
             </Head>
             <article>
-                {showBackgroundRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundRectangle}`}>
-                        types of fish
+                {showEasyRectangle && (
+                    <div className={`${utilStyles.square} ${utilStyles.backgroundEasy}`}>
+                        <div style={{}}>Types of Fish</div>
+                        <div style={{ fontWeight: 'normal' }}>{toDisplay(easy)}</div>
+                    </div>
+                )}
+                {showMediumRectangle && (
+                    <div className={`${utilStyles.square} ${utilStyles.backgroundMedium}`}>
+                        <div style={{}}>Parts of an Eye</div>
+                        <div style={{ fontWeight: 'normal' }}>{toDisplay(medium)}</div>
+                    </div>
+                )}
+                {showHardRectangle && (
+                    <div className={`${utilStyles.square} ${utilStyles.backgroundHard}`}>
+                        <div style={{}}>Having a hard time</div>
+                        <div style={{ fontWeight: 'normal' }}>{toDisplay(hard)}</div>
+                    </div>
+                )}
+                {showDifficultRectangle && (
+                    <div className={`${utilStyles.square} ${utilStyles.backgroundDifficult}`}>
+                         <div style={{}}>Closed compound words</div>
+                        <div style={{ fontWeight: 'normal' }}>{toDisplay(difficult)}</div>
                     </div>
                 )}
                 <div className={utilStyles.grid}>
