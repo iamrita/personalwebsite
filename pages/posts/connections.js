@@ -31,65 +31,57 @@ function containSameElements(arr1, arr2) {
 
 export default function Connections() {
     const [clickedSquares, setClickedSquares] = useState(Array(16).fill(false));
-    const [clickCount, setClickCount] = useState(0);
+    const [unSubmittedSquares, setUnsubmittedSquares] = useState(words)
     const [mistakes, setMistakes] = useState(3);
-    const [submissionAnimation, setSubmissionAnimation] = useState(false);
     const [showBackgroundRectangle, setShowBackgroundRectangle] = useState(false);
+    const [submissionAnimation, setSubmissionAnimation] = useState(false);
+    const [selectedWords, setSelectedWords] = useState([])
 
-    const handleClick = (index) => {
-        if (clickCount < 4 || clickedSquares[index]) {
-            const newClickedSquares = [...clickedSquares];
-            if (!newClickedSquares[index]) {
-                // If the square is not already selected, increment click count
-                setClickCount(clickCount + 1);
-            } else {
-                // If the square is already selected and clicked again, decrement click count
-                setClickCount(clickCount - 1);
-            }
-            newClickedSquares[index] = !newClickedSquares[index]; // Toggle the clicked state
-            setClickedSquares(newClickedSquares);
-        }
+    const handleClick = (index, word) => {
+        const newClickedSquares = [...clickedSquares];
+        newClickedSquares[index] = !newClickedSquares[index];
+        setClickedSquares(newClickedSquares);
+        const newSelectedWords = [...new Set([...selectedWords, word])]; // Add the clicked word to the selected words array and remove duplicates
+        setSelectedWords(newSelectedWords);
     };
 
-    const handleShuffle = () => {
-        console.log("shuffled!");
+    const handleShuffle = (index) => {
+        console.log("shuffle");
     };
 
     const handleSubmit = () => {
-        const submission = mapSubmission(clickedSquares)
-        console.log(submission)
-        if (containSameElements(submission, easy) ||
-        containSameElements(submission, difficult) ||
-        containSameElements(submission, hard) ||
-        containSameElements(submission, medium)) {
+        const submission = mapSubmission(clickedSquares);
+        console.log(selectedWords);
+
+        if (containSameElements(selectedWords, easy) ||
+            containSameElements(selectedWords, difficult) ||
+            containSameElements(selectedWords, hard) ||
+            containSameElements(selectedWords, medium)) {
             console.log("You got one!")
             setSubmissionAnimation(true);
             setTimeout(() => {
                 setSubmissionAnimation(false);
                 setShowBackgroundRectangle(true);
+                const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
+                setUnsubmittedSquares(remainingWords)
+                setClickedSquares(Array(16).fill(false))
+                setSelectedWords([])
             }, 2000);
         } else {
-            setMistakes(mistakes - 1)
-            console.log(`You've got ${mistakes} chances left.`)
+            setMistakes(mistakes - 1);
+            console.log(`You've got ${mistakes} chances left.`);
         }
-
     };
 
-    const squares = words.map((word, index) => (
+    const squares = unSubmittedSquares.map((word, index) => (
         <div
             key={index}
-            className={`${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} ${submissionAnimation && clickedSquares[index] ? utilStyles.submissionAnimation : ''}`}
-            onClick={() => handleClick(index)}
+            className={`${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} ${submissionAnimation ? utilStyles.submissionAnimation : ''}`}
+            onClick={() => handleClick(index, word)}
         >
             {word}
         </div>
     ));
-
-    const backgroundRectangle = (
-        <div className={`${utilStyles.square} ${utilStyles.backgroundRectangle}`}>
-            types of fish
-        </div>
-    );
 
     return (
         <Layout>
@@ -97,8 +89,14 @@ export default function Connections() {
                 <title>Connections</title>
             </Head>
             <article>
-                {showBackgroundRectangle && backgroundRectangle}
-                <div className={utilStyles.grid}>{squares}</div>
+                {showBackgroundRectangle && (
+                    <div className={`${utilStyles.square} ${utilStyles.backgroundRectangle}`}>
+                        types of fish
+                    </div>
+                )}
+                <div className={utilStyles.grid}>
+                    {squares}
+                </div>
                 <div className={utilStyles.buttons}>
                     <button className={utilStyles.square} onClick={handleSubmit}>Submit</button>
                     <button className={utilStyles.square} onClick={handleShuffle}>Shuffle</button>
