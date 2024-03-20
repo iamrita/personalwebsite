@@ -163,15 +163,19 @@ export default function Connections() {
 
     };
 
-    const squares = unSubmittedSquares.map((word, index) => (
-        <div
+    const squares = unSubmittedSquares.map((word, index) => {
+        const isAtTop = index < 4; // Assuming each row has 4 squares
+      
+        return (
+          <div
             key={index}
-            className={`${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} ${clickedSquares[index] && submissionAnimation ? utilStyles.submissionAnimation : ''}`}
+            className={`${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} ${clickedSquares[index] && submissionAnimation && !isAtTop ? utilStyles.submissionAnimation : ''}`}
             onClick={() => handleClick(index, word)}
-        >
+          >
             {word}
-        </div>
-    ));
+          </div>
+        );
+      });
 
     const circles = Array.from({ length: mistakes }, (_, index) => (
         <div key={index} className={utilStyles.circle}></div>

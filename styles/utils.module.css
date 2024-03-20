@@ -122,14 +122,14 @@
   }
 
   100% {
-      transform: translateY(-150px); /* Adjust this value based on your grid's height */
+      transform: translateY(-120%); /* Adjust this value based on your grid's height */
   }
 }
 
 .backgroundEasy {
   background-color: rgb(249, 223, 109);
   padding: 10px;
-  margin-top:10px;
+  margin-bottom:10px;
   text-align: center;
   flex-direction: column;
 }
@@ -137,7 +137,7 @@
 .backgroundMedium {
   background-color: rgb(160, 195, 90);
   padding: 10px;
-  margin-top:10px;
+  margin-bottom:10px;
   text-align: center;
   flex-direction: column;
 
@@ -146,7 +146,7 @@
 .backgroundHard {
   background-color: rgb(176, 196, 239);
   padding: 10px;
-  margin-top:10px;
+  margin-bottom:10px;
   text-align: center;
   flex-direction: column;
 
@@ -155,7 +155,7 @@
 .backgroundDifficult {
   background-color: rgb(186, 129, 197);
   padding: 10px;
-  margin-top:10px;
+  margin-bottom:10px;
   text-align: center;
   flex-direction: column;
 
