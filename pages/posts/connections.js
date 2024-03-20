@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react';
  *   keep the order that the user solved it in. 
  * 2. Getting words from text file. 
  * 3. 1 away, and letting you know if you guessed already. 
+ * 4. make it look better on mobile brwoser 
  * 
  * 
  * Future improvements
@@ -18,16 +19,16 @@ import { useState, useEffect } from 'react';
  */
 
 const words = [
-    'cornea', 'flounder', 'salmon', 'iris',
-    'catfish', 'tilapia', 'breakfast', 'thrash',
-    'tuna', 'retina', 'haircut', 'struggle',
-    'airplane', 'lens', 'flail', 'eyeball'
+    'mamma mia', 'streep', 'good god', 'jesus christ',
+    'moses', 'airplane', 'winslet', 'holy smokes',
+    'oklahoma', 'vishnu', 'bloody hell', 'muhammad',
+    'oliver', 'buddha', 'stone', 'lawrence'
 ];
 
-const easy = ['catfish', 'salmon', 'tilapia', 'tuna']
-const medium = ['cornea', 'iris', 'lens', 'retina']
-const hard = ['flail', 'flounder', 'thrash', 'struggle']
-const difficult = ['airplane', 'breakfast', 'haircut', 'eyeball']
+const easy = ['holy smokes', 'good god', 'jesus christ', 'bloody hell']
+const medium = ['moses', 'muhammad', 'vishnu', 'buddha']
+const hard = ['stone', 'winslet', 'streep', 'lawrence']
+const difficult = ['oklahoma', 'mamma mia', 'oliver', 'airplane']
 
 
 function containSameElements(arr1, arr2) {
@@ -209,25 +210,25 @@ export default function Connections() {
             <article>
                 {showEasyRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundEasy}`}>
-                        <div style={{}}>Types of Fish</div>
+                        <div style={{}}>Exclamatory Phrases</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(easy)}</div>
                     </div>
                 )}
                 {showMediumRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundMedium}`}>
-                        <div style={{}}>Parts of an Eye</div>
+                        <div style={{}}>Religious Figures</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(medium)}</div>
                     </div>
                 )}
                 {showHardRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundHard}`}>
-                        <div style={{}}>Having a hard time</div>
+                        <div style={{}}>Oscar Winning Actresses</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(hard)}</div>
                     </div>
                 )}
                 {showDifficultRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundDifficult}`}>
-                        <div style={{}}>Closed compound words</div>
+                        <div style={{}}>Movie titles that end with a "!"</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(difficult)}</div>
                     </div>
                 )}
