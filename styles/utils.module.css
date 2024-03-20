@@ -78,13 +78,14 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1vw;
+  grid-template-columns: repeat(4, minmax(20%, 1fr)); /* Adjust the width as needed */
+  gap: 1vw; /* Adjust the gap between grid items */
+  margin: 0 auto; /* Center the grid horizontally */
 }
 
 .square {
-  width: 100%;
-  padding: 1vw;
+  width: calc(100% - 2vw); /* Adjust the width to accommodate padding and gap */
+  padding: 1vw; /* Adjust padding as needed */
   border-radius: 10px;
   background-color: lightgray;
   display: flex;
@@ -93,18 +94,19 @@
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
+  font-size: clamp(2vw, 4vw, 2vw); /* Adjust the minimum, preferred, and maximum font size */
+
 }
 
 .buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 20px;
+  margin-top: 2vw; /* Adjust margin as needed */
 }
 
 .buttons .square {
   width: 48%;
-  background-color: white
-;
+  background-color: white;
 }
 
 .clicked {
@@ -122,43 +124,37 @@
   }
 
   100% {
-      transform: translateY(-120%); /* Adjust this value based on your grid's height */
+      transform: translateY(-100%); /* Adjust this value based on your grid's height */
   }
 }
 
 .backgroundEasy {
   background-color: rgb(249, 223, 109);
-  padding: 1vw;
-  margin-bottom:1vw;
+  padding: 1vw; /* Adjust padding as needed */
+  margin-bottom: 1vw; /* Adjust margin as needed */
   text-align: center;
   flex-direction: column;
 }
-
 .backgroundMedium {
   background-color: rgb(160, 195, 90);
-  padding: 1vw;
-  margin-bottom:1vw;
+  padding: 1vw; /* Adjust padding as needed */
+  margin-bottom: 1vw; /* Adjust margin as needed */
   text-align: center;
   flex-direction: column;
-
 }
-
 .backgroundHard {
   background-color: rgb(176, 196, 239);
-  padding: 1vw;
-  margin-bottom:1vw;
+  padding: 1vw; /* Adjust padding as needed */
+  margin-bottom: 1vw; /* Adjust margin as needed */
   text-align: center;
   flex-direction: column;
-
 }
-
 .backgroundDifficult {
   background-color: rgb(186, 129, 197);
-  padding: 1vw;
-  margin-bottom:1vw;
+  padding: 1vw; /* Adjust padding as needed */
+  margin-bottom: 1vw; /* Adjust margin as needed */
   text-align: center;
   flex-direction: column;
-
 }
 
 .circleContainer {
@@ -167,11 +163,10 @@
 }
 
 .circle {
-  width: 20px;
-  height: 20px;
+  width: 1vw; /* Adjust circle size as needed */
+  height: 1vw; /* Adjust circle size as needed */
   border-radius: 50%;
   background-color: gray; /* Change color as needed */
-  margin-right: 5px; /* Adjust spacing between circles */
-  margin-top:20px;
-  margin-inline: 10px;
+  margin-right: 1vw; /* Adjust spacing between circles */
+  margin-top: 1vw; /* Adjust margin as needed */
 }
