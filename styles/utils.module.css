@@ -124,7 +124,7 @@
   }
 
   100% {
-      transform: translateY(-100%); /* Adjust this value based on your grid's height */
+      transform: translateY(-120%); /* Adjust this value based on your grid's height */
   }
 }
 
