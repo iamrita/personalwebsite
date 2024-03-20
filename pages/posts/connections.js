@@ -10,12 +10,16 @@ import { useState, useEffect } from 'react';
  * 2. Getting words from text file. 
  * 3. 1 away, and letting you know if you guessed already. 
  * 4. make it look better on mobile brwoser 
+ * 5. if you solve it out of order, the rectangles still show up in the order you solved it 
+ * 6. shuffling works 
  * 
  * 
  * Future improvements
  * 1. Tracking what peopple guess 
  * 2. Having an archive on the page of previous days 
- * 3. being able to go to previous days by url routing 
+ * 3. be able to share data 
+ * 4. being able to go to previous days by url routing 
+ * 5. if you sign up with a phone number, you'll get a text to the day's connections 
  */
 
 const words = [
