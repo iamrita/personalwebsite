@@ -1,1 +1,2 @@
-This contains the source code for my [website](https://www.amritav.com).
+Welcome to my personal website! This site is built using Next.js. 
+You can access it by going to https://www.amritav.com in any browser. 
