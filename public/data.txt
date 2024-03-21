@@ -3,3 +3,25 @@ easy: catfish,salmon,tilapia,tuna
 medium: cornea,iris,lens,retina
 hard: flail,flounder,thrash,struggle
 difficult: airplane,breakfast,haircut,eyeball
+
+
+words: 
+
+
+easy: montana, rogan, biden, jonas (famous joes)
+medium: idaho, washington, north dakota, minnesota (states bordering canada)
+hard: best, beat, conquer, defeat (synonyms for win over)
+difficult: tarot, trump, credit, face ( ___ card )
+
+
+const words = [
+    'mamma mia', 'streep', 'good god', 'jesus christ',
+    'moses', 'airplane', 'winslet', 'holy smokes',
+    'oklahoma', 'vishnu', 'bloody hell', 'muhammad',
+    'oliver', 'buddha', 'stone', 'lawrence'
+];
+
+const easy = ['holy smokes', 'good god', 'jesus christ', 'bloody hell']
+const medium = ['moses', 'muhammad', 'vishnu', 'buddha']
+const hard = ['stone', 'winslet', 'streep', 'lawrence']
+const difficult = ['oklahoma', 'mamma mia', 'oliver', 'airplane']

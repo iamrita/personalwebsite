@@ -23,16 +23,16 @@ import { useState, useEffect } from 'react';
  */
 
 const words = [
-    'mamma mia', 'streep', 'good god', 'jesus christ',
-    'moses', 'airplane', 'winslet', 'holy smokes',
-    'oklahoma', 'vishnu', 'bloody hell', 'muhammad',
-    'oliver', 'buddha', 'stone', 'lawrence'
+    'sade', 'made', 'fade', 'cade',
+    'mullet', 'sza', 'coined', 'cycle',
+    'ola', 'boat', 'maxwell', 'mohawk',
+    'developed', 'buzz', 'created', 'miguel'
 ];
 
-const easy = ['holy smokes', 'good god', 'jesus christ', 'bloody hell']
-const medium = ['moses', 'muhammad', 'vishnu', 'buddha']
-const hard = ['stone', 'winslet', 'streep', 'lawrence']
-const difficult = ['oklahoma', 'mamma mia', 'oliver', 'airplane']
+const easy = ['mullet', 'buzz', 'fade', 'mohawk']
+const medium = ['developed', 'coined', 'created', 'made']
+const hard = ['sade', 'maxwell', 'sza', 'miguel']
+const difficult = ['cade', 'cycle', 'boat', 'ola']
 
 
 function containSameElements(arr1, arr2) {
@@ -77,13 +77,6 @@ export default function Connections() {
 
     const [submissionAnimation, setSubmissionAnimation] = useState(false);
     const [mistakeAnimation, setMistakeAnimation] = useState(false);
-    if (mistakeAnimation) {
-        console.log("hello")
-    }                
-    
-    else {
-        console.log("goodbye")
-    }
 
     const [selectedWords, setSelectedWords] = useState([])
 
@@ -113,7 +106,6 @@ export default function Connections() {
         setSelectedWords([])
     }
     // TIL logging and state change don't always happen in the sequence you think 
-    // shouldn't be able to click more than four words
     const handleClick = (index, word) => {
         if (selectedWords.length <= 3 || clickedSquares[index]) {
             const newClickedSquares = [...clickedSquares];
@@ -210,9 +202,28 @@ export default function Connections() {
         );
     });
 
+    /**
+     * Below is the same as :
+     * function generateCircles(mistakes) {
+            const circles = [];
+            for (let index = 0; index < mistakes; index++) {
+                 circles.push(<div key={index} className={utilStyles.circle}></div>);
+            }
+            return circles;
+        }
+
+        // Usage:
+        const circles = generateCircles(mistakes);
+
+     */
+
     const circles = Array.from({ length: mistakes }, (_, index) => (
         <div key={index} className={utilStyles.circle}></div>
     ));
+
+    function showRectangle(rectangleStyle) {
+        return <div className={`${utilStyles.square} ${rectangleStyle}`}></div>
+    }
 
     return (
         <Layout>
@@ -220,27 +231,31 @@ export default function Connections() {
                 <title>Connections</title>
             </Head>
             <article>
+                {/* {showEasyRectangle ? showRectangle(utilStyles.backgroundEasy) : showMediumRectangle ? showRectangle(utilStyles.backgroundMedium)
+                    : showHardRectangle ? showRectangle(utilStyles.backgroundHard) : showDifficultRectangle ? showRectangle(utilStyles.backgroundDifficult)
+                        : <div></div>} */}
+
                 {showEasyRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundEasy}`}>
-                        <div style={{}}>Exclamatory Phrases</div>
+                        <div style={{}}>Hairstyles</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(easy)}</div>
                     </div>
                 )}
                 {showMediumRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundMedium}`}>
-                        <div style={{}}>Religious Figures</div>
+                        <div style={{}}>Synonyms for invented</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(medium)}</div>
                     </div>
                 )}
                 {showHardRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundHard}`}>
-                        <div style={{}}>Oscar Winning Actresses</div>
+                        <div style={{}}>RnB artists</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(hard)}</div>
                     </div>
                 )}
                 {showDifficultRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundDifficult}`}>
-                        <div style={{}}>Movie titles that end with a "!"</div>
+                        <div style={{}}>motor____</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(difficult)}</div>
                     </div>
                 )}
