@@ -8,10 +8,10 @@ difficult: airplane,breakfast,haircut,eyeball
 words: 
 
 
-easy: montana, rogan, biden, jonas (famous joes)
-medium: idaho, washington, north dakota, minnesota (states bordering canada)
-hard: best, beat, conquer, defeat (synonyms for win over)
-difficult: tarot, trump, credit, face ( ___ card )
+const easy = ['best', 'beat', 'conquer', 'defeat']
+const medium = ['montana', 'rogan', 'biden', 'jonas']
+const hard = ['idaho', 'washington', 'north dakota', 'minnesota']
+const difficult = ['tarot', 'trump', 'credit', 'face']
 
 
 const words = [

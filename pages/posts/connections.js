@@ -2,6 +2,8 @@ import Layout from "../../components/layout";
 import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css';
 import { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 /**
  * Issues to Fix:
@@ -23,16 +25,18 @@ import { useState, useEffect } from 'react';
  */
 
 const words = [
-    'sade', 'made', 'fade', 'cade',
-    'mullet', 'sza', 'coined', 'cycle',
-    'ola', 'boat', 'maxwell', 'mohawk',
-    'developed', 'buzz', 'created', 'miguel'
+    'biden', 'trump', 'face', 'defeat',
+    'montana', 'idaho', 'beat', 'credit',
+    'rogan', 'washington', 'jonas', 'best',
+    'tarot', 'north dakota', 'conquer', 'minnesota'
 ];
 
-const easy = ['mullet', 'buzz', 'fade', 'mohawk']
-const medium = ['developed', 'coined', 'created', 'made']
-const hard = ['sade', 'maxwell', 'sza', 'miguel']
-const difficult = ['cade', 'cycle', 'boat', 'ola']
+const easy = ['best', 'beat', 'conquer', 'defeat']
+const medium = ['montana', 'rogan', 'biden', 'jonas']
+const hard = ['idaho', 'washington', 'north dakota', 'minnesota']
+const difficult = ['tarot', 'trump', 'credit', 'face']
+
+
 
 
 function containSameElements(arr1, arr2) {
@@ -52,6 +56,13 @@ function formatTextFile(dataString) {
 }
 
 export default function Connections() {
+
+    const GrayToast = ({ message }) => {
+        return (
+            <ToastContainer />
+        );
+    };
+
     function toDisplay(arr) {
         let x = ""
         for (let i = 0; i < arr.length; i++) {
@@ -59,11 +70,11 @@ export default function Connections() {
 
         }
         const strippedStr = x.slice(0, -2);
-        console.log(strippedStr)
         return strippedStr
     }
 
     const [data, setData] = useState([])
+    const [guesses, setGuesses] = useState([[]])
     const [clickedSquares, setClickedSquares] = useState(Array(16).fill(false));
 
     const [unSubmittedSquares, setUnsubmittedSquares] = useState(words)
@@ -127,7 +138,7 @@ export default function Connections() {
     };
 
     const handleSubmit = () => {
-        console.log(selectedWords);
+        setGuesses([...guesses, selectedWords]); // for some reason it doesnt recognize the first guess 
         if (mistakes == 1) {
             setSubmissionAnimation(true);
             setTimeout(() => {
@@ -137,6 +148,7 @@ export default function Connections() {
                 setShowDifficultRectangle(true);
                 setShowHardRectangle(true);
                 setUnsubmittedSquares([])
+                console.log(guesses)
             }, 2000);
         }
 
@@ -194,6 +206,7 @@ export default function Connections() {
                 ${clickedSquares[index] && submissionAnimation && !isAtTop ? utilStyles.submissionAnimation : ''} 
                 ${clickedSquares[index] && mistakeAnimation ? utilStyles.mistakeAnimation : ''}`}
                 onClick={() =>
+
                     handleClick(index, word)
                 }
             >
@@ -237,25 +250,25 @@ export default function Connections() {
 
                 {showEasyRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundEasy}`}>
-                        <div style={{}}>Hairstyles</div>
+                        <div style={{}}>Synonyms for win</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(easy)}</div>
                     </div>
                 )}
                 {showMediumRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundMedium}`}>
-                        <div style={{}}>Synonyms for invented</div>
+                        <div style={{}}>Famous Joes</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(medium)}</div>
                     </div>
                 )}
                 {showHardRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundHard}`}>
-                        <div style={{}}>RnB artists</div>
+                        <div style={{}}>States bordering Canada</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(hard)}</div>
                     </div>
                 )}
                 {showDifficultRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundDifficult}`}>
-                        <div style={{}}>motor____</div>
+                        <div style={{}}>____     card</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(difficult)}</div>
                     </div>
                 )}
