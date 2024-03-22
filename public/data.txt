@@ -8,6 +8,15 @@ difficult: airplane,breakfast,haircut,eyeball
 words: 
 
 
+
+
+
+
+
+
+
+
+
 const easy = ['best', 'beat', 'conquer', 'defeat']
 const medium = ['montana', 'rogan', 'biden', 'jonas']
 const hard = ['idaho', 'washington', 'north dakota', 'minnesota']
@@ -25,3 +34,8 @@ const easy = ['holy smokes', 'good god', 'jesus christ', 'bloody hell']
 const medium = ['moses', 'muhammad', 'vishnu', 'buddha']
 const hard = ['stone', 'winslet', 'streep', 'lawrence']
 const difficult = ['oklahoma', 'mamma mia', 'oliver', 'airplane']
+
+const medium = [smash, bang, roar, thud] - loud noises 
+const easy = [palm, digit, knuckle, nail] - parts of a hand 
+const hard = [pilot, try out, experiment, test] - try something new 
+const difficult = [sex, book, number, tag] - phone ______

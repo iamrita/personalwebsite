@@ -137,8 +137,8 @@ export default function Connections() {
         console.log("shuffle");
     };
 
-    const handleSubmit = () => {
-        setGuesses([...guesses, selectedWords]); // for some reason it doesnt recognize the first guess 
+    const handleSubmit = (mistakes) => {
+        console.log(`selected words is ${selectedWords}`)
         if (mistakes == 1) {
             setSubmissionAnimation(true);
             setTimeout(() => {
@@ -148,7 +148,6 @@ export default function Connections() {
                 setShowDifficultRectangle(true);
                 setShowHardRectangle(true);
                 setUnsubmittedSquares([])
-                console.log(guesses)
             }, 2000);
         }
 
@@ -181,17 +180,14 @@ export default function Connections() {
             }, 2000);
 
         } else {
-            setMistakes(mistakes - 1);
+            setMistakes(prevMistakes => prevMistakes - 1);
             setMistakeAnimation(true)
             setTimeout(() => {
                 setMistakeAnimation(false);
                 setClickedSquares(Array(16).fill(false))
                 setSelectedWords([])
             }, 1000);
-            console.log(`You've got ${mistakes} chances left.`);
         }
-
-
 
     };
 
@@ -205,9 +201,9 @@ export default function Connections() {
                 ${utilStyles.square} ${clickedSquares[index] ? utilStyles.clicked : ''} 
                 ${clickedSquares[index] && submissionAnimation && !isAtTop ? utilStyles.submissionAnimation : ''} 
                 ${clickedSquares[index] && mistakeAnimation ? utilStyles.mistakeAnimation : ''}`}
-                onClick={() =>
-
+                onClick={() => {
                     handleClick(index, word)
+                }
                 }
             >
                 {word}
@@ -279,7 +275,13 @@ export default function Connections() {
                     {circles}
                 </div>
                 <div className={utilStyles.buttons}>
-                    <button className={utilStyles.square} onClick={handleSubmit}>Submit</button>
+                    <button className={utilStyles.square} onClick={() => {
+                        setGuesses(prevGuesses => [...prevGuesses, selectedWords]); // i'm having an issue with state 
+                        handleSubmit(mistakes)
+                        console.log(guesses)
+                    }
+                    }
+                    >Submit</button>
                     <button className={utilStyles.square} onClick={handleShuffle}>Shuffle</button>
                 </div>
             </article>
