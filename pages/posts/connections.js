@@ -4,6 +4,8 @@ import utilStyles from '../../styles/utils.module.css';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import isEqual from 'lodash/isEqual';
+
 
 /**
  * Issues to Fix:
@@ -40,7 +42,9 @@ const difficult = ['tarot', 'trump', 'credit', 'face']
 
 
 function containSameElements(arr1, arr2) {
-    return arr1.sort().join(',') === arr2.sort().join(',')
+    const sortedFirstAray = [...arr1].sort()
+    const sortedSecondArray = [...arr2].sort()
+    return isEqual(sortedFirstAray, sortedSecondArray)
 }
 
 function formatTextFile(dataString) {
@@ -90,6 +94,7 @@ export default function Connections() {
     const [mistakeAnimation, setMistakeAnimation] = useState(false);
 
     const [selectedWords, setSelectedWords] = useState([])
+    const [isGameOver, setIsGameOver] = useState(false)
 
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -137,9 +142,8 @@ export default function Connections() {
         console.log("shuffle");
     };
 
-    const handleSubmit = (mistakes) => {
-        console.log(`selected words is ${selectedWords}`)
-        if (mistakes == 1) {
+    const checkForGameOver = (mistakes) => {
+        if (mistakes == 1 || unSubmittedSquares.length == 4) { // end of the game (buggy logic)
             setSubmissionAnimation(true);
             setTimeout(() => {
                 setSubmissionAnimation(false);
@@ -149,8 +153,12 @@ export default function Connections() {
                 setShowHardRectangle(true);
                 setUnsubmittedSquares([])
             }, 2000);
+            setIsGameOver(true)
         }
-
+    }
+    const handleSubmit = () => {
+        setGuesses(prevGuesses => [...prevGuesses, selectedWords]);
+        console.log(selectedWords)
         if (containSameElements(selectedWords, easy)) {
             console.log("You got easy!")
             setSubmissionAnimation(true);
@@ -210,6 +218,49 @@ export default function Connections() {
             </div>
         );
     });
+
+    function category(word) {
+        if (easy.includes(word)) {
+            return "easy"
+        } else if (medium.includes(word)) {
+            return "medium"
+        } else if (hard.includes(word)) {
+            return "hard"
+        } else {
+            return "difficult"
+        }
+    }
+    function renderSquare(value) {
+        let color = ''
+        if (category(value) === "easy") {
+            color = '🟨'
+        } else if (category(value) === "medium") {
+            color = '🟩'
+        } else if (category(value) === "hard") {
+            color = '🟦'
+        } else {
+            color = '🟪'
+        }
+        return (
+            <span key={Math.random()} role="img" aria-label={category(value)}>
+                {color}
+            </span>
+        );
+    }
+
+    function renderGrid(grid) {
+        return (
+            <div>
+                {grid.map((row, rowIndex) => (
+                    <div key={rowIndex}>
+                        {row.map((cell, cellIndex) => renderSquare(cell))}
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
+
 
     /**
      * Below is the same as :
@@ -276,14 +327,14 @@ export default function Connections() {
                 </div>
                 <div className={utilStyles.buttons}>
                     <button className={utilStyles.square} onClick={() => {
-                        setGuesses(prevGuesses => [...prevGuesses, selectedWords]); // i'm having an issue with state 
-                        handleSubmit(mistakes)
-                        console.log(guesses)
+                        handleSubmit()
+                        checkForGameOver(mistakes)
                     }
                     }
                     >Submit</button>
                     <button className={utilStyles.square} onClick={handleShuffle}>Shuffle</button>
                 </div>
+                {isGameOver && <div>{renderGrid(guesses)}</div>}
             </article>
         </Layout>
     );
