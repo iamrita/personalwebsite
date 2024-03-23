@@ -13,7 +13,6 @@ import Dialog from '@mui/material/Dialog';
  * Issues to Fix:
  * 1. there's an issue where if have one mistake left, it bugs out if you also guess correctly 
  * 2. Getting words from text file. 
- * 3. 1 away, and letting you know if you guessed already. 
  * 4. make it look better on mobile brwoser 
  * 6. shuffling works 
  * 
@@ -36,8 +35,6 @@ const easyArray = ['best', 'beat', 'conquer', 'defeat']
 const mediumArray = ['montana', 'rogan', 'biden', 'jonas']
 const hardArray = ['idaho', 'washington', 'north dakota', 'minnesota']
 const difficultArray = ['tarot', 'trump', 'credit', 'face']
-
-
 
 
 function containSameElements(arr1, arr2) {
@@ -96,7 +93,8 @@ export default function Connections() {
     const [isGameOver, setIsGameOver] = useState(false)
     const [colors, setColors] = useState(
         []
-    ) // order is easy, medium, hard, difficult
+    )
+    const [oneAway, setOneAway] = useState(false)
 
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -114,11 +112,19 @@ export default function Connections() {
     //   }, []);
 
 
-    function isOneAway(selectedGuess) {
+    function isOneAway(selectedGuess, category) {
+        let counter = 0
+        for (let i = 0; i < 4; i++) {
+            if (category.includes(selectedGuess[i])) {
+                console.log("includes")
+                counter = counter + 1
+            }
+        }
+        return counter
 
     }
 
-    function clearBoard(showRectangle) {
+    function clearBoard() {
         setSubmissionAnimation(false);
         const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
         setUnsubmittedSquares(remainingWords)
@@ -187,6 +193,17 @@ export default function Connections() {
     const handleSubmit = () => {
         setGuesses(prevGuesses => [...prevGuesses, selectedWords]);
         console.log(selectedWords)
+
+        let temp = []
+        temp.push(isOneAway(selectedWords, easyArray))
+        temp.push(isOneAway(selectedWords, mediumArray))
+        temp.push(isOneAway(selectedWords, hardArray))
+        temp.push(isOneAway(selectedWords, difficultArray))
+        if (temp.includes(3)) {
+            setOneAway(true)
+        } else {
+            setOneAway(false)
+        }
         if (containSameElements(selectedWords, easyArray)) {
             console.log("You got easy!")
             setSubmissionAnimation(true);
@@ -197,7 +214,7 @@ export default function Connections() {
                     categoryValues: easyArray
                 }
                 setColors(prevColors => [...prevColors, easy]);
-                clearBoard(setShowEasyRectangle)
+                clearBoard()
             }, 2000);
 
         } else if (containSameElements(selectedWords, mediumArray)) {
@@ -210,7 +227,7 @@ export default function Connections() {
                     categoryValues: mediumArray
                 }
                 setColors(prevColors => [...prevColors, medium]);
-                clearBoard(setShowMediumRectangle)
+                clearBoard()
             }, 2000);
 
         } else if (containSameElements(selectedWords, hardArray)) {
@@ -223,7 +240,7 @@ export default function Connections() {
                     categoryValues: hardArray
                 }
                 setColors(prevColors => [...prevColors, hard]);
-                clearBoard(setShowHardRectangle)
+                clearBoard()
             }, 2000);
 
         } else if (containSameElements(selectedWords, difficultArray)) {
@@ -236,7 +253,7 @@ export default function Connections() {
                     categoryValues: difficultArray
                 }
                 setColors(prevColors => [...prevColors, difficult]);
-                clearBoard(setShowDifficultRectangle)
+                clearBoard()
             }, 2000);
 
         } else {
@@ -343,6 +360,7 @@ export default function Connections() {
                 <title>Connections</title>
             </Head>
             <article>
+                {oneAway && <div className={utilStyles.content}>You're one away!</div>}
                 {colors.map((color, colorIndex) => (
                     <div className={`${utilStyles.square} ${color.style}`}>
                         <div style={{}}>{color.categoryName}</div>
@@ -365,7 +383,7 @@ export default function Connections() {
                     <button className={utilStyles.square} onClick={handleShuffle}>Shuffle</button>
                 </div>
                 {isGameOver && <div>
-                    <div>{renderGrid(guesses)}</div>
+                    <div className={utilStyles.content}>{renderGrid(guesses)}</div>
                 </div>}
             </article>
         </Layout>

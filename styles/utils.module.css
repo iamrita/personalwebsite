@@ -78,16 +78,21 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(20%, 1fr)); /* Adjust the width as needed */
-  gap: 1vw; /* Adjust the gap between grid items */
-  margin: 0 auto; /* Center the grid horizontally */
+  grid-template-columns: repeat(4, minmax(20%, 1fr));
+  /* Adjust the width as needed */
+  gap: 1vw;
+  /* Adjust the gap between grid items */
+  margin: 0 auto;
+  /* Center the grid horizontally */
   margin-bottom: 2vw;
 }
 
 .square {
-  width: calc(100% - 2vw); /* Adjust the width to accommodate padding and gap */
-  height:  6vw;
-  padding: 1vw; /* Adjust padding as needed */
+  width: calc(100% - 2vw);
+  /* Adjust the width to accommodate padding and gap */
+  height: 6vw;
+  padding: 1vw;
+  /* Adjust padding as needed */
   border-radius: 10px;
   background-color: lightgray;
   display: flex;
@@ -97,14 +102,16 @@
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
-  font-size: 1.5vw; /* Adjust the minimum, preferred, and maximum font size */
+  font-size: 1.5vw;
+  /* Adjust the minimum, preferred, and maximum font size */
 
 }
 
 .buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 2vw; /* Adjust margin as needed */
+  margin-top: 2vw;
+  /* Adjust margin as needed */
 }
 
 .buttons .square {
@@ -114,8 +121,10 @@
 }
 
 .clicked {
-  background-color: black; /* Dark gray background when clicked */
-  color: white; /* White text when clicked */
+  background-color: black;
+  /* Dark gray background when clicked */
+  color: white;
+  /* White text when clicked */
 }
 
 .submissionAnimation {
@@ -126,58 +135,76 @@
   animation: shake 1s ease-in-out infinite alternate;
 
 }
+
 @keyframes shake {
-    0% {
-      transform: translateX(0);
-    }
-    25% {
-      transform: translateX(-2px) rotate(2deg);
-    }
-    50% {
-      transform: translateX(2px) rotate(-2deg);
-    }
-    75% {
-      transform: translateX(-2px) rotate(2deg);
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-@keyframes moveTop {
   0% {
-      transform: translateY(0);
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-2px) rotate(2deg);
+  }
+
+  50% {
+    transform: translateX(2px) rotate(-2deg);
+  }
+
+  75% {
+    transform: translateX(-2px) rotate(2deg);
   }
 
   100% {
-      transform: translateY(-120%); /* Adjust this value based on your grid's height */
+    transform: translateX(0);
+  }
+}
+
+@keyframes moveTop {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-120%);
+    /* Adjust this value based on your grid's height */
   }
 }
 
 .backgroundEasy {
   background-color: rgb(249, 223, 109);
-  padding: 4vw; /* Adjust padding as needed */
-  margin-bottom: 1vw; /* Adjust margin as needed */
+  padding: 4vw;
+  /* Adjust padding as needed */
+  margin-bottom: 1vw;
+  /* Adjust margin as needed */
   text-align: center;
   flex-direction: column;
 }
+
 .backgroundMedium {
   background-color: rgb(160, 195, 90);
-  padding: 4vw; /* Adjust padding as needed */
-  margin-bottom: 1vw; /* Adjust margin as needed */
+  padding: 4vw;
+  /* Adjust padding as needed */
+  margin-bottom: 1vw;
+  /* Adjust margin as needed */
   text-align: center;
   flex-direction: column;
 }
+
 .backgroundHard {
   background-color: rgb(176, 196, 239);
-  padding: 4vw; /* Adjust padding as needed */
-  margin-bottom: 1vw; /* Adjust margin as needed */
+  padding: 4vw;
+  /* Adjust padding as needed */
+  margin-bottom: 1vw;
+  /* Adjust margin as needed */
   text-align: center;
   flex-direction: column;
 }
+
 .backgroundDifficult {
   background-color: rgb(186, 129, 197);
-  padding: 4vw; /* Adjust padding as needed */
-  margin-bottom: 1vw; /* Adjust margin as needed */
+  padding: 4vw;
+  /* Adjust padding as needed */
+  margin-bottom: 1vw;
+  /* Adjust margin as needed */
   text-align: center;
   flex-direction: column;
 }
@@ -188,10 +215,20 @@
 }
 
 .circle {
-  width: 1vw; /* Adjust circle size as needed */
-  height: 1vw; /* Adjust circle size as needed */
+  width: 1vw;
+  /* Adjust circle size as needed */
+  height: 1vw;
+  /* Adjust circle size as needed */
   border-radius: 50%;
-  background-color: gray; /* Change color as needed */
-  margin-right: 1vw; /* Adjust spacing between circles */
-  margin-top: 1vw; /* Adjust margin as needed */
+  background-color: gray;
+  /* Change color as needed */
+  margin-right: 1vw;
+  /* Adjust spacing between circles */
+  margin-top: 1vw;
+  /* Adjust margin as needed */
+}
+
+.content {
+  text-align: center;
+  padding: 1vw;
 }
