@@ -6,6 +6,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { isEqual, shuffle } from 'lodash';
 import Dialog from '@mui/material/Dialog';
+import ReactDOMServer from 'react-dom/server';
+
 
 
 
@@ -148,6 +150,30 @@ export default function Connections() {
         setUnsubmittedSquares(shuffle(unSubmittedSquares))
     };
 
+    const copyToClipboard = (content) => {
+        const contentString = ReactDOMServer.renderToString(content);
+
+        const textarea = document.createElement('textarea');
+
+        // Set the value of the textarea to the content of the div
+        textarea.value = contentString
+
+        // Append the textarea to the document
+        document.body.appendChild(textarea);
+
+        // Select the content of the textarea
+        textarea.select();
+
+        // Execute the copy command
+        document.execCommand('copy');
+
+        // Remove the temporary textarea
+        document.body.removeChild(textarea);
+
+        // Show a success message or perform any other action as needed
+        alert('Copied to clipboard!');
+
+    }
 
     const checkForGameOver = (mistakes) => {
         if (mistakes === 1) {
@@ -155,10 +181,6 @@ export default function Connections() {
             setSubmissionAnimation(true);
             setTimeout(() => {
                 setSubmissionAnimation(false);
-                setShowEasyRectangle(true);
-                setShowMediumRectangle(true);
-                setShowDifficultRectangle(true);
-                setShowHardRectangle(true);
                 setUnsubmittedSquares([])
                 setColors([
                     {
@@ -369,6 +391,11 @@ export default function Connections() {
                 </div>
                 {isGameOver && <div>
                     <div className={utilStyles.content}>{renderGrid(guesses)}</div>
+                    {/* <div className={utilStyles.buttons}>
+                        <button className={utilStyles.square} onClick={copyToClipboard(renderGrid(guesses))}>
+                            Copy to Clipboard
+                        </button>
+                    </div> */}
                 </div>}
             </article>
         </Layout>
