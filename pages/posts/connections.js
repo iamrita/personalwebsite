@@ -25,16 +25,16 @@ import Dialog from '@mui/material/Dialog';
  */
 
 const words = [
-    'biden', 'trump', 'face', 'defeat',
-    'montana', 'idaho', 'beat', 'credit',
-    'rogan', 'washington', 'jonas', 'best',
-    'tarot', 'north dakota', 'conquer', 'minnesota'
+    'palm', 'pilot', 'number', 'digit',
+    'sex', 'bang', 'nail', 'knuckle',
+    'smash', 'try out', 'book', 'tag',
+    'experiment', 'test', 'roar', 'thud'
 ];
 
-const easyArray = ['best', 'beat', 'conquer', 'defeat']
-const mediumArray = ['montana', 'rogan', 'biden', 'jonas']
-const hardArray = ['idaho', 'washington', 'north dakota', 'minnesota']
-const difficultArray = ['tarot', 'trump', 'credit', 'face']
+const easyArray = ['smash', 'bang', 'roar', 'thud']
+const mediumArray = ['pilot', 'try out', 'experiment', 'test']
+const hardArray = ['palm', 'digit', 'knuckle', 'nail']
+const difficultArray = ['sex', 'book', 'number', 'tag']
 
 
 function containSameElements(arr1, arr2) {
@@ -116,7 +116,6 @@ export default function Connections() {
         let counter = 0
         for (let i = 0; i < 4; i++) {
             if (category.includes(selectedGuess[i])) {
-                console.log("includes")
                 counter = counter + 1
             }
         }
@@ -153,9 +152,9 @@ export default function Connections() {
     };
 
 
-
     const checkForGameOver = (mistakes) => {
-        if (mistakes == 1 || unSubmittedSquares.length == 4) { // end of the game (buggy logic)
+        if (mistakes === 1) { 
+            console.log('game is over')
             setSubmissionAnimation(true);
             setTimeout(() => {
                 setSubmissionAnimation(false);
@@ -167,27 +166,37 @@ export default function Connections() {
                 setColors([
                     {
                         style: utilStyles.backgroundEasy,
-                        categoryName: 'Synonyms for winning over',
+                        categoryName: 'Loud Noises',
                         categoryValues: easyArray
                     },
                     {
                         style: utilStyles.backgroundMedium,
-                        categoryName: 'Famous Joes',
+                        categoryName: 'Try Something New',
                         categoryValues: mediumArray
                     },
                     {
                         style: utilStyles.backgroundHard,
-                        categoryName: 'States bordering Canada',
+                        categoryName: 'Parts of a Hand',
                         categoryValues: hardArray
                     },
                     {
                         style: utilStyles.backgroundDifficult,
-                        categoryName: '______ card',
+                        categoryName: 'Phone _______',
                         categoryValues: difficultArray
                     }
                 ])
                 setIsGameOver(true)
             }, 2000);
+        } else {
+            if (unSubmittedSquares.length == 4) {
+                console.log('game is over')
+                setSubmissionAnimation(true);
+                setTimeout(() => {
+                    setSubmissionAnimation(false);
+                    setUnsubmittedSquares([])
+                    setIsGameOver(true)
+                }, 2000)
+            }
         }
     }
     const handleSubmit = () => {
@@ -210,7 +219,7 @@ export default function Connections() {
             setTimeout(() => {
                 const easy = {
                     style: utilStyles.backgroundEasy,
-                    categoryName: 'Synonyms for winning over',
+                    categoryName: 'Loud Noises',
                     categoryValues: easyArray
                 }
                 setColors(prevColors => [...prevColors, easy]);
@@ -223,7 +232,7 @@ export default function Connections() {
             setTimeout(() => {
                 const medium = {
                     style: utilStyles.backgroundMedium,
-                    categoryName: 'Famous Joes',
+                    categoryName: 'Try Something New',
                     categoryValues: mediumArray
                 }
                 setColors(prevColors => [...prevColors, medium]);
@@ -236,7 +245,7 @@ export default function Connections() {
             setTimeout(() => {
                 const hard = {
                     style: utilStyles.backgroundHard,
-                    categoryName: 'States bordering Canada',
+                    categoryName: 'Parts of a Hand',
                     categoryValues: hardArray
                 }
                 setColors(prevColors => [...prevColors, hard]);
@@ -249,7 +258,7 @@ export default function Connections() {
             setTimeout(() => {
                 const difficult = {
                     style: utilStyles.backgroundDifficult,
-                    categoryName: '______ card',
+                    categoryName: 'Phone _______',
                     categoryValues: difficultArray
                 }
                 setColors(prevColors => [...prevColors, difficult]);
@@ -340,10 +349,10 @@ export default function Connections() {
             }
             return circles;
         }
-
+    
         // Usage:
         const circles = generateCircles(mistakes);
-
+    
      */
 
     const circles = Array.from({ length: mistakes }, (_, index) => (
