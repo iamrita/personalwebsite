@@ -4,7 +4,7 @@ import utilStyles from '../../styles/utils.module.css';
 import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import isEqual from 'lodash/isEqual';
+import { isEqual, shuffle } from 'lodash';
 import Dialog from '@mui/material/Dialog';
 
 
@@ -125,7 +125,7 @@ export default function Connections() {
         setClickedSquares(Array(16).fill(false))
         setSelectedWords([])
     }
-    
+
     // TIL logging and state change don't always happen in the sequence you think 
     const handleClick = (index, word) => {
         if (selectedWords.length <= 3 || clickedSquares[index]) {
@@ -144,7 +144,7 @@ export default function Connections() {
     };
 
     const handleShuffle = (index) => {
-        console.log("shuffle");
+        setUnsubmittedSquares(shuffle(unSubmittedSquares))
     };
 
 
