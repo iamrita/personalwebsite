@@ -136,6 +136,11 @@
 
 }
 
+.markerAnimation {
+  animation: shake 1s ease-in-out infinite alternate;
+
+}
+
 @keyframes shake {
   0% {
     transform: translateX(0);

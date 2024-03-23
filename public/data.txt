@@ -30,6 +30,12 @@ const difficult = [sex, book, number, tag] - phone ______
 
 
 const easy = ['snow', 'hail', 'sleet', 'rain'] [types of preciciptation]
-const medium = ['blizzard', 'rockstar', 'ninentdo', 'sony' ] [video game companies]
-const hard = ['globe', 'orb', 'coconut', 'marble'] [spherical objects]
-const difficult = [ball, 'paper', 'bell', 'cow' ] [ ____ boy]
+const medium = ['globe', 'coconut', 'ball', 'marble'] [spherical objects]
+const hard = ['blizzard', 'rockstar', 'nintendo', 'sony' ] [video game companies]
+const difficult = [frozen, rocky, dune, heat] [one word movie titles]
+
+
+
+const easy = [nose, eyes, ears, mouth]: on your face 
+const hard = [separate, part, diverge, split]: go in different directions
+const difficult = [weight, fork, chair, face] ____ lift

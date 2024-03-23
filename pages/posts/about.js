@@ -3,7 +3,6 @@ import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
-import { ca } from 'date-fns/locale';
 import Link from "next/link";
 
 
@@ -354,7 +353,6 @@ export default function About() {
 
                 <h1 className={utilStyles.headingAbout}>TV Shows</h1>
                 <ul><li>Severance (Apple TV)</li>
-                    <li>Bojack Horseman (Netflix)</li>
                     <li>Atlanta (Hulu)</li>
                     <li>Insecure (HBO Max)</li>
                     <li>Chernobyl (HBO Max)</li>
