@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import isEqual from 'lodash/isEqual';
+import Dialog from '@mui/material/Dialog';
+
 
 
 /**
@@ -144,6 +146,8 @@ export default function Connections() {
         console.log("shuffle");
     };
 
+
+
     const checkForGameOver = (mistakes) => {
         if (mistakes == 1 || unSubmittedSquares.length == 4) { // end of the game (buggy logic)
             setSubmissionAnimation(true);
@@ -154,6 +158,28 @@ export default function Connections() {
                 setShowDifficultRectangle(true);
                 setShowHardRectangle(true);
                 setUnsubmittedSquares([])
+                setColors([
+                    {
+                        style: utilStyles.backgroundEasy,
+                        categoryName: 'Synonyms for winning over',
+                        categoryValues: easyArray
+                    },
+                    {
+                        style: utilStyles.backgroundMedium,
+                        categoryName: 'Famous Joes',
+                        categoryValues: mediumArray
+                    },
+                    {
+                        style: utilStyles.backgroundHard,
+                        categoryName: 'States bordering Canada',
+                        categoryValues: hardArray
+                    },
+                    {
+                        style: utilStyles.backgroundDifficult,
+                        categoryName: '______ card',
+                        categoryValues: difficultArray
+                    }
+                ])
                 setIsGameOver(true)
             }, 2000);
         }
@@ -338,7 +364,9 @@ export default function Connections() {
                     >Submit</button>
                     <button className={utilStyles.square} onClick={handleShuffle}>Shuffle</button>
                 </div>
-                {isGameOver && <div>{renderGrid(guesses)}</div>}
+                {isGameOver && <div>
+                    <div>{renderGrid(guesses)}</div>
+                </div>}
             </article>
         </Layout>
     );
