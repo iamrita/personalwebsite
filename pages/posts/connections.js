@@ -9,12 +9,9 @@ import isEqual from 'lodash/isEqual';
 
 /**
  * Issues to Fix:
- * 1. When the user is finished, the rectangles auto order in easiest to hardest. Should
- *   keep the order that the user solved it in. 
  * 2. Getting words from text file. 
  * 3. 1 away, and letting you know if you guessed already. 
  * 4. make it look better on mobile brwoser 
- * 5. if you solve it out of order, the rectangles still show up in the order you solved it 
  * 6. shuffling works 
  * 
  * 
@@ -23,7 +20,6 @@ import isEqual from 'lodash/isEqual';
  * 2. Having an archive on the page of previous days 
  * 3. be able to share data 
  * 4. being able to go to previous days by url routing 
- * 5. if you sign up with a phone number, you'll get a text to the day's connections 
  */
 
 const words = [
@@ -33,10 +29,10 @@ const words = [
     'tarot', 'north dakota', 'conquer', 'minnesota'
 ];
 
-const easy = ['best', 'beat', 'conquer', 'defeat']
-const medium = ['montana', 'rogan', 'biden', 'jonas']
-const hard = ['idaho', 'washington', 'north dakota', 'minnesota']
-const difficult = ['tarot', 'trump', 'credit', 'face']
+const easyArray = ['best', 'beat', 'conquer', 'defeat']
+const mediumArray = ['montana', 'rogan', 'biden', 'jonas']
+const hardArray = ['idaho', 'washington', 'north dakota', 'minnesota']
+const difficultArray = ['tarot', 'trump', 'credit', 'face']
 
 
 
@@ -95,6 +91,9 @@ export default function Connections() {
 
     const [selectedWords, setSelectedWords] = useState([])
     const [isGameOver, setIsGameOver] = useState(false)
+    const [colors, setColors] = useState(
+        []
+    ) // order is easy, medium, hard, difficult
 
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -115,7 +114,6 @@ export default function Connections() {
 
     function clearBoard(showRectangle) {
         setSubmissionAnimation(false);
-        showRectangle(true);
         const remainingWords = unSubmittedSquares.filter(word => !selectedWords.includes(word))
         setUnsubmittedSquares(remainingWords)
         setClickedSquares(Array(16).fill(false))
@@ -152,38 +150,62 @@ export default function Connections() {
                 setShowDifficultRectangle(true);
                 setShowHardRectangle(true);
                 setUnsubmittedSquares([])
+                setIsGameOver(true)
             }, 2000);
-            setIsGameOver(true)
         }
     }
     const handleSubmit = () => {
         setGuesses(prevGuesses => [...prevGuesses, selectedWords]);
         console.log(selectedWords)
-        if (containSameElements(selectedWords, easy)) {
+        if (containSameElements(selectedWords, easyArray)) {
             console.log("You got easy!")
             setSubmissionAnimation(true);
             setTimeout(() => {
+                const easy = {
+                    style: utilStyles.backgroundEasy,
+                    categoryName: 'Synonyms for winning over',
+                    categoryValues: easyArray
+                }
+                setColors(prevColors => [...prevColors, easy]);
                 clearBoard(setShowEasyRectangle)
             }, 2000);
 
-        } else if (containSameElements(selectedWords, medium)) {
+        } else if (containSameElements(selectedWords, mediumArray)) {
             console.log("You got medium!")
             setSubmissionAnimation(true);
             setTimeout(() => {
+                const medium = {
+                    style: utilStyles.backgroundMedium,
+                    categoryName: 'Famous Joes',
+                    categoryValues: mediumArray
+                }
+                setColors(prevColors => [...prevColors, medium]);
                 clearBoard(setShowMediumRectangle)
             }, 2000);
 
-        } else if (containSameElements(selectedWords, hard)) {
+        } else if (containSameElements(selectedWords, hardArray)) {
             console.log("You got hard!")
             setSubmissionAnimation(true);
             setTimeout(() => {
+                const hard = {
+                    style: utilStyles.backgroundHard,
+                    categoryName: 'States bordering Canada',
+                    categoryValues: hardArray
+                }
+                setColors(prevColors => [...prevColors, hard]);
                 clearBoard(setShowHardRectangle)
             }, 2000);
 
-        } else if (containSameElements(selectedWords, difficult)) {
+        } else if (containSameElements(selectedWords, difficultArray)) {
             console.log("You got difficult!")
             setSubmissionAnimation(true);
             setTimeout(() => {
+                const difficult = {
+                    style: utilStyles.backgroundDifficult,
+                    categoryName: '______ card',
+                    categoryValues: difficultArray
+                }
+                setColors(prevColors => [...prevColors, difficult]);
                 clearBoard(setShowDifficultRectangle)
             }, 2000);
 
@@ -220,11 +242,11 @@ export default function Connections() {
     });
 
     function category(word) {
-        if (easy.includes(word)) {
+        if (easyArray.includes(word)) {
             return "easy"
-        } else if (medium.includes(word)) {
+        } else if (mediumArray.includes(word)) {
             return "medium"
-        } else if (hard.includes(word)) {
+        } else if (hardArray.includes(word)) {
             return "hard"
         } else {
             return "difficult"
@@ -294,8 +316,14 @@ export default function Connections() {
                 {/* {showEasyRectangle ? showRectangle(utilStyles.backgroundEasy) : showMediumRectangle ? showRectangle(utilStyles.backgroundMedium)
                     : showHardRectangle ? showRectangle(utilStyles.backgroundHard) : showDifficultRectangle ? showRectangle(utilStyles.backgroundDifficult)
                         : <div></div>} */}
+                {colors.map((color, colorIndex) => (
+                    <div className={`${utilStyles.square} ${color.style}`}>
+                        <div style={{}}>{color.categoryName}</div>
+                        <div style={{ fontWeight: 'normal' }}>{toDisplay(color.categoryValues)}</div>
+                    </div>
+                ))}
 
-                {showEasyRectangle && (
+                {/* {showEasyRectangle && (
                     <div className={`${utilStyles.square} ${utilStyles.backgroundEasy}`}>
                         <div style={{}}>Synonyms for win</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(easy)}</div>
@@ -318,7 +346,7 @@ export default function Connections() {
                         <div style={{}}>____     card</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(difficult)}</div>
                     </div>
-                )}
+                )} */}
                 <div className={utilStyles.grid}>
                     {squares}
                 </div>
