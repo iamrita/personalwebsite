@@ -383,11 +383,12 @@ export default function Connections() {
                     {circles}
                 </div>
                 <div className={utilStyles.buttons}>
-                    <button className={utilStyles.square} onClick={() => {
-                        handleSubmit()
-                        checkForGameOver(mistakes)
-                    }
-                    }
+                    <button className={utilStyles.square} disabled={!(selectedWords.length === 4)}
+                        onClick={() => {
+                            handleSubmit()
+                            checkForGameOver(mistakes)
+                        }
+                        }
                     >Submit</button>
                     <button className={utilStyles.square} onClick={handleShuffle}>Shuffle</button>
                 </div>
