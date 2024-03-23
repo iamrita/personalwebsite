@@ -16,7 +16,8 @@ import ReactDOMServer from 'react-dom/server';
  * 1. there's an issue where if have one mistake left, it bugs out if you also guess correctly 
  * 2. Getting words from text file. 
  * 4. make it look better on mobile brwoser 
- * 5. check if a guess has already been made 
+ * 5. copying emojis to clipboard
+ * 6. check if a guess has already been made 
  * 
  * 
  * Future improvements
@@ -93,6 +94,7 @@ export default function Connections() {
     )
     const [oneAway, setOneAway] = useState(false)
     const [alreadyGuessed, setAlreadyGuessed] = useState(false)
+    const [isSubmitDisabled, setSubmitDisabled] = useState(true)
 
     // useEffect(() => {
     //     const fetchData = async () => {
