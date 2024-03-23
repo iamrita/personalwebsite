@@ -27,3 +27,9 @@ const medium = [smash, bang, roar, thud] - loud noises
 const easy = [palm, digit, knuckle, nail] - parts of a hand 
 const hard = [pilot, try out, experiment, test] - try something new 
 const difficult = [sex, book, number, tag] - phone ______
+
+
+const easy = ['snow', 'hail', 'sleet', 'rain']
+const medium = ['blizzard', 'rockstar', 'ninentdo', 'sony' ]
+const hard = ['bassist', 'singer', 'drummer']
+const difficult = ['piano', 'rocket', ]
