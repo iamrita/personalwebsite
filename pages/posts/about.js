@@ -1,4 +1,4 @@
-import Layout, {siteTitle} from '../../components/layout'
+import Layout, { siteTitle } from '../../components/layout'
 import Head from 'next/head';
 import utilStyles from '../../styles/utils.module.css'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
@@ -64,8 +64,8 @@ const mapStyles = {
             ]
         }
     ]
-  };
-  
+};
+
 const khanfectionsCoords = {
     name: "Khanfections - best breakfast sandwich in the city",
     coords: {
@@ -191,11 +191,52 @@ const folioBooks = {
         lng: -122.43091182665557
     }
 }
+
+const diamondCoffee = {
+    name: "Diamond Coffee N' Pastry",
+    coords: {
+        lat: 37.761387998102464,
+        lng: -122.48975956889238
+    }
+}
+
+const mill = {
+    name: "The Mill",
+    coords: {
+        lat: 37.7768549571018,
+        lng: -122.4379319535504
+    }
+}
+
+const woodenCoffeeHouse = {
+    name: 'Wooden Coffeehouse',
+    coords: {
+        lat: 37.766214567855044,
+        lng: -122.44985401612037
+    }
+}
+
+const atlas = {
+    name: 'Atlas Cafe',
+    coords: {
+        lat: 37.75913227900749,
+        lng: -122.41146190262695
+    }
+}
+
+const tartine = {
+    name: 'Tartine Manufactory',
+    coords: {
+        lat: 37.76201437173618,
+        lng: -122.41192938913306
+    }
+}
 const bars = [abvCoords, localEdition, snug]
 const restaurants = [mangroveCoords, sliceHouseCoords, norcina, noodleHouse, kingThai]
 const bakeries = [noeValleyBakery, khanfectionsCoords]
 const bookstores = [booksmith, greenAppleBooks, folioBooks]
 const parks = [tankHill, alamoSquarePark, buenaVistaPark]
+const coffeeShops = [atlas, tartine, mill, woodenCoffeeHouse, diamondCoffee]
 
 
 export default function About() {
@@ -228,6 +269,12 @@ export default function About() {
                 )
                 ))
                 break;
+            case "Coffee Shops":
+                setMarkers(coffeeShops.map(shop => (
+                    <Marker key={shop.name} position={shop.coords} title={shop.name} />
+                )
+                ))
+                break;
 
             case "Parks":
                 setMarkers(parks.map(park => (
@@ -245,9 +292,9 @@ export default function About() {
 
 
     return <Layout>
-           <Head>
-        <title>About</title>
-      </Head>
+        <Head>
+            <title>About</title>
+        </Head>
         <article>
             <h1 className={utilStyles.headingXl}>About Me</h1>
             <div className={utilStyles.aboutText}>
@@ -258,10 +305,10 @@ export default function About() {
                 <h1 className={utilStyles.headingAbout}>Places in San Francisco</h1>
                 <p>Use the dropdown below to filter based on category, and hover over the pin to see the name and my comments!</p>
 
-                <div style={{ display: 'flex', alignItems: 'center' ,  marginBottom: '10px',}}>
+                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', }}>
                     <label htmlFor="restaurantFilter"></label>
                     <select id="restaurantFilter" value={selectedCategory} onChange={handleCategoryChange}
-                         style={{
+                        style={{
                             padding: '8px 30px 8px 12px', /* Adjusted padding on the right side */
                             fontSize: '16px',
                             borderRadius: '4px',
@@ -272,12 +319,13 @@ export default function About() {
                             backgroundImage: `url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>')`,
                             backgroundRepeat: 'no-repeat',
                             backgroundPosition: 'right 10px center'
-                          }}>
+                        }}>
                         <option value="Restaurants">Restaurants</option>
                         <option value="Bars">Bars</option>
                         <option value="Parks">Parks</option>
                         <option value="Bookstores">Bookstores</option>
                         <option value="Bakeries">Bakeries</option>
+                        <option value="Coffee Shops">Coffee Shops</option>
                     </select>
                 </div>
                 <LoadScript
@@ -287,7 +335,7 @@ export default function About() {
                         mapContainerStyle={{ width: '100%', height: '400px' }}
                         center={sliceHouseCoords.coords}
                         zoom={13}
-                        options={{ styles: mapStyles.retro}}
+                        options={{ styles: mapStyles.retro }}
                     >
                         {markers}
                     </GoogleMap>
