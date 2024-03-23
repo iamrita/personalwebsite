@@ -5,18 +5,6 @@ hard: flail,flounder,thrash,struggle
 difficult: airplane,breakfast,haircut,eyeball
 
 
-words: 
-
-
-
-
-
-
-
-
-
-
-
 const easy = ['best', 'beat', 'conquer', 'defeat']
 const medium = ['montana', 'rogan', 'biden', 'jonas']
 const hard = ['idaho', 'washington', 'north dakota', 'minnesota']

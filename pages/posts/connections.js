@@ -80,11 +80,6 @@ export default function Connections() {
     const [unSubmittedSquares, setUnsubmittedSquares] = useState(words)
 
     const [mistakes, setMistakes] = useState(4);
-    const [showEasyRectangle, setShowEasyRectangle] = useState(false);
-    const [showMediumRectangle, setShowMediumRectangle] = useState(false);
-    const [showHardRectangle, setShowHardRectangle] = useState(false);
-
-    const [showDifficultRectangle, setShowDifficultRectangle] = useState(false);
 
     const [submissionAnimation, setSubmissionAnimation] = useState(false);
     const [mistakeAnimation, setMistakeAnimation] = useState(false);
@@ -130,6 +125,7 @@ export default function Connections() {
         setClickedSquares(Array(16).fill(false))
         setSelectedWords([])
     }
+    
     // TIL logging and state change don't always happen in the sequence you think 
     const handleClick = (index, word) => {
         if (selectedWords.length <= 3 || clickedSquares[index]) {
@@ -153,7 +149,7 @@ export default function Connections() {
 
 
     const checkForGameOver = (mistakes) => {
-        if (mistakes === 1) { 
+        if (mistakes === 1) {
             console.log('game is over')
             setSubmissionAnimation(true);
             setTimeout(() => {
@@ -339,29 +335,10 @@ export default function Connections() {
     }
 
 
-
-    /**
-     * Below is the same as :
-     * function generateCircles(mistakes) {
-            const circles = [];
-            for (let index = 0; index < mistakes; index++) {
-                 circles.push(<div key={index} className={utilStyles.circle}></div>);
-            }
-            return circles;
-        }
-    
-        // Usage:
-        const circles = generateCircles(mistakes);
-    
-     */
-
     const circles = Array.from({ length: mistakes }, (_, index) => (
         <div key={index} className={utilStyles.circle}></div>
     ));
 
-    function showRectangle(rectangleStyle) {
-        return <div className={`${utilStyles.square} ${rectangleStyle}`}></div>
-    }
 
     return (
         <Layout>
