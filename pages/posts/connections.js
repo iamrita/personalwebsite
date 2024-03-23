@@ -177,9 +177,9 @@ export default function Connections() {
 
     }
 
-    const checkForGameOver = (mistakes) => {
-        if (mistakes === 1) {
-            console.log('game is over')
+    const checkForGameOver = () => {
+        if (mistakes === 1) { // not understanding how this works for mistakes 
+            console.log('game is over cuz of mistakes')
             setSubmissionAnimation(true);
             setTimeout(() => {
                 setSubmissionAnimation(false);
@@ -210,7 +210,7 @@ export default function Connections() {
             }, 2000);
         } else {
             if (unSubmittedSquares.length == 4) {
-                console.log('game is over')
+                console.log('game is over cuz no more squares')
                 setSubmissionAnimation(true);
                 setTimeout(() => {
                     setSubmissionAnimation(false);
@@ -222,6 +222,7 @@ export default function Connections() {
     }
     const handleSubmit = () => {
         setGuesses(prevGuesses => [...prevGuesses, selectedWords]);
+        console.log(selectedWords)
         let temp = []
         temp.push(isOneAway(selectedWords, easyArray))
         temp.push(isOneAway(selectedWords, mediumArray))
@@ -285,6 +286,7 @@ export default function Connections() {
             }, 2000);
 
         } else {
+            console.log("in here")
             setMistakes(prevMistakes => prevMistakes - 1);
             setMistakeAnimation(true)
             setTimeout(() => {
@@ -370,6 +372,7 @@ export default function Connections() {
             </Head>
             <article>
                 {oneAway && <div className={utilStyles.content}>You're one away!</div>}
+                {alreadyGuessed && <div className={utilStyles.content}>You already guessed it!</div>}
                 {colors.map((color, colorIndex) => (
                     <div className={`${utilStyles.square} ${color.style}`}>
                         <div style={{}}>{color.categoryName}</div>
@@ -386,7 +389,7 @@ export default function Connections() {
                     <button className={utilStyles.square} disabled={!(selectedWords.length === 4)}
                         onClick={() => {
                             handleSubmit()
-                            checkForGameOver(mistakes)
+                            checkForGameOver()
                         }
                         }
                     >Submit</button>
