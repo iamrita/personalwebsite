@@ -25,10 +25,12 @@ export default function Home({ allPostsData }) {
       <section className={utilStyles.headingMd}>
         <p>
           {" "}
-          Hi! My name is <Link href={`/posts/about`}>Amrita</Link>. 
+          Hi! My name is <Link href={`/posts/about`}>Amrita</Link>.
           I currently live in San Francisco, California and work as an engineer for Maven Clinic, a virtual clinic for women and families. I also
           volunteer at the San Francisco Tenants Union, where I help tenants
-          learn about their rights against eviction and displacement. When I'm
+          learn about their rights against eviction and displacement. I also have a minor obsession with the <a href="https://www.nytimes.com/games/connections">NY Times Connections</a>, so much so
+          that I've made my own <Link href={`/posts/connections`}>here</Link>. I post a new board every day!</p>
+        <p>When I'm
           not working or volunteering, I'm attempting to triangulate Rihanna's
           location on any given night. You can find me on{" "}
           <a href="https://twitter.com/iamrita98">Twitter</a> or check out my{" "}

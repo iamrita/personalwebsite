@@ -14,7 +14,7 @@ import Dialog from '@mui/material/Dialog';
  * 1. there's an issue where if have one mistake left, it bugs out if you also guess correctly 
  * 2. Getting words from text file. 
  * 4. make it look better on mobile brwoser 
- * 6. shuffling works 
+ * 5. check if a guess has already been made 
  * 
  * 
  * Future improvements
@@ -90,6 +90,7 @@ export default function Connections() {
         []
     )
     const [oneAway, setOneAway] = useState(false)
+    const [alreadyGuessed, setAlreadyGuessed] = useState(false)
 
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -197,8 +198,6 @@ export default function Connections() {
     }
     const handleSubmit = () => {
         setGuesses(prevGuesses => [...prevGuesses, selectedWords]);
-        console.log(selectedWords)
-
         let temp = []
         temp.push(isOneAway(selectedWords, easyArray))
         temp.push(isOneAway(selectedWords, mediumArray))
