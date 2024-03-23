@@ -39,35 +39,3 @@ const medium = [smash, bang, roar, thud] - loud noises
 const easy = [palm, digit, knuckle, nail] - parts of a hand 
 const hard = [pilot, try out, experiment, test] - try something new 
 const difficult = [sex, book, number, tag] - phone ______
-
-
-
-
-              {/* {showEasyRectangle ? showRectangle(utilStyles.backgroundEasy) : showMediumRectangle ? showRectangle(utilStyles.backgroundMedium)
-                    : showHardRectangle ? showRectangle(utilStyles.backgroundHard) : showDifficultRectangle ? showRectangle(utilStyles.backgroundDifficult)
-                        : <div></div>} */}
-
-                {showEasyRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundEasy}`}>
-                        <div style={{}}>Synonyms for win</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(easy)}</div>
-                    </div>
-                )}
-                {showMediumRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundMedium}`}>
-                        <div style={{}}>Famous Joes</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(medium)}</div>
-                    </div>
-                )}
-                {showHardRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundHard}`}>
-                        <div style={{}}>States bordering Canada</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(hard)}</div>
-                    </div>
-                )}
-                {showDifficultRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundDifficult}`}>
-                        <div style={{}}>____     card</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(difficult)}</div>
-                    </div>
-                )}

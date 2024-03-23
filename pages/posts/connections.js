@@ -9,6 +9,7 @@ import isEqual from 'lodash/isEqual';
 
 /**
  * Issues to Fix:
+ * 1. there's an issue where if have one mistake left, it bugs out if you also guess correctly 
  * 2. Getting words from text file. 
  * 3. 1 away, and letting you know if you guessed already. 
  * 4. make it look better on mobile brwoser 
@@ -111,6 +112,9 @@ export default function Connections() {
     //   }, []);
 
 
+    function isOneAway(selectedGuess) {
+
+    }
 
     function clearBoard(showRectangle) {
         setSubmissionAnimation(false);
@@ -313,40 +317,12 @@ export default function Connections() {
                 <title>Connections</title>
             </Head>
             <article>
-                {/* {showEasyRectangle ? showRectangle(utilStyles.backgroundEasy) : showMediumRectangle ? showRectangle(utilStyles.backgroundMedium)
-                    : showHardRectangle ? showRectangle(utilStyles.backgroundHard) : showDifficultRectangle ? showRectangle(utilStyles.backgroundDifficult)
-                        : <div></div>} */}
                 {colors.map((color, colorIndex) => (
                     <div className={`${utilStyles.square} ${color.style}`}>
                         <div style={{}}>{color.categoryName}</div>
                         <div style={{ fontWeight: 'normal' }}>{toDisplay(color.categoryValues)}</div>
                     </div>
                 ))}
-
-                {/* {showEasyRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundEasy}`}>
-                        <div style={{}}>Synonyms for win</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(easy)}</div>
-                    </div>
-                )}
-                {showMediumRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundMedium}`}>
-                        <div style={{}}>Famous Joes</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(medium)}</div>
-                    </div>
-                )}
-                {showHardRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundHard}`}>
-                        <div style={{}}>States bordering Canada</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(hard)}</div>
-                    </div>
-                )}
-                {showDifficultRectangle && (
-                    <div className={`${utilStyles.square} ${utilStyles.backgroundDifficult}`}>
-                        <div style={{}}>____     card</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(difficult)}</div>
-                    </div>
-                )} */}
                 <div className={utilStyles.grid}>
                     {squares}
                 </div>
