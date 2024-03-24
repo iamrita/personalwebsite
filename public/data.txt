@@ -35,7 +35,7 @@ const hard = ['blizzard', 'rockstar', 'nintendo', 'sony' ] [video game companies
 const difficult = [frozen, rocky, dune, heat] [one word movie titles]
 
 
-
-const easy = [nose, eyes, ears, mouth]: on your face 
+const easy = [slice, chop, mince, dice] - techniques with a knife 
+const medium = [barbell, treadmill, bench, elliptical]: things you find at the gym 
 const hard = [separate, part, diverge, split]: go in different directions
 const difficult = [weight, fork, chair, face] ____ lift
