@@ -4,6 +4,8 @@ import utilStyles from '../../styles/utils.module.css'
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { useState, useEffect } from 'react';
 import Link from "next/link";
+import "../../components/firebase"
+
 
 
 const mapStyles = {

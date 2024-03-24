@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { isEqual, shuffle } from 'lodash';
 import Dialog from '@mui/material/Dialog';
 import ReactDOMServer from 'react-dom/server';
+import "../../components/firebase"
+
 
 
 
