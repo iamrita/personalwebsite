@@ -12,6 +12,7 @@
     "@mui/material": "^5.15.14",
     "@react-google-maps/api": "^2.19.3",
     "date-fns": "^2.29.3",
+    "firebase": "^10.9.0",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
     "next": "latest",
