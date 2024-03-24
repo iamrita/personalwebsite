@@ -10,9 +10,6 @@ import ReactDOMServer from 'react-dom/server';
 import "../../components/firebase"
 
 
-
-
-
 /**
  * Issues to Fix:
  * 1. there's an issue where if have one mistake left, it bugs out if you also guess correctly 
@@ -36,16 +33,16 @@ const words = [
     'nintendo', 'hail', 'marble', 'sony'
 ];
 
-const easyArray = ['snow', 'hail', 'sleet', 'rain'] //[types of preciciptation]
-const mediumArray = ['globe', 'coconut', 'ball', 'marble'] // [spherical objects]
-const hardArray = ['blizzard', 'rockstar', 'nintendo', 'sony'] // [video game companies]
-const difficultArray = ['frozen', 'rocky', 'dune', 'heat']//  [one word movie titles]
+const easyArray = ['snow', 'hail', 'sleet', 'rain']
+const mediumArray = ['globe', 'coconut', 'ball', 'marble']
+const hardArray = ['blizzard', 'rockstar', 'nintendo', 'sony']
+const difficultArray = ['frozen', 'rocky', 'dune', 'heat']
 
 
 function containSameElements(arr1, arr2) {
-    const sortedFirstAray = [...arr1].sort()
-    const sortedSecondArray = [...arr2].sort()
-    return isEqual(sortedFirstAray, sortedSecondArray)
+    const set1 = new Set(arr1)
+    const set2 = new Set(arr2)
+    return isEqual(set1, set2)
 }
 
 function formatTextFile(dataString) {
@@ -96,7 +93,6 @@ export default function Connections() {
     )
     const [oneAway, setOneAway] = useState(false)
     const [alreadyGuessed, setAlreadyGuessed] = useState(false)
-    const [isSubmitDisabled, setSubmitDisabled] = useState(true)
 
     // useEffect(() => {
     //     const fetchData = async () => {
