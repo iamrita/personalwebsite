@@ -28,16 +28,16 @@ import ReactDOMServer from 'react-dom/server';
  */
 
 const words = [
-    'palm', 'pilot', 'number', 'digit',
-    'sex', 'bang', 'nail', 'knuckle',
-    'smash', 'try out', 'book', 'tag',
-    'experiment', 'test', 'roar', 'thud'
+    'snow', 'globe', 'ball', 'frozen',
+    'blizzard', 'coconut', 'rain', 'rocky',
+    'dune', 'sleet', 'rockstar', 'heat',
+    'nintendo', 'hail', 'marble', 'sony'
 ];
 
-const easyArray = ['smash', 'bang', 'roar', 'thud']
-const mediumArray = ['pilot', 'try out', 'experiment', 'test']
-const hardArray = ['palm', 'digit', 'knuckle', 'nail']
-const difficultArray = ['sex', 'book', 'number', 'tag']
+const easyArray = ['snow', 'hail', 'sleet', 'rain'] //[types of preciciptation]
+const mediumArray = ['globe', 'coconut', 'ball', 'marble'] // [spherical objects]
+const hardArray = ['blizzard', 'rockstar', 'nintendo', 'sony'] // [video game companies]
+const difficultArray = ['frozen', 'rocky', 'dune', 'heat']//  [one word movie titles]
 
 
 function containSameElements(arr1, arr2) {
@@ -177,49 +177,7 @@ export default function Connections() {
 
     }
 
-    const checkForGameOver = () => {
-        if (mistakes === 1) { // not understanding how this works for mistakes 
-            console.log('game is over cuz of mistakes')
-            setSubmissionAnimation(true);
-            setTimeout(() => {
-                setSubmissionAnimation(false);
-                setUnsubmittedSquares([])
-                setColors([
-                    {
-                        style: utilStyles.backgroundEasy,
-                        categoryName: 'Loud Noises',
-                        categoryValues: easyArray
-                    },
-                    {
-                        style: utilStyles.backgroundMedium,
-                        categoryName: 'Try Something New',
-                        categoryValues: mediumArray
-                    },
-                    {
-                        style: utilStyles.backgroundHard,
-                        categoryName: 'Parts of a Hand',
-                        categoryValues: hardArray
-                    },
-                    {
-                        style: utilStyles.backgroundDifficult,
-                        categoryName: 'Phone _______',
-                        categoryValues: difficultArray
-                    }
-                ])
-                setIsGameOver(true)
-            }, 2000);
-        } else {
-            if (unSubmittedSquares.length == 4) {
-                console.log('game is over cuz no more squares')
-                setSubmissionAnimation(true);
-                setTimeout(() => {
-                    setSubmissionAnimation(false);
-                    setUnsubmittedSquares([])
-                    setIsGameOver(true)
-                }, 2000)
-            }
-        }
-    }
+
     const handleSubmit = () => {
         setGuesses(prevGuesses => [...prevGuesses, selectedWords]);
         console.log(selectedWords)
@@ -239,7 +197,7 @@ export default function Connections() {
             setTimeout(() => {
                 const easy = {
                     style: utilStyles.backgroundEasy,
-                    categoryName: 'Loud Noises',
+                    categoryName: 'Types of precipitation',
                     categoryValues: easyArray
                 }
                 setColors(prevColors => [...prevColors, easy]);
@@ -252,7 +210,7 @@ export default function Connections() {
             setTimeout(() => {
                 const medium = {
                     style: utilStyles.backgroundMedium,
-                    categoryName: 'Try Something New',
+                    categoryName: 'Spherical Objects',
                     categoryValues: mediumArray
                 }
                 setColors(prevColors => [...prevColors, medium]);
@@ -265,7 +223,7 @@ export default function Connections() {
             setTimeout(() => {
                 const hard = {
                     style: utilStyles.backgroundHard,
-                    categoryName: 'Parts of a Hand',
+                    categoryName: 'Video Game Companies',
                     categoryValues: hardArray
                 }
                 setColors(prevColors => [...prevColors, hard]);
@@ -278,7 +236,7 @@ export default function Connections() {
             setTimeout(() => {
                 const difficult = {
                     style: utilStyles.backgroundDifficult,
-                    categoryName: 'Phone _______',
+                    categoryName: 'One Word Movie Titles',
                     categoryValues: difficultArray
                 }
                 setColors(prevColors => [...prevColors, difficult]);
@@ -364,6 +322,50 @@ export default function Connections() {
         <div key={index} className={utilStyles.circle}></div>
     ));
 
+    const checkForGameOver = () => {
+        if (mistakes === 1) { // not understanding how this works for mistakes 
+            console.log('game is over cuz of mistakes')
+            setSubmissionAnimation(true);
+            setTimeout(() => {
+                setSubmissionAnimation(false);
+                setUnsubmittedSquares([])
+                setColors([
+                    {
+                        style: utilStyles.backgroundEasy,
+                        categoryName: 'Types of precipitation',
+                        categoryValues: easyArray
+                    },
+                    {
+                        style: utilStyles.backgroundMedium,
+                        categoryName: 'Spherical Objects',
+                        categoryValues: mediumArray
+                    },
+                    {
+                        style: utilStyles.backgroundHard,
+                        categoryName: 'Video Game Companies',
+                        categoryValues: hardArray
+                    },
+                    {
+                        style: utilStyles.backgroundDifficult,
+                        categoryName: 'One Word Movie Titles',
+                        categoryValues: difficultArray
+                    }
+                ])
+                setIsGameOver(true)
+            }, 2000);
+        } else {
+            if (unSubmittedSquares.length == 4) {
+                console.log('game is over cuz no more squares')
+                setSubmissionAnimation(true);
+                setTimeout(() => {
+                    setSubmissionAnimation(false);
+                    setUnsubmittedSquares([])
+                    setIsGameOver(true)
+                }, 2000)
+            }
+        }
+    }
+
 
     return (
         <Layout>
@@ -395,14 +397,12 @@ export default function Connections() {
                     >Submit</button>
                     <button className={utilStyles.square} onClick={handleShuffle}>Shuffle</button>
                 </div>
-                {isGameOver && <div>
+                {/* {(mistakes === 0) && 
                     <div className={utilStyles.content}>{renderGrid(guesses)}</div>
-                    {/* <div className={utilStyles.buttons}>
-                        <button className={utilStyles.square} onClick={copyToClipboard(renderGrid(guesses))}>
-                            Copy to Clipboard
-                        </button>
-                    </div> */}
-                </div>}
+                }  -- this is counting mistakes properly */}
+                {isGameOver &&
+                    <div className={utilStyles.content}>{renderGrid(guesses)}</div>
+                }
             </article>
         </Layout>
     );
