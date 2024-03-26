@@ -39,3 +39,9 @@ const easy = [slice, chop, mince, dice] - techniques with a knife
 const medium = [barbell, treadmill, bench, elliptical]: things you find at the gym 
 const hard = [separate, part, diverge, split]: go in different directions
 const difficult = [weight, fork, chair, face] ____ lift
+
+
+const easy = [run, dash, race, bolt] get somewhere fast 
+const medium = [scarf, beanie, boots, gloves] cold weather accessories
+const hard = [tie, stalemate, deadlock, impasse] stuck 
+const difficult = [skip, reverse, draw, wild] cards in uno
