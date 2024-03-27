@@ -45,3 +45,9 @@ const easy = [run, dash, race, bolt] get somewhere fast
 const medium = [scarf, beanie, boots, gloves] cold weather accessories
 const hard = [tie, stalemate, deadlock, impasse] stuck 
 const difficult = [skip, reverse, draw, wild] cards in uno
+
+
+scarf, tie, run, skip 
+draw, impasse, boots, bolt, 
+dash, draw, deadlock, gloves
+reverse, beanie, stalemate, wild
