@@ -27,16 +27,16 @@ import "../../components/firebase"
  */
 
 const words = [
-    'scarf', 'tie', 'run', 'skip',
-    'draw', 'impasse', 'boots', 'bolt',
-    'dash', 'race', 'deadlock', 'gloves',
-    'reverse', 'beanie', 'stalemate', 'wild'
+    'king', 'cobra', 'frog', 'rabbit',
+    'duke', 'yale', 'baron', 'vassar',
+    'emory', 'tree', 'tufts', 'duchess',
+    'cat', 'kangaroo', 'cow', 'grasshopper'
 ];
 
-const easyArray = ['run', 'dash', 'race', 'bolt']
-const mediumArray = ['scarf', 'beanie', 'boots', 'gloves']
-const hardArray = ['tie', 'stalemate', 'deadlock', 'impasse']
-const difficultArray = ['skip', 'reverse', 'draw', 'wild']
+const easyArray = ['king', 'duke', 'baron', 'duchess']
+const mediumArray = ['kangaroo', 'frog', 'rabbit', 'grasshopper']
+const hardArray = ['yale', 'emory', 'vassar', 'tufts']
+const difficultArray = ['tree', 'cat', 'cow', 'cobra']
 
 
 function containSameElements(arr1, arr2) {
@@ -195,7 +195,7 @@ export default function Connections() {
             setTimeout(() => {
                 const easy = {
                     style: utilStyles.backgroundEasy,
-                    categoryName: 'Get somewhere fast',
+                    categoryName: 'Royal titles',
                     categoryValues: easyArray
                 }
                 setColors(prevColors => [...prevColors, easy]);
@@ -208,7 +208,7 @@ export default function Connections() {
             setTimeout(() => {
                 const medium = {
                     style: utilStyles.backgroundMedium,
-                    categoryName: 'Cold weather accessories',
+                    categoryName: 'Animals that hop',
                     categoryValues: mediumArray
                 }
                 setColors(prevColors => [...prevColors, medium]);
@@ -221,7 +221,7 @@ export default function Connections() {
             setTimeout(() => {
                 const hard = {
                     style: utilStyles.backgroundHard,
-                    categoryName: 'Synonyms for a draw',
+                    categoryName: 'Private east coast schools',
                     categoryValues: hardArray
                 }
                 setColors(prevColors => [...prevColors, hard]);
@@ -234,7 +234,7 @@ export default function Connections() {
             setTimeout(() => {
                 const difficult = {
                     style: utilStyles.backgroundDifficult,
-                    categoryName: 'Cards in Uno',
+                    categoryName: 'Yoga poses',
                     categoryValues: difficultArray
                 }
                 setColors(prevColors => [...prevColors, difficult]);
@@ -330,22 +330,22 @@ export default function Connections() {
                 setColors([
                     {
                         style: utilStyles.backgroundEasy,
-                        categoryName: 'Get somewhere fast',
+                        categoryName: 'Royal titles',
                         categoryValues: easyArray
                     },
                     {
                         style: utilStyles.backgroundMedium,
-                        categoryName: 'Cold weather accessories',
+                        categoryName: 'Animals that hop',
                         categoryValues: mediumArray
                     },
                     {
                         style: utilStyles.backgroundHard,
-                        categoryName: 'Synonyms for a draw',
+                        categoryName: 'Private easet coast schools',
                         categoryValues: hardArray
                     },
                     {
                         style: utilStyles.backgroundDifficult,
-                        categoryName: 'Cards in Uno',
+                        categoryName: 'Yoga poses',
                         categoryValues: difficultArray
                     }
                 ])

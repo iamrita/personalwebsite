@@ -51,3 +51,8 @@ scarf, tie, run, skip
 draw, impasse, boots, bolt, 
 dash, draw, deadlock, gloves
 reverse, beanie, stalemate, wild
+
+const easy = [king, duke, baron, ducchess] - royal titles
+const medium = [kangaroo, frog, rabbit, grashopper] - animals that hop
+const hard = [yale, vanderbilt, vassar, tufts] - private east coast schools
+const difficult = [tree, cat, cow, cobra] yoga poses 
