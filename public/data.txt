@@ -56,3 +56,8 @@ const easy = [king, duke, baron, ducchess] - royal titles
 const medium = [kangaroo, frog, rabbit, grashopper] - animals that hop
 const hard = [yale, vanderbilt, vassar, tufts] - private east coast schools
 const difficult = [tree, cat, cow, cobra] yoga poses 
+
+const easy = [kill, murder, slay, end] synonyms for ending someone
+const medium = [beginning, middle, climax, resolution] - parts of a story 
+const hard =[outfit, getup, attire, ensemble] - outfit 
+const difficult = [check, bill, waiver, autograph] things you sign 
