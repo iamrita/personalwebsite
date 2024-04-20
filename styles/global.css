@@ -25,3 +25,128 @@ img {
   max-width: 100%;
   display: block;
 }
+
+main {
+  display: flex;
+  perspective: 3500px;
+}
+
+.container {
+  --width: 35px;
+  --height: calc(var(--width) * 4);
+  --depth: calc(var(--width) * 3);
+  --padding: 20px;
+
+  width: calc(var(--width) + var(--padding));
+  height: var(--height);
+
+  display: grid;
+  place-items: center;
+
+  transform-style: preserve-3d;
+  transform: translateZ(calc(var(--depth) / -2));
+
+  transition: transform 0.3s, width 0.3s;
+}
+
+.container:hover {
+  transform: translateY(-10px) translateZ(calc(var(--depth) / -2));
+}
+
+.container:has(input:checked) {
+  width: calc(var(--depth) + var(--padding));
+  transform: translateZ(0);
+}
+
+.book {
+  color: #777;
+
+  width: var(--width);
+  height: var(--height);
+
+  position: relative;
+  transform-style: preserve-3d;
+
+  transition: transform 0.3s;
+
+  & div {
+    position: absolute;
+    transition: background-color 0.3s;
+  }
+
+  /* front and back */
+  & div:nth-child(-n+2) {
+    background: #eee;
+    height: var(--height);
+    width: var(--width);
+  }
+
+  & div:nth-child(1) {
+    transform: rotateY(0deg) translateZ(calc(var(--depth) / 2));
+
+    & span {
+      display: block;
+      transform: rotateZ(90deg);
+      margin-top: 20px;
+      text-wrap: nowrap;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: visible;
+    }
+  }
+
+  & div:nth-child(2) {
+    transform: rotateY(180deg) translateZ(calc(var(--depth) / 2));
+  }
+
+  /* left and right */
+  & div:nth-child(3),
+  & div:nth-child(4) {
+    background: #777;
+    height: var(--height);
+    width: var(--depth);
+    left: calc(var(--width) * -1);
+  }
+
+  & div:nth-child(3) {
+    transform: rotateY(90deg) translateZ(calc(var(--width) / 2));
+
+    & span {
+      display: block;
+      margin-top: 20px;
+      text-wrap: nowrap;
+      text-align: center;
+      font-size: calc(8px + 0.5vw);
+      white-space: nowrap;
+      overflow: visible;
+    }
+  }
+
+  & div:nth-child(4) {
+    transform: rotateY(-90deg) translateZ(calc(var(--width) / 2));
+  }
+
+  & > input {
+    position: absolute;
+    width: 0px;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+    opacity: 0;
+  }
+
+  &:has(>input:checked) {
+    transform: translateZ(calc(var(--width) / -2)) rotateY(-90deg);
+
+    /* left and right */
+    & div:nth-child(3),
+    & div:nth-child(4) {
+      background: #fff;
+    }
+
+    /* front and back */
+    & div:nth-child(-n+2) {
+      background: #777;
+    }
+  }
+}

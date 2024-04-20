@@ -343,15 +343,105 @@ export default function About() {
                 </LoadScript>
                 <h1 className={utilStyles.headingAbout}>Books</h1>
                 <ul>
-                    <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
+                    {/* <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
                     <li>Different by Franz de Waal</li>
                     <li>Maximum City by Suketu Mehta</li>
                     <li>Unaccustomed Earth by Jhumpa Lahiri</li>
                     <li>You're the Only One I've Told by Dr. Meera Shah</li>
                     <li>Homegoing by Yaa Gyasi</li>
                     <li>The Vanishing Half by Brit Bennett</li>
-                    <li>Pachinko by Min Jin Lee</li>
+                    <li>Pachinko by Min Jin Lee</li> */}
                 </ul>
+                <main>
+                    <label class="container">
+                        <div class="book">
+                            <div><span>Pachinko</span></div>
+                            <div></div>
+                            <div>
+                                <span>Pachinko</span>
+                            </div>
+                            <div></div>
+
+                            <input type="radio" name="book" />
+                        </div>
+                    </label>
+
+                    <label class="container">
+                        <div class="book">
+                            <div><span>Different</span></div>
+                            <div></div>
+                            <div><span>Different</span></div>
+                            <div></div>
+
+                            <input type="radio" name="book" />
+                        </div>
+                    </label>
+
+                    <label class="container">
+                        <div class="book">
+                            <div><span>Maximum City</span></div>
+                            <div></div>
+                            <div><span>Maximum City</span></div>
+                            <div></div>
+
+                            <input type="radio" name="book" />
+                        </div>
+                    </label>
+
+                    <label class="container">
+                        <div class="book">
+                            <div><span>Homegoing</span></div>
+                            <div></div>
+                            <div><span>Homegoing</span></div>
+                            <div></div>
+
+                            <input type="radio" name="book" />
+                        </div>
+                    </label>
+
+                    <label class="container">
+                        <div class="book">
+                            <div><span>Unaccustomed Earth</span></div>
+                            <div></div>
+                            <div><span>Unaccustomed</span><span>Earth</span></div>
+                                <div></div>
+
+                                <input type="radio" name="book" />
+                            </div>
+                    </label>
+
+                    <label class="container">
+                        <div class="book">
+                            <div><span>The Vanishing Half</span></div>
+                            <div></div>
+                            <div><span>The Vanishing Half</span></div>
+                            <div></div>
+
+                            <input type="radio" name="book" />
+                        </div>
+                    </label>
+
+                    <label class="container">
+                        <div class="book">
+                            <div><span>Such A Fun Age</span></div>
+                            <div></div>
+                            <div><span>Such A Fun Age</span></div>
+                            <div></div>
+
+                            <input type="radio" name="book" />
+                        </div>
+                    </label>
+                    {/* <label class="container">
+                        <div class="book">
+                            <div><span>The Storied Life of A.J. Fikry</span></div>
+                            <div></div>
+                            <div><span>Such A Fun Age</span></div>
+                            <div></div>
+
+                            <input type="radio" name="book" />
+                        </div>
+                    </label> */}
+                </main>
 
                 <h1 className={utilStyles.headingAbout}>TV Shows</h1>
                 <ul><li>Severance (Apple TV)</li>
