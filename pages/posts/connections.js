@@ -27,16 +27,16 @@ import "../../components/firebase"
  */
 
 const words = [
-    'shark', 'week', 'ray', 'whale',
-    'fish', 'hit', 'box', 'year',
-    'games', 'day', 'octopus', 'punch',
-    'men', 'strike', 'month', 'clip'
+    'wrinkle', 'iron', 'zinc', 'dry',
+    'donate', 'nickel', 'give', 'psycho',
+    'wash', 'hour', 'grant', 'knit',
+    'fold', 'contribute', 'copper', 'cobalt'
 ];
 
-const easyArray = ['week', 'month', 'year', 'day']
-const mediumArray = ['shark', 'octopus', 'whale', 'fish']
-const hardArray = ['strike', 'hit', 'punch', 'clip']
-const difficultArray = ['games', 'ray', 'box', 'men']
+const easyArray = ['donate', 'contribute', 'grant', 'give']
+const mediumArray = ['nickel', 'copper', 'zinc', 'cobalt']
+const hardArray = ['wash', 'dry', 'fold', 'iron']
+const difficultArray = ['knit', 'hour', 'wrinkle', 'psycho']
 
 
 function containSameElements(arr1, arr2) {
@@ -93,21 +93,6 @@ export default function Connections() {
     )
     const [oneAway, setOneAway] = useState(false)
     const [alreadyGuessed, setAlreadyGuessed] = useState(false)
-
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //       try {
-    //         const response = await fetch('/api/data');
-    //         const { data } = await response.json();
-    //         console.log(data)
-    //         setData(formatTextFile(data));
-    //       } catch (error) {
-    //         console.error(error);
-    //       }
-    //     };
-
-    //     fetchData();
-    //   }, []);
 
 
     function isOneAway(selectedGuess, category) {
@@ -195,7 +180,7 @@ export default function Connections() {
             setTimeout(() => {
                 const easy = {
                     style: utilStyles.backgroundEasy,
-                    categoryName: 'Units of time',
+                    categoryName: 'To hand out something willingly',
                     categoryValues: easyArray
                 }
                 setColors(prevColors => [...prevColors, easy]);
@@ -208,7 +193,7 @@ export default function Connections() {
             setTimeout(() => {
                 const medium = {
                     style: utilStyles.backgroundMedium,
-                    categoryName: 'Underwater creatures',
+                    categoryName: 'Metals in the Periodic Table',
                     categoryValues: mediumArray
                 }
                 setColors(prevColors => [...prevColors, medium]);
@@ -221,7 +206,7 @@ export default function Connections() {
             setTimeout(() => {
                 const hard = {
                     style: utilStyles.backgroundHard,
-                    categoryName: 'To hit something',
+                    categoryName: 'Steps in Doing Laundry',
                     categoryValues: hardArray
                 }
                 setColors(prevColors => [...prevColors, hard]);
@@ -234,7 +219,7 @@ export default function Connections() {
             setTimeout(() => {
                 const difficult = {
                     style: utilStyles.backgroundDifficult,
-                    categoryName: 'X _____',
+                    categoryName: 'Words with a silent first letter ',
                     categoryValues: difficultArray
                 }
                 setColors(prevColors => [...prevColors, difficult]);
@@ -330,22 +315,22 @@ export default function Connections() {
                 setColors([
                     {
                         style: utilStyles.backgroundEasy,
-                        categoryName: 'Units of time',
+                        categoryName: 'To hand out something willingly',
                         categoryValues: easyArray
                     },
                     {
                         style: utilStyles.backgroundMedium,
-                        categoryName: 'underwater creatures',
+                        categoryName: 'Metals in the Periodic Table',
                         categoryValues: mediumArray
                     },
                     {
                         style: utilStyles.backgroundHard,
-                        categoryName: 'To hit something',
+                        categoryName: 'Steps in Doing Laundry',
                         categoryValues: hardArray
                     },
                     {
                         style: utilStyles.backgroundDifficult,
-                        categoryName: 'X ______',
+                        categoryName: 'Words with a silent first letter ',
                         categoryValues: difficultArray
                     }
                 ])
