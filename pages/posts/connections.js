@@ -36,7 +36,7 @@ const words = [
 const easyArray = ['which', 'what', 'why', 'where']
 const mediumArray = ['odd', 'peculiar', 'bizarre', 'unusual']
 const hardArray = ['narnia', 'neverland', 'atlantis', 'rivendell']
-const difficultArray = ['oz', 'strange', 'phil', 'who']
+const difficultArray = ['Miami', 'Atlanta', 'phil', 'who']
 
 
 function containSameElements(arr1, arr2) {
