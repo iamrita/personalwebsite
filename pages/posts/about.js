@@ -362,12 +362,16 @@ export default function About() {
                 </ul>
 
                 <h1 className={utilStyles.headingAbout}>Movies</h1>
-                <ul><li>The Farewell</li>
+                <ul>
+                    <li>The Devil Wears Prada</li>
+                    <li>The Farewell</li>
                     <li>Marcel the Shell With Shoes On</li>
                     <li>Spotlight</li>
                     <li>Pride and Prejudice (Keira Knightley version)</li>
                     <li>Zindagi Na Milegi Dobara</li>
                     <li>A Real Pain</li>
+                    <li>Freaky Friday</li>
+                    
                 </ul>
 
 
@@ -378,6 +382,7 @@ export default function About() {
                     <li>Swimming by Mac Miller</li>
                     <li>ANTI by Rihanna</li>
                     <li>Channel Orange by Frank Ocean</li>
+                    <li>Malibu by Anderson Paak</li>
                 </ul>
             </div>
         </article>
