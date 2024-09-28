@@ -347,10 +347,11 @@ export default function About() {
                     <li>Different by Franz de Waal</li>
                     <li>Maximum City by Suketu Mehta</li>
                     <li>Unaccustomed Earth by Jhumpa Lahiri</li>
-                    <li>You're the Only One I've Told by Dr. Meera Shah</li>
+                    <li>Good Material by Dolly Alderton</li>
                     <li>Homegoing by Yaa Gyasi</li>
                     <li>The Vanishing Half by Brit Bennett</li>
                     <li>Pachinko by Min Jin Lee</li>
+                    <li>The Interestings by Meg Wolitzer</li>
                 </ul>
 
                 <h1 className={utilStyles.headingAbout}>TV Shows</h1>
