@@ -34,7 +34,7 @@ According to the DSM (Diagnostic and Statistical Manual of Mental Disorders), fo
 
 Here’s one reason: because women in general tend to openly express sadness and grief more than men do, it is often easier for women to receive a diagnosis. In fact, it could be the case that there are just as many men who are depressed as women, but they don’t receive a diagnosis due to the specific DSM criteria shown above. Because of this, there have been many researchers pushing to change the criteria which would address gender specificity when diagnosing a disorder like depression. 
 
-Here’s another more interesting reason: women, scientifically, have a larger “circle of care” than men. What this means is that women tend to care about a much wider range of people than men do. This begets unfortunate or negative scenarios to occur; essentially, by caring about more people, you have more chances to get hurt or feel upset. And these potential tragic or traumatic events can prompt depressive episodes. Check out this paper by Kessler and McLeod on the relationship between sex and psychological distress to read more about this.
+Here’s another more interesting reason: women, scientifically, have a larger “circle of care” than men. What this means is that women tend to care about a much wider range of people than men do. This begets unfortunate or negative scenarios to occur; essentially, by caring about more people, you have more chances to get hurt or feel upset. And these potential tragic or traumatic events can prompt depressive episodes. Check out this [paper](https://link.springer.com/chapter/10.1007/978-94-009-5115-0_25) by Kessler and McLeod on the relationship between sex and psychological distress to read more about this.
 
 **What role does a general practitioner play in a patient who has depression?**
 
@@ -48,7 +48,7 @@ This is not a dig at GPs. It’s a tough situation to be in. But it does make yo
 
 **Why hasn’t evolution gotten rid of depression already?**
 
-This is an interesting question that can be extended to a lot of different disorders, not just depression. In this paper, Nesse argues that depression can in fact, be an adaptation. He argues that it is an adult human’s way of signaling a need for help. However, there is not enough evidence to say for sure. In fact, Nesse concludes by saying that “even though low moods and sometimes depression may be useful for inhibiting dangerous or wasteful actions, that should not distract attention from the fact that depression is one of humanity’s most serious problems.” So, TLDR, we don’t really know why evolution hasn’t gotten rid of it. 
+This is an interesting question that can be extended to a lot of different disorders, not just depression. In his [blog](https://www.randolphnesse.com/articles/depression), Nesse argues that depression can in fact, be an adaptation. He argues that it is an adult human’s way of signaling a need for help. However, there is not enough evidence to say for sure. In fact, Nesse concludes by saying that “even though low moods and sometimes depression may be useful for inhibiting dangerous or wasteful actions, that should not distract attention from the fact that depression is one of humanity’s most serious problems.” So, TLDR, we don’t really know why evolution hasn’t gotten rid of it. 
 
 **What about suicide?**
 
