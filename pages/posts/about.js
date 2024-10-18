@@ -303,32 +303,6 @@ export default function About() {
                     contact me if you'd like to geek out over anything listed together!
                 </p>
                 <p>I also love to play <Link href={`/posts/connections`}>Connections</Link>. This is a part of my website that I'm working on that is a work in progress.</p>
-                <h1 className={utilStyles.headingAbout}>Places in San Francisco</h1>
-                <p>Use the dropdown below to filter based on category, and hover over the pin to see the name and my comments!</p>
-
-                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '10px', }}>
-                    <label htmlFor="restaurantFilter"></label>
-                    <select id="restaurantFilter" value={selectedCategory} onChange={handleCategoryChange}
-                        style={{
-                            padding: '8px 30px 8px 12px', /* Adjusted padding on the right side */
-                            fontSize: '16px',
-                            borderRadius: '4px',
-                            border: '1px solid #ccc',
-                            backgroundColor: '#fff',
-                            boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
-                            appearance: 'none',
-                            backgroundImage: `url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="%23333" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z" /><path d="M0 0h24v24H0z" fill="none" /></svg>')`,
-                            backgroundRepeat: 'no-repeat',
-                            backgroundPosition: 'right 10px center'
-                        }}>
-                        <option value="Restaurants">Restaurants</option>
-                        <option value="Bars">Bars</option>
-                        <option value="Parks">Parks</option>
-                        <option value="Bookstores">Bookstores</option>
-                        <option value="Bakeries">Bakeries</option>
-                        <option value="Coffee Shops">Coffee Shops</option>
-                    </select>
-                </div>
                 <LoadScript
                     googleMapsApiKey="AIzaSyBmhvvC_jgOxYKGFRLOwfdPEwQhbAMJz8E"
                 >
