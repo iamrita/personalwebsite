@@ -303,18 +303,6 @@ export default function About() {
                     contact me if you'd like to geek out over anything listed together!
                 </p>
                 <p>I also love to play <Link href={`/posts/connections`}>Connections</Link>. This is a part of my website that I'm working on that is a work in progress.</p>
-                <LoadScript
-                    googleMapsApiKey="AIzaSyBmhvvC_jgOxYKGFRLOwfdPEwQhbAMJz8E"
-                >
-                    <GoogleMap
-                        mapContainerStyle={{ width: '100%', height: '400px' }}
-                        center={sliceHouseCoords.coords}
-                        zoom={13}
-                        options={{ styles: mapStyles.retro }}
-                    >
-                        {markers}
-                    </GoogleMap>
-                </LoadScript>
                 <h1 className={utilStyles.headingAbout}>Books</h1>
                 <ul>
                     <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
