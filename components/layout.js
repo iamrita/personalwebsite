@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 const name = 'Amrita Venkatraman';
 export const siteTitle = "Amrita's Blog";
+
 export default function Layout({ children, home }) {
     return (<div className={styles.container}>
         <Head>
