@@ -1,5 +1,6 @@
 import { GoogleMap, LoadScript, Marker, InfoWindow, useJsApiLoader} from '@react-google-maps/api';
 
+
 const MapComponent = () => {
     const { isLoaded } = useJsApiLoader({
       id: 'google-map-script',
