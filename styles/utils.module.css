@@ -239,3 +239,44 @@
 }
 
 
+.menuContainer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  margin: 10px;
+}
+
+.menuButton {
+  background-color: transparent; /* Transparent background */
+  color: white;
+  cursor: pointer;
+  padding-left: 10px;
+  border-radius: 5px;
+  font-size: 48px; /* Increase emoji size */
+}
+
+.menuContent {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.menuImage {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+.speechBubble {
+  position: relative;
+  background: white;
+  border-radius: 0.4em;
+  padding: 10px;
+  color: black;
+  margin-bottom: 10px;
+  max-width: 400px;
+  text-align: center;
+  border: 2px dotted black;
+  font-family: 'Courier New', Courier, monospace;
+}
