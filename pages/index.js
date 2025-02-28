@@ -6,7 +6,7 @@ import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
 import "../components/firebase";
-import Menu from "../components/Menu";
+import BookSticker from "../components/BookSticker";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -49,7 +49,7 @@ export default function Home({ allPostsData }) {
           </a>
           .
         </p>
-        <Menu></Menu>
+        <BookSticker></BookSticker>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>

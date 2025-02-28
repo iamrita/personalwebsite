@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "../styles/utils.module.css";
 
-const Menu = () => {
+const BookSticker = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleMouseEnter = () => {
@@ -30,4 +30,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default BookSticker;
