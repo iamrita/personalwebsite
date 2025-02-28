@@ -5,9 +5,8 @@ import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
-import "../components/firebase"
+import "../components/firebase";
 import Menu from "../components/Menu";
- 
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -28,14 +27,24 @@ export default function Home({ allPostsData }) {
       <section className={utilStyles.headingMd}>
         <p>
           {" "}
-          Hi! My name is <Link href={`/posts/about`}>Amrita</Link>.
-          I currently live in San Francisco, California and work as an engineer for Maven Clinic, a virtual clinic for women and families. I recently have been
+          Hi! My name is <Link href={`/posts/about`}>Amrita</Link>. I currently
+          live in San Francisco, California and work as an engineer for Maven
+          Clinic, a virtual clinic for women and families. I recently have been
           volunteering at the San Francisco Tenants Union, where I help tenants
-          learn about their rights against eviction and displacement. I also have a minor obsession with the <a href="https://www.nytimes.com/games/connections">NY Times Connections</a>, so much so
-          that I've made my own <Link href={`/posts/connections`}>here</Link>. I post a new board every day!</p>
-        <p>When I'm
-          not working or volunteering, I'm attempting to triangulate Rihanna's
-          location on any given night. You can find me on <a href="https://twitter.com/iamrita98">Twitter</a> or check out my <a href="/files/resume_feb_2024.pdf" download>
+          learn about their rights against eviction and displacement. I also
+          have a minor obsession with the{" "}
+          <a href="https://www.nytimes.com/games/connections">
+            NY Times Connections
+          </a>
+          , so much so that I've made my own{" "}
+          <Link href={`/posts/connections`}>here</Link>. I post a new board
+          every day!
+        </p>
+        <p>
+          When I'm not working or volunteering, I'm attempting to triangulate
+          Rihanna's location on any given night. You can find me on{" "}
+          <a href="https://twitter.com/iamrita98">Twitter</a> or check out my{" "}
+          <a href="/files/resume_feb_2024.pdf" download>
             resume
           </a>
           .
