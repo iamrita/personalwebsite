@@ -16,7 +16,10 @@ const BookSticker = () => {
     <div className={styles.menuContainer}>
       {isOpen && (
         <div className={styles.speechBubble}>
-          <p>I am currently reading City of Thieves by David Benioff.</p>
+          <p>
+            I am currently reading Remarkably Bright Creatures by Shelby Van
+            Pelt.
+          </p>
         </div>
       )}
       <div
