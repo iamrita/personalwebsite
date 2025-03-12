@@ -19,7 +19,7 @@ export default function Layout({ children, home }) {
       <header className={styles.header}>
         {home ? (
           <>
-            <Image
+            {/* <Image
               priority
               unoptimized
               src="/images/profile.jpg"
@@ -27,7 +27,7 @@ export default function Layout({ children, home }) {
               height={175}
               width={144}
               alt=""
-            />
+            /> */}
             <h1 className={utilStyles.heading2Xl}>{name}</h1>
 
             <div className={styles.row}>

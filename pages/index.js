@@ -7,6 +7,9 @@ import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
 import "../components/firebase";
 import BookSticker from "../components/BookSticker";
+import MovieSticker from "../components/MovieSticker";
+import VideoGameSticker from "../components/VideoGameSticker";
+import MusicSticker from "../components/MusicSticker";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -24,6 +27,7 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <MovieSticker />
       <section className={utilStyles.headingMd}>
         <p>
           {" "}
@@ -87,6 +91,8 @@ export default function Home({ allPostsData }) {
           </div>
         </div>
       </section>
+      <VideoGameSticker />
+      <MusicSticker />
     </Layout>
   );
 }

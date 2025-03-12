@@ -242,6 +242,18 @@
   color: #E9967A;
 }
 
+.movieContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 10px;
+}
+.musicContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  margin: 10px;
+}
 .menuContainer {
   position: fixed;
   bottom: 0;
@@ -282,6 +294,7 @@
   text-align: center;
   border: 2px dotted black;
   font-family: 'Courier New', Courier, monospace;
+  font-size: 1.1rem; /* Increase font size slightly */
 }
 
 .blogContainer {
@@ -304,3 +317,50 @@
   max-width: 300px; /* Adjust the size as needed */
   height: auto;
 }
+
+.videoGameContainer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 10px;
+}
+
+
+
+.videoGameSpeechBubble {
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  background: white;
+  border-radius: 0.4em;
+  padding: 10px;
+  color: black;
+  margin-bottom: 10px;
+  max-width: 400px; /* Ensure consistent width */
+  text-align: center;
+  border: 2px dotted black;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.1rem; /* Ensure consistent text size */
+  z-index: 1000; /* Allow overlap with other elements */
+}
+
+
+.musicSpeechBubble {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  border-radius: 0.4em;
+  padding: 10px;
+  color: black;
+  margin-bottom: 10px;
+  max-width: 400px; /* Ensure consistent width */
+  text-align: center;
+  border: 2px dotted black;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.1rem; /* Ensure consistent text size */
+  z-index: 1000; /* Allow overlap with other elements */
+}
+
+
+
