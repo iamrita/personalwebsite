@@ -10,6 +10,10 @@ import {
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import "../../components/firebase";
+import MovieSticker from "../../components/MovieSticker";
+import BookSticker from "../../components/BookSticker";
+import VideoGameSticker from "../../components/VideoGameSticker";
+import MusicSticker from "../../components/MusicSticker";
 
 export default function About() {
   return (
@@ -17,6 +21,10 @@ export default function About() {
       <Head>
         <title>About</title>
       </Head>
+      <MovieSticker />
+      <BookSticker />
+      <VideoGameSticker />
+      <MusicSticker />
       <article>
         <h1 className={utilStyles.headingXl}>About Me</h1>
         <div className={utilStyles.aboutText}>
