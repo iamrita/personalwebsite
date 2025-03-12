@@ -238,6 +238,9 @@
   padding: 1vw;
 }
 
+.link {
+  color: #E9967A;
+}
 
 .menuContainer {
   position: fixed;
@@ -279,4 +282,25 @@
   text-align: center;
   border: 2px dotted black;
   font-family: 'Courier New', Courier, monospace;
+}
+
+.blogContainer {
+  display: flex;
+  align-items: center;
+}
+
+.list {
+  flex: 1;
+}
+
+.gifContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 20px;
+}
+
+.gif {
+  max-width: 300px; /* Adjust the size as needed */
+  height: auto;
 }
