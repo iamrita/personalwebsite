@@ -28,7 +28,9 @@ export default function Layout({ children, home }) {
               width={144}
               alt=""
             /> */}
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={`${utilStyles.heading2Xl} ${styles.centerOnSmall}`}>
+              {name}
+            </h1>
 
             <div className={styles.row}>
               <a className={styles.column} href="https://github.com/iamrita">
