@@ -5,7 +5,8 @@ import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
 import "../components/firebase";
-import localFont from "next/font/local";
+// import localFont from "next/font/local";
+import headerFont from "../components/Font";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -17,11 +18,11 @@ export async function getStaticProps() {
   };
 }
 
-const yourFont = localFont({
-  src: "../fonts/test-domaine-text-bold.woff2", // path relative to this file
-  display: "swap",
-  variable: "--font-yourfont",
-});
+// const yourFont = localFont({
+//   src: "../fonts/test-domaine-text-bold.woff2", // path relative to this file
+//   display: "swap",
+//   variable: "--font-yourfont",
+// });
 
 export default function Home({ allPostsData }) {
   return (
@@ -79,7 +80,7 @@ export default function Home({ allPostsData }) {
         </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={yourFont.className}>Blog</h2>
+        <h2 className={headerFont.className}>Blog</h2>
         <div className={utilStyles.blogContainer}>
           <ul className={utilStyles.list}>
             {allPostsData.map(({ id, date, title }) => (
