@@ -17,8 +17,7 @@ const BookSticker = () => {
       {isOpen && (
         <div className={styles.speechBubble}>
           <p>
-            I am currently reading Remarkably Bright Creatures by Shelby Van
-            Pelt.
+            I am currently reading Between Two Kingdoms by Suleika Jaouad.
           </p>
         </div>
       )}

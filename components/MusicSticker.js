@@ -16,7 +16,7 @@ const MusicSticker = () => {
       <div className={styles.menuButton}>🎧</div>
       {isOpen && (
         <div className={styles.musicSpeechBubble}>
-          <p>I am currently listening to Ogi.</p>
+          <p>I am currently listening to Harry Styles.</p>
         </div>
       )}
     </div>

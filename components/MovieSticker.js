@@ -24,8 +24,7 @@ const MovieSticker = () => {
       {isOpen && (
         <div className={styles.speechBubble}>
           <p>
-            I am currently watching Running Point on Netflix and Severance on
-            Apple TV.
+            I am currently watching The Last of Us 2 on HBO Max.
           </p>
         </div>
       )}

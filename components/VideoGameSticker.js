@@ -16,7 +16,7 @@ const VideoGameSticker = () => {
     <div className={styles.videoGameContainer}>
       {isOpen && (
         <div className={styles.videoGameSpeechBubble}>
-          <p>I am currently playing Indika on the PlayStation V.</p>
+          <p>I am currently playing Split Fiction on the PlayStation V.</p>
         </div>
       )}
       <div
