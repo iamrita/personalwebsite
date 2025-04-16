@@ -14,6 +14,7 @@ import MovieSticker from "../../components/MovieSticker";
 import BookSticker from "../../components/BookSticker";
 import VideoGameSticker from "../../components/VideoGameSticker";
 import MusicSticker from "../../components/MusicSticker";
+import AppleSticker from "../../components/AppleSticker";
 
 export default function About() {
   return (
@@ -88,6 +89,7 @@ export default function About() {
           </ul>
         </div>
       </article>
+      <AppleSticker />
     </Layout>
   );
 }

@@ -1,4 +1,4 @@
-@font-face {
+/* @font-face {
   font-family: 'Domaine Display';
   src: url("/fonts/test-domaine-display-black.woff2") format("woff2");
   font-weight: bold;
@@ -10,7 +10,7 @@
   src: url("/fonts/test-domaine-text-bold.woff2") format("woff2");
   font-weight: normal;
   font-style: italic;
-}
+} */
 
 .heading2Xl {
   font-family: 'Domaine Text';
