@@ -25,3 +25,9 @@ img {
   max-width: 100%;
   display: block;
 }
+
+.heading2Xl,
+.headingXl,
+.headingLg {
+  font-family: var(--font-yourfont), sans-serif;
+}

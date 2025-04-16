@@ -14,7 +14,13 @@ import MovieSticker from "../../components/MovieSticker";
 import BookSticker from "../../components/BookSticker";
 import VideoGameSticker from "../../components/VideoGameSticker";
 import MusicSticker from "../../components/MusicSticker";
-import AppleSticker from "../../components/AppleSticker";
+import localFont from "next/font/local";
+
+const yourFont = localFont({
+  src: "../../fonts/test-domaine-text-bold.woff2", // path relative to this file
+  display: "swap",
+  variable: "--font-yourfont",
+});
 
 export default function About() {
   return (
@@ -27,7 +33,7 @@ export default function About() {
       <VideoGameSticker />
       <MusicSticker />
       <article>
-        <h1 className={utilStyles.headingXl}>About Me</h1>
+        <h1 className={yourFont.className}>About Me</h1>
         <div className={utilStyles.aboutText}>
           <p>
             Below, I've compiled a list of my favorites - places, books, TV
@@ -43,7 +49,7 @@ export default function About() {
             . This is a part of my website that I'm working on that is a work in
             progress.
           </p>
-          <h1 className={utilStyles.headingAbout}>Books</h1>
+          <h1 className={yourFont.className}>Books</h1>
           <ul>
             <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
             <li>Different by Franz de Waal</li>
@@ -57,7 +63,7 @@ export default function About() {
             <li>Martyr! By Kaveh Akbar</li>
           </ul>
 
-          <h1 className={utilStyles.headingAbout}>TV Shows</h1>
+          <h1 className={yourFont.className}>TV Shows</h1>
           <ul>
             <li>Severance (Apple TV)</li>
             <li>Atlanta (Hulu)</li>
@@ -65,7 +71,7 @@ export default function About() {
             <li>Chernobyl (HBO Max)</li>
           </ul>
 
-          <h1 className={utilStyles.headingAbout}>Movies</h1>
+          <h1 className={yourFont.className}>Movies</h1>
           <ul>
             <li>The Devil Wears Prada</li>
             <li>The Farewell</li>
@@ -77,7 +83,7 @@ export default function About() {
             <li>Freaky Friday</li>
           </ul>
 
-          <h1 className={utilStyles.headingAbout}>Albums</h1>
+          <h1 className={yourFont.className}>Albums</h1>
           <ul>
             <li>Ctrl by SZA</li>
             <li>Nothing Like the Sun by Sting</li>
@@ -89,7 +95,6 @@ export default function About() {
           </ul>
         </div>
       </article>
-      <AppleSticker />
     </Layout>
   );
 }

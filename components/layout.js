@@ -3,9 +3,16 @@ import Head from "next/head";
 import utilStyles from "../styles/utils.module.css";
 import Image from "next/image";
 import Link from "next/link";
-
+import localFont from "next/font/local";
+const yourFont = localFont({
+  src: "../fonts/test-domaine-text-bold.woff2", // path relative to this file
+  display: "swap",
+  variable: "--font-yourfont",
+});
 const name = "Amrita Venkatraman";
+
 export const siteTitle = "Amrita's Blog";
+
 export default function Layout({ children, home }) {
   return (
     <div className={styles.container}>
@@ -28,9 +35,7 @@ export default function Layout({ children, home }) {
               width={144}
               alt=""
             /> */}
-            <h1 className={`${utilStyles.heading2Xl} ${styles.centerOnSmall}`}>
-              {name}
-            </h1>
+            <h1 className={yourFont.className}>{name}</h1>
 
             <div className={styles.row}>
               <a className={styles.column} href="https://github.com/iamrita">
