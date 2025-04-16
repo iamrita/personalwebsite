@@ -1,13 +1,13 @@
 @font-face {
   font-family: 'Domaine Display';
-  src: url("/public/fonts/test-domaine-display-black.woff2") format("woff2");
+  src: url("/fonts/test-domaine-display-black.woff2") format("woff2");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Domaine Text';
-  src: url("/public/fonts/test-domaine-text-bold.woff2") format("woff2");
+  src: url("/fonts/test-domaine-text-bold.woff2") format("woff2");
   font-weight: normal;
   font-style: italic;
 }
