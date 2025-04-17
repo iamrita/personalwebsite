@@ -15,6 +15,7 @@ import BookSticker from "../../components/BookSticker";
 import VideoGameSticker from "../../components/VideoGameSticker";
 import MusicSticker from "../../components/MusicSticker";
 import headerFont from "../../components/Font";
+import Bookshelf from "../../components/Bookshelf";
 
 export default function About() {
   return (
@@ -22,10 +23,10 @@ export default function About() {
       <Head>
         <title>About</title>
       </Head>
-      <MovieSticker />
+      {/* <MovieSticker />
       <BookSticker />
       <VideoGameSticker />
-      <MusicSticker />
+      <MusicSticker /> */}
       <article>
         <h1 className={headerFont.className}>About Me</h1>
         <div className={utilStyles.aboutText}>
@@ -36,15 +37,16 @@ export default function About() {
             together!
           </p>
           <p>
-            I also love to play{" "}
-            <Link className={utilStyles.link} href={`/posts/connections`}>
-              Connections
-            </Link>
-            . This is a part of my website that I'm working on that is a work in
-            progress.
+            Currently, I am reading Between Two Kingdoms by Suleika Jaouad,
+            listening to a lot of Harry Styles, and watching The Last of Us 2 on
+            HBO Max. My partner and I also just finished playing Indika on the
+            Playstation V and are about to start Split Fiction.
           </p>
           <h1 className={headerFont.className}>Books</h1>
-          <ul>
+          <Bookshelf />
+          {/* <Bookshelf /> */}
+
+          {/* <ul>
             <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
             <li>Different by Franz de Waal</li>
             <li>Maximum City by Suketu Mehta</li>
@@ -55,7 +57,7 @@ export default function About() {
             <li>Pachinko by Min Jin Lee</li>
             <li>The Interestings by Meg Wolitzer</li>
             <li>Martyr! By Kaveh Akbar</li>
-          </ul>
+          </ul> */}
 
           <h1 className={headerFont.className}>TV Shows</h1>
           <ul>
