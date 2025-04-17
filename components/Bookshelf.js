@@ -9,7 +9,7 @@ const books = [
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1439218170i/4364.jpg",
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1529845599i/34051011.jpg",
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1683818219i/139400713.jpg",
-  "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1579614170i/50743767.jpg",
+  "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577090827l/51791252.jpg",
 ];
 
 function Book({ imageURL }) {
