@@ -1,5 +1,20 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|VT323&display=swap');
 
+@keyframes pulse {
+  0% {
+    transform: translateY(-215%) scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.7);
+  }
+  50% {
+    transform: translateY(-215%) scale(1.1);
+    box-shadow: 0 0 10px 10px rgba(255, 255, 0, 0);
+  }
+  100% {
+    transform: translateY(-215%) scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 0, 0);
+  }
+}
+
 .row {
   padding-top: 2rem;
   padding-bottom: 2rem;
@@ -98,6 +113,7 @@
   line-height: 0;
   cursor: pointer;
   transition: all 200ms ease-in-out;
+  animation: pulse 2s infinite; /* Add the pulse animation */
 }
 
 .dial:hover {

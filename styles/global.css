@@ -8,6 +8,14 @@ body {
   font-size: 18px;
 }
 
+body {
+  background-color: #ffffff;
+  background-image:
+    linear-gradient(hsl(189, 37%, 93%) 1px, transparent 1px),
+    linear-gradient(90deg, hsl(189, 37%, 93%) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
 * {
   box-sizing: border-box;
 }
