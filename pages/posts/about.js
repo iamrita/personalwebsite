@@ -19,6 +19,16 @@ import Bookshelf from "../../components/Bookshelf";
 import GifTV from "../../components/Television";
 import SpotifyEmbed from "../../components/MusicPlayer";
 
+const books = [
+  "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1641271171i/58085267.jpg",
+  "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1448108591i/27071490.jpg",
+
+  "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1439218170i/4364.jpg",
+  "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1529845599i/34051011.jpg",
+  "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1683818219i/139400713.jpg",
+  "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577090827l/51791252.jpg",
+];
+
 export default function About() {
   return (
     <Layout>
@@ -45,7 +55,7 @@ export default function About() {
             Playstation V and are about to start Split Fiction.
           </p>
           <h1 className={headerFont.className}>Books</h1>
-          <Bookshelf />
+          <Bookshelf books={books} />
           {/* <Bookshelf /> */}
 
           {/* <ul>

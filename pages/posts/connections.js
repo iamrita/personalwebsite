@@ -36,25 +36,13 @@ const words = [
 const easyArray = ['which', 'what', 'why', 'where']
 const mediumArray = ['odd', 'peculiar', 'bizarre', 'unusual']
 const hardArray = ['narnia', 'neverland', 'atlantis', 'rivendell']
-const difficultArray = ['Miami', 'Atlanta', 'phil', 'who']
+const difficultArray = ['oz', 'strange', 'phil', 'who']
 
 
 function containSameElements(arr1, arr2) {
     const set1 = new Set(arr1)
     const set2 = new Set(arr2)
     return isEqual(set1, set2)
-}
-
-function formatTextFile(dataString) {
-    // Split the string into lines
-    const lines = dataString.split('\n');
-    // Extract words from the first line
-    const wordsLine = lines[0].trim();
-    // Split the words line by colon and get the words part
-    const wordsArray = wordsLine.split(': ')[1].split(',');
-    // Trim each word and remove any empty strings
-    const words = wordsArray.map(word => word.trim()).filter(word => word !== '');
-    return words;
 }
 
 export default function Connections() {
