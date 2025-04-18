@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../styles/tv.module.css";
-// import './GifTV.css'; // Add your CSS styles including the keyframes
 
 const CHANNELS = [
   "https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExeDNpNzhqeHU5cnZoZXlsOGczN3R3dHpwMDZ0anY5aTdvd3k1c2hpdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/XjDZoIXRpaJjZY6VFI/giphy.gif",
@@ -13,25 +12,13 @@ const CHANNELS = [
 const STATIC_GIF =
   "https://res.cloudinary.com/cyborgspaceviking/image/upload/v1571155222/giphy_n0r827.gif";
 
-const playSound = (url, volume = 1, muted = false) => {
-  if (muted) return;
-  const audio = new Audio(url);
-  audio.volume = volume;
-  audio.play();
-};
-
 const GifTV = () => {
   const videoRef = useRef(null);
   const pixelsRef = useRef(null);
   const viewportRef = useRef(null);
 
   const [channelIndex, setChannelIndex] = useState(0);
-  const [volume, setVolume] = useState(8);
-  const [isMuted, setMuted] = useState(false);
-  const [hdOn, setHdOn] = useState(true);
-  const [hueShift, setHueShift] = useState(false);
-  const [brightOn, setBrightOn] = useState(true);
-  const [colorOn, setColorOn] = useState(true);
+
   const [message, setMessage] = useState({ left: [], right: [] });
 
   const updateMessage = (side, text) => {
@@ -66,79 +53,50 @@ const GifTV = () => {
     videoRef.current.src = CHANNELS[channelIndex];
   }, []);
 
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.style.animation = hueShift
-        ? "rainbow_barf 2s infinite"
-        : "";
-      videoRef.current.style.filter = colorOn ? "none" : "grayscale(100%)";
-    }
-  }, [hueShift, colorOn]);
-
-  useEffect(() => {
-    if (pixelsRef.current) {
-      pixelsRef.current.style.visibility = hdOn ? "visible" : "hidden";
-    }
-  }, [hdOn]);
-
-  useEffect(() => {
-    if (viewportRef.current) {
-      viewportRef.current.style.opacity = brightOn ? "1" : "0.5";
-    }
-  }, [brightOn]);
-
   return (
-    <div className={styles.body}>
-      <section className={`${styles.row} ${styles.gutter}`}>
-        <div className={styles.wrapper}>
-          <div className={styles.gifTv}>
-            <div ref={viewportRef} className={styles.viewport}>
-              <img ref={videoRef} className={styles.video} alt="GIF TV" />
-              <div
-                ref={pixelsRef}
-                className={styles.pixels}
-                style={{
-                  backgroundImage: `url('https://res.cloudinary.com/cyborgspaceviking/image/upload/v1571119227/vhs-overlay_zpzs7x.png')`,
-                }}
-              />
-              <div className={styles.metaLeft}>
-                {message.left.map((msg, i) => (
-                  <span
-                    key={i}
-                    className={`${styles.tvSpan} ${styles.activeText}`}
-                  >
-                    {msg}
-                  </span>
-                ))}
-              </div>
-              <div className={styles.metaRight}>
-                {message.right.map((msg, i) => (
-                  <span
-                    key={i}
-                    className={`${styles.tvSpan} ${styles.activeText}`}
-                  >
-                    {msg}
-                  </span>
-                ))}
-              </div>
+    <section className={`${styles.row} ${styles.gutter}`}>
+      <div className={styles.wrapper}>
+        <div className={styles.gifTv}>
+          <div ref={viewportRef} className={styles.viewport}>
+            <img ref={videoRef} className={styles.video} alt="GIF TV" />
+            <div
+              ref={pixelsRef}
+              className={styles.pixels}
+              style={{
+                backgroundImage: `url('https://res.cloudinary.com/cyborgspaceviking/image/upload/v1571119227/vhs-overlay_zpzs7x.png')`,
+              }}
+            />
+            <div className={styles.metaLeft}>
+              {message.left.map((msg, i) => (
+                <span
+                  key={i}
+                  className={`${styles.tvSpan} ${styles.activeText}`}
+                >
+                  {msg}
+                </span>
+              ))}
             </div>
-
-            <img
-              className={styles.tv}
-              src="https://res.cloudinary.com/cyborgspaceviking/image/upload/v1571119227/80s-tv_ekkex2.png"
-              alt="CRT TV"
-            />
-
-            {/* Buttons */}
-
-            <button
-              className={styles.dial}
-              onClick={() => changeChannel("up")}
-            />
+            <div className={styles.metaRight}>
+              {message.right.map((msg, i) => (
+                <span
+                  key={i}
+                  className={`${styles.tvSpan} ${styles.activeText}`}
+                >
+                  {msg}
+                </span>
+              ))}
+            </div>
           </div>
+
+          <img
+            className={styles.tv}
+            src="https://res.cloudinary.com/cyborgspaceviking/image/upload/v1571119227/80s-tv_ekkex2.png"
+            alt="CRT TV"
+          />
+          <button className={styles.dial} onClick={() => changeChannel("up")} />
         </div>
-      </section>
-    </div>
+      </div>
+    </section>
   );
 };
 
