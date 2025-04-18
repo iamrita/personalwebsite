@@ -17,6 +17,7 @@ import MusicSticker from "../../components/MusicSticker";
 import headerFont from "../../components/Font";
 import Bookshelf from "../../components/Bookshelf";
 import GifTV from "../../components/Television";
+import SpotifyEmbed from "../../components/MusicPlayer";
 
 export default function About() {
   return (
@@ -76,15 +77,7 @@ export default function About() {
           </ul>
 
           <h1 className={headerFont.className}>Albums</h1>
-          <ul>
-            <li>Ctrl by SZA</li>
-            <li>Nothing Like the Sun by Sting</li>
-            <li>The Miseducation of Lauryn Hill by Lauryn Hill</li>
-            <li>Swimming by Mac Miller</li>
-            <li>ANTI by Rihanna</li>
-            <li>Channel Orange by Frank Ocean</li>
-            <li>Malibu by Anderson Paak</li>
-          </ul>
+          <SpotifyEmbed />
         </div>
       </article>
     </Layout>
