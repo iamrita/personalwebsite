@@ -16,6 +16,7 @@ import VideoGameSticker from "../../components/VideoGameSticker";
 import MusicSticker from "../../components/MusicSticker";
 import headerFont from "../../components/Font";
 import Bookshelf from "../../components/Bookshelf";
+import GifTV from "../../components/Television";
 
 export default function About() {
   return (
@@ -60,12 +61,7 @@ export default function About() {
           </ul> */}
 
           <h1 className={headerFont.className}>TV Shows</h1>
-          <ul>
-            <li>Severance (Apple TV)</li>
-            <li>Atlanta (Hulu)</li>
-            <li>Insecure (HBO Max)</li>
-            <li>Chernobyl (HBO Max)</li>
-          </ul>
+          <GifTV />
 
           <h1 className={headerFont.className}>Movies</h1>
           <ul>

@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|VT323&display=swap');
+
+ /* html {
+  font-size: 20px;
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 480px) and (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  position: relative;
+  background-color: #000;
+  font-size: 1rem;
+  font-family: Roboto;
+  color: #ccc;
+}
+
+body::before {
+  position: fixed;
+  z-index: -999;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-image: url('https://res.cloudinary.com/cyborgspaceviking/image/upload/v1571119521/space-background_fowfq3.jpg');
+  opacity: 0.3;
+  content: '';
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}  */
+
+.row {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.gutter {
+  padding-right: 2rem;
+  padding-left: 2rem;
+}
+
+.wrapper {
+  max-width: 1080px;
+  margin: auto;
+}
+
+.gifTv {
+  position: relative;
+  margin-right: 1rem;
+}
+
+.viewport {
+  position: absolute;
+  top: 9%;
+  right: 26%;
+  bottom: 15%;
+  left: 7%;
+  background: #161616;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.video {
+  z-index: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.pixels {
+  z-index: 1;
+  display: block;
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  content: '';
+}
+
+.metaLeft,
+.metaRight {
+  display: flex;
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  padding: 4% 6%;
+}
+
+.metaLeft {
+  justify-content: flex-start;
+  left: 0;
+}
+
+.metaRight {
+  justify-content: flex-end;
+  right: 0;
+}
+
+.tvSpan {
+  text-shadow: 0 0 3px #888;
+  font-size: 2rem;
+  font-family: VT323;
+}
+
+.inactiveText {
+  display: none;
+}
+
+.activeText {
+  display: block;
+}
+
+.dial {
+  display: block;
+  position: absolute;
+  left: 85.6%;
+  transform: translateY(-215%);
+  padding: 0;
+  border-radius: 50%;
+  border: yellow solid 3px;
+  background-color: transparent;
+  width: 10.2%;
+  line-height: 0;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.dial:hover {
+  border-color: #00aaff;
+}
+
+.dial:active {
+  border-color: #007fff;
+}
+
+.dial::before {
+  display: block;
+  width: 100%;
+  padding-top: 100%;
+  content: '';
+}
+
+.switch {
+  display: block;
+  position: absolute;
+  left: 82.2%;
+  transform: translateY(-50%);
+  padding: 0;
+  border-radius: 50%;
+  border: none;
+  background-color: #DFDDD1;
+  width: 1.6%;
+  line-height: 0;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+
+.switch:hover {
+  background-color: #00aaff;
+}
+
+.switch:active {
+  background-color: #007fff;
+}
+
+.switch::before {
+  display: block;
+  width: 100%;
+  padding-top: 100%;
+  content: '';
+}
+
+@keyframes rainbow_barf {
+  0% { filter: hue-rotate(0deg); }
+  25% { filter: hue-rotate(90deg); }
+  50% { filter: hue-rotate(180deg); }
+  75% { filter: hue-rotate(270deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+.cta {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform-origin: bottom left;
+  transform: translate(100%, 0) rotate(90deg);
+  text-shadow: 0 2px 8px #999;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.heading {
+  width: 100%;
+  margin: 10% 0;
+  text-shadow: 0 2px 8px #999;
+  letter-spacing: 0.2em;
+  font-weight: bold;
+  font-size: 4rem;
+  text-align: center;
+}
