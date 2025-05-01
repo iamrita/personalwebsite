@@ -1,39 +1,4 @@
-// import {onRequest} from "firebase-functions/v2/https";
-// import * as logger from "firebase-functions/logger";
-
-// // Start writing functions
-// // https://firebase.google.com/docs/functions/typescript
-
-// export const helloWorld = onRequest((request, response) => {
-//   // logger.info("test", request.params[0])
-//   // logger.info("Hello logs!", {structuredData: true});
-//   // response.send("Hello from Firebase!");
-//     logger.info("Webhook hit", { method: request.method, path: request.path });
-
-//   /* 1 ─── Verification handshake ───────────────────────────── */
-//   if (request.method === "GET") {
-//     const VERIFY_TOKEN = "myVerifyToken";        // ← use the same string in the curl you send to Strava
-//     if (request.query["hub.verify_token"] !== VERIFY_TOKEN) {
-//       response.status(403).send("Bad verify token");
-//       return;
-//     }
-//     // Echo the challenge so Strava accepts the subscription
-//     response.status(200).json({ "hub.challenge": request.query["hub.challenge"] });
-//     return;
-//   }
-
-//   /* 2 ─── Activity events (POST) ───────────────────────────── */
-//   if (request.method === "POST") {
-//     // You could inspect req.body here if you need to
-//     response.status(200).send("hooray");
-//     return;
-//   }
-
-//   /* 3 ─── Anything else ───────────────────────────────────── */
-//  response.status(405).send("Method not allowed");
-// });
-
-import { onRequest } from "firebase-functions/v2/https";
+import {onRequest} from "firebase-functions/v2/https";
 import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import axios from "axios";
@@ -48,7 +13,7 @@ const db = admin.firestore();
  * =================================================================== */
 export const helloWorld = onRequest(
   async (req, res): Promise<void> => {
-    logger.info("Webhook hit", { method: req.method, path: req.path });
+    logger.info("Webhook hit", {method: req.method, path: req.path});
 
     /* ---- 1-a  Verification handshake (GET) ------------------------- */
     if (req.method === "GET") {
@@ -58,7 +23,7 @@ export const helloWorld = onRequest(
       }
       res
         .status(200)
-        .json({ "hub.challenge": req.query["hub.challenge"] as string });
+        .json({"hub.challenge": req.query["hub.challenge"] as string});
       return;
     }
 
@@ -67,16 +32,25 @@ export const helloWorld = onRequest(
       res.status(200).send("hooray"); // ACK first so Strava stops retrying
 
       // OPTIONAL: fetch full activity details with a fresh access token
+      const payload =
+      typeof req.body === "string" ? Object.fromEntries(new URLSearchParams(req.body)) : req.body;
+
+    const objectId = payload.object_id;
+    if (!objectId) {
+      logger.warn("object_id missing", payload);
+      return;
+    }
+
       try {
-        const { object_id } = req.body;
         const token = await getFreshAccessToken();
-        const { data: act } = await axios.get(
-          `https://www.strava.com/api/v3/activities/${object_id}`,
-          { headers: { Authorization: `Bearer ${token}` } }
+        logger.info(`token is ${token}`)
+        const {data: act} = await axios.get(
+          `https://www.strava.com/api/v3/activities/${objectId}`,
+          {headers: {Authorization: `Bearer 991d0091bf4d05c81087b2896d598608ae94cfa5`}}
         );
-        logger.info(`Fetched activity ${object_id}: ${act.name} ${act.sport_type}`);
+        logger.info(`Fetched activity ${objectId}: ${act.name} ${act.sport_type}`);
       } catch (e) {
-        logger.warn("Failed to fetch full activity", e);
+        logger.warn(`Failed to fetch full activity for ${objectId}`, e);
       }
       return;
     }
@@ -105,25 +79,15 @@ export const stravaOAuth = onRequest(
         /* redirect_uri is optional as long as host matched */
       });
 
-      // const { data } = await axios.post(
-      //   "https://www.strava.com/api/v3/oauth/token",
-      //   {
-      //     client_id: "157704",
-      //     client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
-      //     grant_type: "authorization_code",
-      //     code: authCode,
-      //   }
-      // );
-
-      const { data } = await axios.post(
+      const {data} = await axios.post(
         "https://www.strava.com/api/v3/oauth/token",
         body.toString(),
-        { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+        {headers: {"Content-Type": "application/x-www-form-urlencoded"}}
       );
 
       // Save the trio {access_token, refresh_token, expires_at} in Firestore
       await db.doc("config/stravaTokens").set(data);
-      logger.info("Stored new Strava tokens", { athlete: data.athlete?.id });
+      logger.info("Stored new Strava tokens", {athlete: data.athlete?.id});
 
       res
         .status(200)
@@ -137,9 +101,10 @@ export const stravaOAuth = onRequest(
   }
 );
 
-/* =====================================================================
- * 3.  Helper – auto-refresh access token when needed
- * =================================================================== */
+/**
+ * 
+ * @returns Promise
+ */
 async function getFreshAccessToken(): Promise<string> {
   const snap = await db.doc("config/stravaTokens").get();
   const tokens = snap.data() as {
@@ -152,16 +117,16 @@ async function getFreshAccessToken(): Promise<string> {
 
   if (Date.now() / 1000 < tokens.expires_at - 60) return tokens.access_token;
 
-  const { data } = await axios.post(
+  const {data} = await axios.post(
     "https://www.strava.com/api/v3/oauth/token",
     {
-      client_id:"157704",
+      client_id: "157704",
       client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
       grant_type: "refresh_token",
       refresh_token: tokens.refresh_token,
     }
   );
 
-  await snap.ref.set(data);
+ await snap.ref.set(data);
   return data.access_token;
 }
