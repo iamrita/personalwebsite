@@ -24,7 +24,7 @@ curl -X POST https://www.strava.com/api/v3/push_subscriptions \
 
  */
 admin.initializeApp();
-const db = admin.firestore();
+//const db = admin.firestore();
 
 
 
@@ -51,21 +51,24 @@ export const helloWorld = onRequest(
     /* ---- 1-b  Activity POST ---------------------------------------- */
     if (req.method === "POST") {
       res.status(200).send("hooray"); // ACK first so Strava stops retrying
+      const {object_id} = req.body
+      logger.info(`Fetched activity for ${object_id}`)
 
 
       // OPTIONAL: fetch full activity details with a fresh access toke
 
-      try {
-        const {object_id} = req.body
-        const token = await getFreshAccessToken();
-        const {data: act} = await axios.get(
-          `https://www.strava.com/api/v3/activities/${object_id}`,
-          {headers: {Authorization: `Bearer ${token}`}}
-        );
-        logger.info(`Fetched activity ${object_id}: ${act.name} ${act.sport_type}`);
-      } catch (e) {
-        logger.warn(`Failed to fetch full activit sdfsdfsdfsdfy`, e);
-      }
+      // COMMENT THIS BACK
+      // try {
+      //   const {object_id} = req.body
+      //   const token = await getFreshAccessToken();
+      //   const {data: act} = await axios.get(
+      //     `https://www.strava.com/api/v3/activities/${object_id}`,
+      //     {headers: {Authorization: `Bearer ${token}`}}
+      //   );
+      //   logger.info(`Fetched activity ${object_id}: ${act.name} ${act.sport_type}`);
+      // } catch (e) {
+      //   logger.warn(`Failed to fetch full activit sdfsdfsdfsdfy`, e);
+      // }
       return;
     }
 
@@ -99,8 +102,9 @@ export const stravaOAuth = onRequest(
         {headers: {"Content-Type": "application/x-www-form-urlencoded"}}
       );
 
+      // COMMENT THIS BACK
       // Save the trio {access_token, refresh_token, expires_at} in Firestore
-      await db.doc("config/stravaTokens").set(data);
+     // await db.doc("config/stravaTokens").set(data); having trouble setting this data for some reason which is causing 500s
       logger.info("Stored new Strava tokens", {athlete: data.athlete?.id});
 
       res
@@ -116,31 +120,31 @@ export const stravaOAuth = onRequest(
 );
 
 /**
- * 
+ * COMMENT THIS BACK
  * @returns Promise
  */
-async function getFreshAccessToken(): Promise<string> {
-  const snap = await db.doc("config/stravaTokens").get();
-  const tokens = snap.data() as {
-    access_token: string;
-    refresh_token: string;
-    expires_at: number;
-  };
+// async function getFreshAccessToken(): Promise<string> {
+//   const snap = await db.doc("config/stravaTokens").get();
+//   const tokens = snap.data() as {
+//     access_token: string;
+//     refresh_token: string;
+//     expires_at: number;
+//   };
 
-  if (!tokens) throw new Error("Strava tokens not found; run OAuth first");
+//   if (!tokens) throw new Error("Strava tokens not found; run OAuth first");
 
-  if (Date.now() / 1000 < tokens.expires_at - 60) return tokens.access_token;
+//   if (Date.now() / 1000 < tokens.expires_at - 60) return tokens.access_token;
 
-  const {data} = await axios.post(
-    "https://www.strava.com/api/v3/oauth/token",
-    {
-      client_id: "157704",
-      client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
-      grant_type: "refresh_token",
-      refresh_token: tokens.refresh_token,
-    }
-  );
+//   const {data} = await axios.post(
+//     "https://www.strava.com/api/v3/oauth/token",
+//     {
+//       client_id: "157704",
+//       client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
+//       grant_type: "refresh_token",
+//       refresh_token: tokens.refresh_token,
+//     }
+//   );
 
- await snap.ref.set(data);
-  return data.access_token;
-}
+//  await snap.ref.set(data);
+//   return data.access_token;
+// }
