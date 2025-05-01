@@ -3,9 +3,29 @@ import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import axios from "axios";
 
-/* ───────── Initialise Firestore (emulator-safe) ───────── */
+
+/**
+ * To test the strava webhook locally you need to run
+ * (first compile the typescript using npm run build)
+ * then run firebase emulators:start --only functions, firestore
+ * then to get the grok you want to run npx ngrok http 5001
+ * then go to this link: https://www.strava.com/oauth/authorize?client_id=157704&response_type=code&redirect_uri=https://4307-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force to authorize strava 
+ * 
+ * also make sure that your subscription is live 
+ * curl -G https://www.strava.com/api/v3/push_subscriptions \
+     -d client_id=157704 -d client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 | jq
+
+     curl -X DELETE https://www.strava.com/api/v3/push_subscriptions/281111?client_id=157704& client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396
+curl -X POST https://www.strava.com/api/v3/push_subscriptions \
+     -F client_id=157704 \
+     -F client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 \
+     -F callback_url=https://55ff-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/helloWorld \
+     -F verify_token=myVerifyToken
+
+ */
 admin.initializeApp();
 const db = admin.firestore();
+
 
 
 /* =====================================================================
@@ -14,6 +34,7 @@ const db = admin.firestore();
 export const helloWorld = onRequest(
   async (req, res): Promise<void> => {
     logger.info("Webhook hit", {method: req.method, path: req.path});
+
 
     /* ---- 1-a  Verification handshake (GET) ------------------------- */
     if (req.method === "GET") {
@@ -31,26 +52,19 @@ export const helloWorld = onRequest(
     if (req.method === "POST") {
       res.status(200).send("hooray"); // ACK first so Strava stops retrying
 
-      // OPTIONAL: fetch full activity details with a fresh access token
-      const payload =
-      typeof req.body === "string" ? Object.fromEntries(new URLSearchParams(req.body)) : req.body;
 
-    const objectId = payload.object_id;
-    if (!objectId) {
-      logger.warn("object_id missing", payload);
-      return;
-    }
+      // OPTIONAL: fetch full activity details with a fresh access toke
 
       try {
+        const {object_id} = req.body
         const token = await getFreshAccessToken();
-        logger.info(`token is ${token}`)
         const {data: act} = await axios.get(
-          `https://www.strava.com/api/v3/activities/${objectId}`,
-          {headers: {Authorization: `Bearer 991d0091bf4d05c81087b2896d598608ae94cfa5`}}
+          `https://www.strava.com/api/v3/activities/${object_id}`,
+          {headers: {Authorization: `Bearer ${token}`}}
         );
-        logger.info(`Fetched activity ${objectId}: ${act.name} ${act.sport_type}`);
+        logger.info(`Fetched activity ${object_id}: ${act.name} ${act.sport_type}`);
       } catch (e) {
-        logger.warn(`Failed to fetch full activity for ${objectId}`, e);
+        logger.warn(`Failed to fetch full activit sdfsdfsdfsdfy`, e);
       }
       return;
     }
