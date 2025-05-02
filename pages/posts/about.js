@@ -18,6 +18,15 @@ import headerFont from "../../components/Font";
 import Bookshelf from "../../components/Bookshelf";
 import GifTV from "../../components/Television";
 import SpotifyEmbed from "../../components/MusicPlayer";
+import {
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+  onSnapshot,
+} from "firebase/firestore";
+import { db } from "../../components/firebase";
 
 const books = [
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1641271171i/58085267.jpg",
@@ -30,6 +39,25 @@ const books = [
 ];
 
 export default function About() {
+  const [sports, setSports] = useState([]);
+
+  useEffect(() => {
+    // Query the most recent activity
+    const q = query(collection(db, "activities"), orderBy("timestamp", "desc"));
+
+    // Real-time:
+    const unsub = onSnapshot(q, (snap) => {
+      if (!snap.empty) {
+        const types = snap.docs.map((doc) => doc.data().sportType);
+        setSports(types);
+      } else {
+        setSports("no activities yet");
+      }
+    });
+
+    return () => unsub();
+  }, []);
+
   return (
     <Layout>
       <Head>
@@ -54,6 +82,16 @@ export default function About() {
             HBO Max. My partner and I also just finished playing Indika on the
             Playstation V and are about to start Split Fiction.
           </p>
+          <h1>Latest activity</h1>
+          {sports.length > 0 ? (
+            <ul>
+              {sports.map((type, idx) => (
+                <li key={idx}>{type}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>No activities yet.</p>
+          )}
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
           {/* <Bookshelf /> */}
