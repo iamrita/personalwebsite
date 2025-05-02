@@ -1,8 +1,7 @@
-import {onRequest} from "firebase-functions/v2/https";
+import { onRequest } from "firebase-functions/v2/https";
 import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import axios from "axios";
-
 
 /**
  * To test the strava webhook locally you need to run
@@ -26,100 +25,107 @@ curl -X POST https://www.strava.com/api/v3/push_subscriptions \
 admin.initializeApp();
 const db = admin.firestore();
 
-
-
 /* =====================================================================
  * 1.  /helloWorld  – Strava Webhook (handshake + activity POST)
  * =================================================================== */
-export const helloWorld = onRequest(
-  async (req, res): Promise<void> => {
-    logger.info("Webhook hit", {method: req.method, path: req.path});
+export const helloWorld = onRequest(async (req, res): Promise<void> => {
+  logger.info("Webhook hit", { method: req.method, path: req.path });
 
-
-    /* ---- 1-a  Verification handshake (GET) ------------------------- */
-    if (req.method === "GET") {
-      if (req.query["hub.verify_token"] !== "myVerifyToken") {
-        res.status(403).send("Bad verify token");
-        return;
-      }
-      res
-        .status(200)
-        .json({"hub.challenge": req.query["hub.challenge"] as string});
+  /* ---- 1-a  Verification handshake (GET) ------------------------- */
+  if (req.method === "GET") {
+    if (req.query["hub.verify_token"] !== "myVerifyToken") {
+      res.status(403).send("Bad verify token");
       return;
     }
-
-    /* ---- 1-b  Activity POST ---------------------------------------- */
-    if (req.method === "POST") {
-      res.status(200).send("hooray"); // ACK first so Strava stops retrying
-      try {
-        const {object_id} = req.body
-        const token = await getFreshAccessToken();
-        const {data: act} = await axios.get(
-          `https://www.strava.com/api/v3/activities/${object_id}`,
-          {headers: {Authorization: `Bearer ${token}`}}
-        );
-        logger.info(`Fetched activity ${object_id}: ${act.name} ${act.sport_type}`);
-      } catch (e) {
-        logger.warn(`Failed to fetch full activity`, e);
-      }
-      return;
-    }
-
-    res.status(405).send("Method not allowed");
+    res
+      .status(200)
+      .json({ "hub.challenge": req.query["hub.challenge"] as string });
+    return;
   }
-);
+
+  /* ---- 1-b  Activity POST ---------------------------------------- */
+  if (req.method === "POST") {
+    res.status(200).send("hooray"); // ACK first so Strava stops retrying
+    try {
+      const { object_id } = req.body;
+      const token = await getFreshAccessToken();
+      const { data: act } = await axios.get(
+        `https://www.strava.com/api/v3/activities/${object_id}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      logger.info(
+        `Fetched activity ${object_id}: ${act.name} ${act.sport_type}`
+      );
+
+      try {
+        // Write to Firestore:
+        await db.collection("activities").doc(object_id.toString()).set({
+          name: act.name,
+          sportType: act.sport_type,
+          timestamp: admin.firestore.FieldValue.serverTimestamp(),
+        });
+      } catch (e) {
+        logger.error("Failed to write activity data", e);
+      }
+
+      logger.info(`Saved activity ${object_id} (${act.sport_type})`);
+    } catch (e) {
+      logger.warn(`Failed to fetch full activity`, e);
+    }
+    return;
+  }
+
+  res.status(405).send("Method not allowed");
+});
 
 /* =====================================================================
  * 2.  /stravaOAuth  – handles the browser redirect & stores tokens
  * =================================================================== */
-export const stravaOAuth = onRequest(
-  async (req, res): Promise<void> => {
-    const authCode = req.query.code as string | undefined;
-    if (!authCode) {
-      res.status(400).send("Missing ?code param");
+export const stravaOAuth = onRequest(async (req, res): Promise<void> => {
+  const authCode = req.query.code as string | undefined;
+  if (!authCode) {
+    res.status(400).send("Missing ?code param");
+    return;
+  }
+
+  try {
+    const body = new URLSearchParams({
+      client_id: "157704",
+      client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
+      grant_type: "authorization_code",
+      code: authCode,
+      /* redirect_uri is optional as long as host matched */
+    });
+
+    const { data } = await axios.post(
+      "https://www.strava.com/api/v3/oauth/token",
+      body.toString(),
+      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    );
+
+    // Save the trio {access_token, refresh_token, expires_at} in Firestore
+    try {
+      await db.doc("config/stravaTokens").set(data); // ok so I learned that in order for this to work, the database on firestore needs to be named (default)
+      logger.info("Stored new Strava tokens", { athlete: data.athlete?.id });
+    } catch (e) {
+      logger.error("Failed to store tokens", e);
+      res.status(500).send("Failed to store tokens");
       return;
     }
 
-    try {
-      const body = new URLSearchParams({
-        client_id: "157704",
-        client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
-        grant_type: "authorization_code",
-        code: authCode,
-        /* redirect_uri is optional as long as host matched */
-      });
-
-      const {data} = await axios.post(
-        "https://www.strava.com/api/v3/oauth/token",
-        body.toString(),
-        {headers: {"Content-Type": "application/x-www-form-urlencoded"}}
+    res
+      .status(200)
+      .send(
+        "✅ Strava authorised! You can close this tab and test the webhook."
       );
-
-      // Save the trio {access_token, refresh_token, expires_at} in Firestore
-      try {
-        await db.doc("config/stravaTokens").set(data); // ok so I learned that in order for this to work, the database on firestore needs to be named (default) 
-        logger.info("Stored new Strava tokens", {athlete: data.athlete?.id});
-      } catch (e) {
-        logger.error("Failed to store tokens", e);
-        res.status(500).send("Failed to store tokens");
-        return;
-      }
-    
-
-      res
-        .status(200)
-        .send(
-          "✅ Strava authorised! You can close this tab and test the webhook."
-        );
-    } catch (err) {
-      logger.error("OAuth exchange failed", err);
-      res.status(500).send("OAuth token exchange failed – see logs.");
-    }
+  } catch (err) {
+    logger.error("OAuth exchange failed", err);
+    res.status(500).send("OAuth token exchange failed – see logs.");
   }
-);
+});
 
 /**
- * 
+ *
  * @returns Promise
  */
 async function getFreshAccessToken(): Promise<string> {
@@ -134,7 +140,7 @@ async function getFreshAccessToken(): Promise<string> {
 
   if (Date.now() / 1000 < tokens.expires_at - 60) return tokens.access_token;
 
-  const {data} = await axios.post(
+  const { data } = await axios.post(
     "https://www.strava.com/api/v3/oauth/token",
     {
       client_id: "157704",
@@ -144,6 +150,6 @@ async function getFreshAccessToken(): Promise<string> {
     }
   );
 
- await snap.ref.set(data);
+  await snap.ref.set(data);
   return data.access_token;
 }
