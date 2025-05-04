@@ -51,7 +51,7 @@ export default function About() {
           <p>
             Currently, I am reading Careless People by Sarah Wynn-Wililams,
             listening to a lot of Harry Styles, and watching The Last of Us 2 on
-            HBO Max. My partner and I also playing Split Fiction on the Playstation 5.
+            HBO Max. My partner and I are also playing Split Fiction on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
