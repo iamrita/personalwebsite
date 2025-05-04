@@ -53,6 +53,7 @@ export const helloWorld = onRequest(async (req, res): Promise<void> => {
     res.status(200).send("hooray"); // ACK first so Strava stops retrying
     try {
       const { object_id } = req.body;
+      logger.info(`Created activity with id ${object_id}`)
       const token = await getFreshAccessToken();
       const { data: act } = await axios.get(
         `https://www.strava.com/api/v3/activities/${object_id}`,
