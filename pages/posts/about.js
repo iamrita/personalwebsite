@@ -8,7 +8,6 @@ import Bookshelf from "../../components/Bookshelf";
 import GifTV from "../../components/Television";
 import SpotifyEmbed from "../../components/MusicPlayer";
 
-
 const books = [
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1641271171i/58085267.jpg",
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1448108591i/27071490.jpg",
@@ -18,7 +17,6 @@ const books = [
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1683818219i/139400713.jpg",
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577090827l/51791252.jpg",
 ];
-
 
 // Helper to generate calendar grid for current month
 function generateCalendar(year, month) {
@@ -58,15 +56,15 @@ export default function About() {
         <h1 className={headerFont.className}>About Me</h1>
         <div className={utilStyles.aboutText}>
           <p>
-            Below, I've compiled a list of my favorites - places, books, TV
-            shows, music, and movies. I try to keep them updated when I can.
-            Please contact me if you'd like to geek out over anything listed
-            together!
+            Below, I've compiled a list of my favorites - specifically books, TV
+            shows, and music. I try to keep them updated when I can. Please
+            contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
             Currently, I am reading Careless People by Sarah Wynn-Wililams,
             listening to a lot of Harry Styles, and watching The Last of Us 2 on
-            HBO Max. My partner and I are also playing Split Fiction on the Playstation 5.
+            HBO Max. My partner and I are also playing Split Fiction on the
+            Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
@@ -88,7 +86,7 @@ export default function About() {
           <h1 className={headerFont.className}>TV Shows</h1>
           <GifTV />
 
-          <h1 className={headerFont.className}>Movies</h1>
+          {/* <h1 className={headerFont.className}>Movies</h1>
           <ul>
             <li>The Devil Wears Prada</li>
             <li>The Farewell</li>
@@ -98,14 +96,24 @@ export default function About() {
             <li>Zindagi Na Milegi Dobara</li>
             <li>A Real Pain</li>
             <li>Freaky Friday</li>
-          </ul>
-        
+          </ul> */}
 
           <h1 className={headerFont.className}>Albums</h1>
           <SpotifyEmbed />
         </div>
       </article>
-     
+      <style jsx>
+        {`
+          p,
+          ul {
+            border: 1px solid black;
+            font-size: 18px;
+            border-radius: 8px;
+            background-color: #e9f4e9;
+            padding: 32px;
+          }
+        `}
+      </style>
     </Layout>
   );
 }

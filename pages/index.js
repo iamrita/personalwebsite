@@ -41,9 +41,12 @@ export default function Home({ allPostsData }) {
           software engineer for Maven Clinic, a virtual clinic for women and
           families. I recently have been volunteering at the San Francisco
           Tenants Union, where I help tenants learn about their rights against
-          eviction and displacement. When I'm not working or volunteering, I'm
-          usually doing yoga, top-roping, or trying to make it through a Barry's
-          Bootcamp class without dying. Check out this little{" "}
+          eviction and displacement.
+          <br />
+          <br />
+          When I'm not working or volunteering, I'm usually doing yoga,
+          top-roping, or trying to make it through a Barry's Bootcamp class
+          without dying. Check out this little{" "}
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
@@ -114,7 +117,7 @@ export default function Home({ allPostsData }) {
             border: 1px solid black;
             font-size: 18px;
             border-radius: 8px;
-            background-color: white;
+            background-color:#f0f0f0;
             padding: 32px;
           }
         `}
