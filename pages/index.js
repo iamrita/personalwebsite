@@ -43,7 +43,7 @@ export default function Home({ allPostsData }) {
           Tenants Union, where I help tenants learn about their rights against
           eviction and displacement. When I'm not working or volunteering, I'm
           usually doing yoga, top-roping, or trying to make it through a Barry's
-          Boot Camp class without dying. Check out this little{" "}
+          Bootcamp class without dying. Check out this little{" "}
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
