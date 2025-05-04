@@ -2,21 +2,23 @@ import { onRequest } from "firebase-functions/v2/https";
 import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import axios from "axios";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 /**
  * To test the strava webhook locally you need to run
  * (first compile the typescript using npm run build)
  * then run firebase emulators:start --only functions, firestore
  * then to get the grok you want to run npx ngrok http 5001
- * then go to this link: https://www.strava.com/oauth/authorize?client_id=157704&response_type=code&redirect_uri=https://4307-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force to authorize strava 
+ * then go to this link: https://www.strava.com/oauth/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=https://4307-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force to authorize strava 
  * 
  * also make sure that your subscription is live 
  * curl -G https://www.strava.com/api/v3/push_subscriptions \
-     -d client_id=157704 -d client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 | jq
+     -d client_id=CLIENT_ID -d client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 | jq
 
-     curl -X DELETE https://www.strava.com/api/v3/push_subscriptions/281111?client_id=157704& client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396
+     curl -X DELETE https://www.strava.com/api/v3/push_subscriptions/281111?client_id=CLIENT_ID& client_secret=CLIENT_SECRET
 curl -X POST https://www.strava.com/api/v3/push_subscriptions \
-     -F client_id=157704 \
+     -F client_id=CLIENT_ID \
      -F client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 \
      -F callback_url=https://55ff-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/helloWorld \
      -F verify_token=myVerifyToken
@@ -24,6 +26,9 @@ curl -X POST https://www.strava.com/api/v3/push_subscriptions \
  */
 admin.initializeApp();
 const db = admin.firestore();
+
+const CLIENT_ID = process.env.STRAVA_CLIENT_ID!;
+const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET!;
 
 /* =====================================================================
  * 1.  /helloWorld  – Strava Webhook (handshake + activity POST)
@@ -90,8 +95,8 @@ export const stravaOAuth = onRequest(async (req, res): Promise<void> => {
 
   try {
     const body = new URLSearchParams({
-      client_id: "157704",
-      client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
       grant_type: "authorization_code",
       code: authCode,
       /* redirect_uri is optional as long as host matched */
@@ -143,8 +148,8 @@ async function getFreshAccessToken(): Promise<string> {
   const { data } = await axios.post(
     "https://www.strava.com/api/v3/oauth/token",
     {
-      client_id: "157704",
-      client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
       grant_type: "refresh_token",
       refresh_token: tokens.refresh_token,
     }
