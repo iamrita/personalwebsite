@@ -37,11 +37,20 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/about`} className={utilStyles.link}>
             Amrita
           </Link>
-          . I currently live in San Francisco, California and work as an
-          engineer for Maven Clinic, a virtual clinic for women and families. I
-          recently have been volunteering at the San Francisco Tenants Union,
-          where I help tenants learn about their rights against eviction and
-          displacement. I also have a minor obsession with the{" "}
+          . I currently live in San Francisco, California and work as a senior
+          software engineer for Maven Clinic, a virtual clinic for women and
+          families. I recently have been volunteering at the San Francisco
+          Tenants Union, where I help tenants learn about their rights against
+          eviction and displacement. When I'm not working or volunteering, I'm
+          usually doing yoga, top-roping, or trying to make it through a Barry's
+          Boot Camp class without dying. Check out this little{" "}
+          <Link href={`/posts/activities`} className={utilStyles.link}>
+            activity calendar
+          </Link>{" "}
+          I made for myself!
+        </p>
+        <p>
+          I also have a minor obsession with the{" "}
           <a
             href="https://www.nytimes.com/games/connections"
             className={utilStyles.link}
@@ -53,15 +62,6 @@ export default function Home({ allPostsData }) {
             here
           </Link>
           . I post a new board every day!
-        </p>
-        <p>
-          When I'm not working or volunteering, I'm usually doing yoga,
-          top-roping, or trying to make it through a Barry's Boot Camp class
-          without dying. Check out this little{" "}
-          <Link href={`/posts/activities`} className={utilStyles.link}>
-            activity calendar
-          </Link>{" "}
-          I made for myself!
         </p>
         <p>
           You can find me on{" "}
@@ -78,14 +78,14 @@ export default function Home({ allPostsData }) {
           </a>
           .
         </p>
-        <p>
+        {/* <p>
           Looking for a book recommendation? Check out my little recommender
           game{" "}
           <Link href={`/posts/recommend`} className={utilStyles.link}>
             here
           </Link>
           .
-        </p>
+        </p> */}
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={headerFont.className}>Blog</h2>
@@ -108,6 +108,17 @@ export default function Home({ allPostsData }) {
           </div>
         </div>
       </section>
+      <style jsx>
+        {`
+          p {
+            border: 1px solid black;
+            font-size: 18px;
+            border-radius: 8px;
+            background-color: white;
+            padding: 32px;
+          }
+        `}
+      </style>
     </Layout>
   );
 }

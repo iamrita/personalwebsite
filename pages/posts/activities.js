@@ -86,7 +86,7 @@ export default function Activities() {
       </Head>
 
       <article>
-        <h1 className={headerFont.className}>Latest activity</h1>
+        <h1 className={headerFont.className}>May 2025</h1>
         <div className="calendar">
           <div className="week">
             {daysOfWeek.map((day, idx) => (
@@ -139,30 +139,30 @@ export default function Activities() {
           Strava, my cloud function will trigger and add that activity to my
           Firestore database. My website reads from this database, and based on
           what type of activity I do, a different image will show on the
-          calendar. If I happen to do multiple activities on the same day, I can
-          click on the image to cycle through them.
+          calendar. If I happen to do multiple activities on the same day (not
+          often), I can click on the image to cycle through them.
         </p>
         <p>
           <em>
             Curious where these beautiful images come from? They're the official
             pictograms from the 2004 Athens Olympic Games. If you love great
             design and art like I do, Olympic pictograms are a perfect blend of
-            history, tradition, and visual communication! These stylized,
-            non-verbal icons are intended to guide people—no matter what
-            language they speak—by conveying information in the simplest,
-            clearest way possible. In fact, Olympic organizers recognized the
-            power of pictograms as early as Paris 1924 and London 1948, adopting
-            them to help visitors find their way around venues. There's a rich
-            and fascinating story behind how these symbols evolved over the
-            decades—I highly recommend reading about the history of Olympic
-            pictograms{" "}
+            history, tradition, and visual communication! First introduced at
+            the 1924 Paris and 1948 London Games, these sleek, language-free
+            symbols were crafted by the Olympics organizers to guide
+            spectators—no matter their native tongue—by delivering information
+            in the clearest, most intuitive way. There's a rich and fascinating
+            story behind how these symbols evolved over the decades—I highly
+            recommend reading about the history of Olympic pictograms{" "}
             <a
               href="https://www.theolympicdesign.com/olympic-games/pictograms/"
               className={utilStyles.link}
             >
               here
             </a>{" "}
-            and see how the pictograms have changed over the years! .
+            and see how the pictograms have changed over the years!. I plan to
+            change up the pictograms I use every month, but I started with this
+            one because it was my favorite.
           </em>
         </p>
         <p>
@@ -206,6 +206,12 @@ export default function Activities() {
           height: 70px;
           cursor: pointer;
           transition: transform 0.2s, z-index 0.2s;
+        }
+        p {
+          border: 1px solid black;
+          border-radius: 8px;
+          background-color: #fff2de;
+          padding: 32px;
         }
       `}</style>
     </Layout>
