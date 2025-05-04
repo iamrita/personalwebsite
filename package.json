@@ -3,14 +3,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "export": "next export"
-  },
+    "start": "next start"
+    },
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.15.14",
     "@react-google-maps/api": "^2.19.3",
+    "axios": "^1.9.0",
     "date-fns": "^2.29.3",
     "firebase": "^10.9.0",
     "gray-matter": "^4.0.3",

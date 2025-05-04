@@ -1,6 +1,7 @@
 import { getApps, initializeApp } from "firebase/app" // this is the new format for importing app from firebase as of version 9
 // online documentation might show something different, it's because it probably has not been updated 
 // I used this website: https://www.youtube.com/watch?v=GkdHUX2Xxvk&ab_channel=DailyWebCoding for reference 
+import { getFirestore } from "firebase/firestore";
 
 import { getAnalytics } from 'firebase/analytics'
 
@@ -15,13 +16,20 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+let firebaseApp
 if (!getApps.length) {
-  initializeApp(firebaseConfig)
+  firebaseApp = initializeApp(firebaseConfig)
   if (typeof window !== "undefined") { // with next.js, there's a weird issue where unless this is checked, you'll get an error 
     // check out this medium article for more details: https://wideawakeben.medium.com/adding-firebase-analytics-and-firestore-to-a-react-next-js-app-bffffc2f638e
     if ("measurementId" in firebaseConfig) {
       getAnalytics()
     }
   }
+
+} else {
+  firebaseApp = getApp()
 }
+const db = getFirestore(firebaseApp);
+
+export { firebaseApp, db };
 

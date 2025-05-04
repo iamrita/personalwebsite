@@ -55,8 +55,16 @@ export default function Home({ allPostsData }) {
           . I post a new board every day!
         </p>
         <p>
-          When I'm not working or volunteering, I'm attempting to triangulate
-          Rihanna's location on any given night. You can find me on{" "}
+          When I'm not working or volunteering, I'm usually doing yoga,
+          top-roping, or trying to make it through a Barry's Boot Camp class
+          without dying. Check out this little{" "}
+          <Link href={`/posts/activities`} className={utilStyles.link}>
+            activity calendar
+          </Link>{" "}
+          I made for myself!
+        </p>
+        <p>
+          You can find me on{" "}
           <a href="https://twitter.com/iamrita98" className={utilStyles.link}>
             Twitter
           </a>{" "}
