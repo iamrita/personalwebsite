@@ -1,6 +1,8 @@
 import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "../../components/firebase";
 import Layout, { siteTitle } from "../../components/layout";
+import utilStyles from "../../styles/utils.module.css";
+
 import Head from "next/head";
 import { useState, useEffect } from "react";
 import headerFont from "../../components/Font";
@@ -129,6 +131,48 @@ export default function Activities() {
             </div>
           ))}
         </div>
+        <p>
+          The goal of this page was three fold - to experiment with Firebase
+          cloud functions, to try out the Strava Webhook API, and to have a fun
+          way of tracking all the different activities I do throughout the
+          month. Right now, I have set up a webhook so that whenever I post on
+          Strava, my cloud function will trigger and add that activity to my
+          Firestore database. My website reads from this database, and based on
+          what type of activity I do, a different image will show on the
+          calendar. If I happen to do multiple activities on the same day, I can
+          click on the image to cycle through them.
+        </p>
+        <p>
+          <em>
+            Curious where these beautiful images come from? They're the official
+            pictograms from the 2004 Athens Olympic Games. If you love great
+            design and art like I do, Olympic pictograms are a perfect blend of
+            history, tradition, and visual communication! These stylized,
+            non-verbal icons are intended to guide people—no matter what
+            language they speak—by conveying information in the simplest,
+            clearest way possible. In fact, Olympic organizers recognized the
+            power of pictograms as early as Paris 1924 and London 1948, adopting
+            them to help visitors find their way around venues. There's a rich
+            and fascinating story behind how these symbols evolved over the
+            decades—I highly recommend reading about the history of Olympic
+            pictograms{" "}
+            <a
+              href="https://www.theolympicdesign.com/olympic-games/pictograms/"
+              className={utilStyles.link}
+            >
+              here
+            </a>{" "}
+            and see how the pictograms have changed over the years! .
+          </em>
+        </p>
+        <p>
+          <em>
+            Because there are some sports on Strava that don't have a
+            corresponding Olympic sport (like rock climbing), I've taken the
+            artistic challenge to create them in the same style! Stay tuned to
+            see what I come up with :)
+          </em>
+        </p>
       </article>
       <style jsx>{`
         .calendar {
