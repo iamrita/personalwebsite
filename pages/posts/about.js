@@ -1,32 +1,13 @@
 import Layout, { siteTitle } from "../../components/layout";
 import Head from "next/head";
 import utilStyles from "../../styles/utils.module.css";
-import {
-  GoogleMap,
-  LoadScript,
-  Marker,
-  InfoWindow,
-} from "@react-google-maps/api";
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import "../../components/firebase";
-import MovieSticker from "../../components/MovieSticker";
-import BookSticker from "../../components/BookSticker";
-import VideoGameSticker from "../../components/VideoGameSticker";
-import MusicSticker from "../../components/MusicSticker";
 import headerFont from "../../components/Font";
 import Bookshelf from "../../components/Bookshelf";
 import GifTV from "../../components/Television";
 import SpotifyEmbed from "../../components/MusicPlayer";
-import {
-  collection,
-  query,
-  orderBy,
-  limit,
-  getDocs,
-  onSnapshot,
-} from "firebase/firestore";
-import { db } from "../../components/firebase";
+
 
 const books = [
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1641271171i/58085267.jpg",
@@ -38,26 +19,32 @@ const books = [
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577090827l/51791252.jpg",
 ];
 
-export default function About() {
-  const [sports, setSports] = useState([]);
 
-  useEffect(() => {
-    // Query the most recent activity
-    const q = query(collection(db, "activities"), orderBy("timestamp", "desc"));
+// Helper to generate calendar grid for current month
+function generateCalendar(year, month) {
+  const firstDayIndex = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const totalSlots = firstDayIndex + daysInMonth;
+  const weeks = [];
+  let current = 0;
 
-    // Real-time:
-    const unsub = onSnapshot(q, (snap) => {
-      if (!snap.empty) {
-        const types = snap.docs.map((doc) => doc.data().sportType);
-        setSports(types);
+  while (current < totalSlots) {
+    const week = [];
+    for (let d = 0; d < 7; d++) {
+      const dayIndex = current - firstDayIndex + 1;
+      if (current < firstDayIndex || dayIndex > daysInMonth) {
+        week.push(null);
       } else {
-        setSports("no activities yet");
+        week.push(dayIndex);
       }
-    });
+      current++;
+    }
+    weeks.push(week);
+  }
+  return weeks;
+}
 
-    return () => unsub();
-  }, []);
-
+export default function About() {
   return (
     <Layout>
       <Head>
@@ -82,16 +69,6 @@ export default function About() {
             HBO Max. My partner and I also just finished playing Indika on the
             Playstation V and are about to start Split Fiction.
           </p>
-          <h1>Latest activity</h1>
-          {sports.length > 0 ? (
-            <ul>
-              {sports.map((type, idx) => (
-                <li key={idx}>{type}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>No activities yet.</p>
-          )}
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
           {/* <Bookshelf /> */}
@@ -123,11 +100,13 @@ export default function About() {
             <li>A Real Pain</li>
             <li>Freaky Friday</li>
           </ul>
+        
 
           <h1 className={headerFont.className}>Albums</h1>
           <SpotifyEmbed />
         </div>
       </article>
+     
     </Layout>
   );
 }
