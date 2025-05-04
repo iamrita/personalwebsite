@@ -30,9 +30,16 @@ function generateCalendar(year, month) {
 }
 const sportsMap = {
   Workout: "/images/workout.png",
+  Walk: "/images/workout.png",
+  Run: "/images/workout.png",
+  Hike: "/images/workout.png",
   Yoga: "/images/yoga.png",
   Ride: "/images/cycling.png",
-  HighIntensityIntervalTraining: "/images/workout.png",
+  VirtualRide: "/images/cycling.png",
+  HighIntensityIntervalTraining: "/images/boxing.png",
+  Swim: "/images/swimming.png",
+  RockClimbing: "/images/climbing.png",
+  WeightTraining: "/images/weightlifting.png",
 };
 
 const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
