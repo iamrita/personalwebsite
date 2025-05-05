@@ -81,14 +81,14 @@ export default function Home({ allPostsData }) {
           </a>
           .
         </p>
-        {/* <p>
+        <p>
           Looking for a book recommendation? Check out my little recommender
           game{" "}
           <Link href={`/posts/recommend`} className={utilStyles.link}>
             here
           </Link>
           .
-        </p> */}
+        </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={headerFont.className}>Blog</h2>
@@ -117,7 +117,7 @@ export default function Home({ allPostsData }) {
             border: 1px solid black;
             font-size: 18px;
             border-radius: 8px;
-            background-color:#f0f0f0;
+            background-color: #f0f0f0;
             padding: 32px;
           }
         `}
