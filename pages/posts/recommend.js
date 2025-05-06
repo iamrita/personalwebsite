@@ -1,6 +1,5 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Layout from "../../components/layout";
-import Bookshelf from "../../components/Bookshelf";
 import * as dotenv from "dotenv";
 import { motion } from "motion/react";
 import useMeasure from "react-use-measure";
@@ -9,6 +8,7 @@ import styles from "../../styles/bookshelf.module.css";
 import OpenAI from "openai";
 import { zodTextFormat } from "openai/helpers/zod";
 import { z } from "zod";
+import headerFont from "../../components/Font";
 
 dotenv.config();
 
@@ -64,7 +64,7 @@ async function fetchResponse(input) {
 }
 
 export default function Recommendation() {
-  const [aiResponse, setAiResponse] = useState("");
+  const [generatedRecs, setGeneratedRecs] = useState([]);
   const [books, setBooks] = useState([
     "Pachinko",
     "Homegoing",
@@ -82,10 +82,18 @@ export default function Recommendation() {
   ]);
 
   const [selectedBooks, setSelectedBooks] = useState([]);
-  const bookColors = useMemo(() => generateBookColors(books), [books]);
-  const [open, toggle] = useState(false);
+  const [bookColors] = useState(() => generateBookColors(books)); // Generate once and persist
   const [ref, { width }] = useMeasure();
-  const props = useSpring({ width: open ? width : 0 });
+
+  const getButtonBackgroundBlocks = () => {
+    const colors = selectedBooks.map((book) => bookColors[book]); // Use consistent colors from `bookColors`
+    const blockWidth = 100 / colors.length; // Divide button width equally
+    return colors.map((color, index) => ({
+      backgroundColor: color,
+      width: `${blockWidth}%`,
+      left: `${index * blockWidth}%`,
+    }));
+  };
 
   async function getAIResponse() {
     try {
@@ -94,11 +102,20 @@ export default function Recommendation() {
           ", "
         )}. `
       );
-      console.log(response.output_parsed);
-      //setAiResponse(response.output[0].content[0].text);
+
+      // Ensure response contains the expected structure
+      if (
+        response.output_parsed &&
+        Array.isArray(response.output_parsed.books)
+      ) {
+        setGeneratedRecs(response.output_parsed.books); // Set the books array
+      } else {
+        console.error("Unexpected response format:", response);
+        setGeneratedRecs([]); // Fallback to an empty array
+      }
     } catch (error) {
       console.error("Error fetching AI response:", error);
-      setAiResponse("Failed to load AI response.");
+      setGeneratedRecs([]); // Fallback to an empty array in case of error
     }
   }
 
@@ -106,6 +123,10 @@ export default function Recommendation() {
     setBooks(books.filter((book) => book !== bookToRemove));
     setSelectedBooks(selectedBooks.filter((book) => book !== bookToRemove));
   }
+
+  const handleRecommendationClick = (link) => {
+    window.open(link, "_blank");
+  };
 
   const handleBookClick = (book) => {
     if (selectedBooks.includes(book)) {
@@ -119,11 +140,19 @@ export default function Recommendation() {
 
   return (
     <Layout>
+      <h1 className={headerFont.className}>Book Recommender</h1>
       <p>
-        I often times find it difficult to find what book to read next. Luckily,
-        AI has been the greatest help in helping me choose my next read,
-        depending on what books I've liked in the past. Play around by clicking
-        on the books below to see what book you should read next!
+        There's so many great books out there that finding out what to read next
+        can be hard, and I've found that Goodreads isn't great in using my
+        recently read books to inform what I would like. I created the
+        interaction below to help me choose my next read, depending on what
+        books I've liked in the past. Right now, I've prepopulated it with a
+        list of books that I've enjoyed over the past couple years.
+        <b>
+          {" "}
+          Play around by clicking on the books below to see what book you should
+          read next!
+        </b>
       </p>
       <div
         style={{
@@ -135,19 +164,21 @@ export default function Recommendation() {
         }}
       >
         {books.map((book) => {
-          const pastelColor = bookColors[book];
+          const pastelColor = bookColors[book]; // Ensure consistent color mapping
           const isSelected = selectedBooks.includes(book);
 
           return (
             <motion.div
               key={book}
               whileHover={{ scale: 1.15 }}
-              onClick={() => handleBookClick(book)}
+              onClick={() => {
+                handleBookClick(book);
+              }}
               style={{
                 position: "relative", // For positioning the badge
                 border: `2px solid black`,
                 backgroundColor: isSelected ? "black" : pastelColor,
-                color: isSelected ? "white" : "#333",
+                color: isSelected ? "white" : "black",
                 margin: "2px",
                 padding: "10px 15px",
                 borderRadius: "8px",
@@ -194,12 +225,8 @@ export default function Recommendation() {
       >
         <button
           ref={ref}
-          onClick={() => {
-            getAIResponse();
-            toggle(!open);
-          }}
           style={{
-            border: "2px solid black", // Pastel pink border
+            border: "5px solid black", // Pastel pink border
             backgroundColor: "white",
             color: "#333",
             padding: "10px 15px",
@@ -211,14 +238,75 @@ export default function Recommendation() {
             width: "200px",
             height: "50px",
           }}
+          onClick={() => getAIResponse()}
         >
-          <animated.div className={styles.fill} style={props} />
-          <animated.div className={styles.content}>
+          {getButtonBackgroundBlocks().map((block, index) => (
+            <animated.div
+              key={index}
+              style={{
+                position: "absolute",
+                top: 0,
+                height: "100%",
+                ...block, // Apply block-specific styles
+                zIndex: 1,
+              }}
+            />
+          ))}
+          <animated.div
+            className={styles.content}
+            style={{
+              position: "relative",
+              zIndex: 2,
+              color: "#333",
+              textAlign: "center",
+            }}
+          >
             Recommend me a book!
           </animated.div>
         </button>
       </div>
-      <p>{aiResponse}</p>
+      {generatedRecs.length > 0 && (
+        <div
+          style={{
+            marginTop: "20px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {generatedRecs.map((book) => (
+            <motion.div
+              key={book.title} // Use a unique key
+              whileHover={{ scale: 1.15 }}
+              onClick={() => handleRecommendationClick(book.link)}
+              style={{
+                position: "relative",
+                border: `2px solid black`,
+                backgroundColor: "white",
+                color: "black",
+                margin: "10px",
+                padding: "10px 15px",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontSize: "14px",
+                width: "300px",
+                textAlign: "center",
+              }}
+            >
+              {book.title}
+            </motion.div>
+          ))}
+        </div>
+      )}
+      <style jsx>{`
+        p {
+          border: 1px solid black;
+          border-radius: 8px;
+          background-color: #fff2de;
+          padding: 32px;
+          margin-bottom: 50px;
+        }
+      `}</style>
     </Layout>
   );
 }
