@@ -42,6 +42,7 @@ const sportsMap = {
   Swim: "/images/swimming-paris.png",
   RockClimbing: "/images/climbing-paris.png",
   WeightTraining: "/images/weightlifting-paris.png",
+  Tennis: "/images/tennis-paris.png",
 };
 
 const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
