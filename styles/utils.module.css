@@ -241,7 +241,7 @@
 }
 
 .link {
-  color: #E9967A;
+  color: #1e65e5;
 }
 
 .movieContainer {
@@ -305,7 +305,7 @@
   border: 1px solid black;
             font-size: 18px;
             border-radius: 8px;
-            background-color: #f0f0f0;
+            background-color: #f1f5fd;
             padding: 32px;
 }
 

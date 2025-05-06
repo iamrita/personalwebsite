@@ -106,9 +106,6 @@ export default function Home({ allPostsData }) {
               </li>
             ))}
           </ul>
-          <div className={utilStyles.gifContainer}>
-            <img src="/images/girl.gif" alt="GIF" className={utilStyles.gif} />
-          </div>
         </div>
       </section>
       <style jsx>
@@ -117,7 +114,7 @@ export default function Home({ allPostsData }) {
             border: 1px solid black;
             font-size: 18px;
             border-radius: 8px;
-            background-color:#f0f0f0;
+            background-color: #f1f5fd;
             padding: 32px;
           }
         `}
