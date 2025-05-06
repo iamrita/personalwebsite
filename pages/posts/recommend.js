@@ -12,6 +12,10 @@ import headerFont from "../../components/Font";
 
 dotenv.config();
 
+/**
+ * Good for testing, but I can't deploy with this
+ * because the apiKey will be publicly accessible in the browser
+ */
 const client = new OpenAI({
   apiKey: process.env.NEXT_PUBLIC_OPEN_AI_KEY,
   dangerouslyAllowBrowser: true,
@@ -153,11 +157,11 @@ export default function Recommendation() {
       <h1 className={headerFont.className}>Book Recommender</h1>
       <p>
         There's so many great books out there that finding out what to read next
-        can be hard, and I've found that Goodreads isn't great in using my
-        recently read books to inform what I would like. I created the
-        interaction below to help me choose my next read, depending on what
-        books I've liked in the past. Right now, I've prepopulated it with a
-        list of books that I've enjoyed over the past couple years.
+        can be hard, and I've found that Goodreads isn't great in using my past
+        books to inform what I would like. I created the interaction below to
+        help me choose my next read, depending on what books I've liked in the
+        past. Right now, I've prepopulated it with a list of books that I've
+        enjoyed over the past couple years.
         <b>
           {" "}
           Play around by clicking on the books below to see what book you should
@@ -176,7 +180,6 @@ export default function Recommendation() {
         {books.map((book) => {
           const pastelColor = bookColors[book]; // Ensure consistent color mapping
           const isSelected = selectedBooks.includes(book);
-
           return (
             <motion.div
               key={book}
@@ -185,7 +188,6 @@ export default function Recommendation() {
                 handleBookClick(book);
               }}
               style={{
-                position: "relative", // For positioning the badge
                 border: `2px solid black`,
                 backgroundColor: isSelected ? "black" : pastelColor,
                 color: isSelected ? "white" : "black",
@@ -200,6 +202,22 @@ export default function Recommendation() {
             </motion.div>
           );
         })}
+        <motion.div
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ width: "200px" }}
+          style={{
+            border: `2px solid black`,
+            backgroundColor: "white",
+            color: "black",
+            margin: "2px",
+            padding: "10px 15px",
+            borderRadius: "8px",
+            cursor: "pointer",
+            fontSize: "14px",
+          }}
+        >
+          +
+        </motion.div>
       </div>
       <div
         style={{
@@ -253,7 +271,7 @@ export default function Recommendation() {
               textAlign: "center",
             }}
           >
-            {isLoading ? "Finding..." : "Recommend me a book!"}
+            <b>{isLoading ? "Finding..." : "Recommend me a book!"}</b>
           </animated.div>
         </button>
       </div>
