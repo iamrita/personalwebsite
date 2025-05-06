@@ -31,17 +31,18 @@ function generateCalendar(year, month) {
   return weeks;
 }
 const sportsMap = {
-  Workout: "/images/workout.png",
-  Walk: "/images/workout.png",
-  Run: "/images/workout.png",
-  Hike: "/images/workout.png",
-  Yoga: "/images/yoga.png",
-  Ride: "/images/cycling.png",
-  VirtualRide: "/images/cycling.png",
-  HighIntensityIntervalTraining: "/images/boxing.png",
-  Swim: "/images/swimming.png",
-  RockClimbing: "/images/climbing.png",
-  WeightTraining: "/images/weightlifting.png",
+  Workout: "/images/running-paris.png",
+  Walk: "/images/running-paris.png",
+  Run: "/images/running-paris.png",
+  Hike: "/images/hiking-paris.png",
+  Yoga: "/images/yoga-paris.png",
+  Ride: "/images/cycling-paris.png",
+  VirtualRide: "/images/cycling-paris.png",
+  HighIntensityIntervalTraining: "/images/boxing-paris.png",
+  Swim: "/images/swimming-paris.png",
+  RockClimbing: "/images/climbing-paris.png",
+  WeightTraining: "/images/weightlifting-paris.png",
+  Tennis: "/images/tennis-paris.png",
 };
 
 const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
@@ -145,7 +146,7 @@ export default function Activities() {
         <p>
           <em>
             Curious where these beautiful images come from? They're the official
-            pictograms from the 2004 Athens Olympic Games. If you love great
+            pictograms from the 2024 Paris Olympic Games. If you love great
             design and art like I do, Olympic pictograms are a perfect blend of
             history, tradition, and visual communication! First introduced at
             the 1924 Paris and 1948 London Games, these sleek, language-free
@@ -162,15 +163,15 @@ export default function Activities() {
             </a>{" "}
             and see how the pictograms have changed over the years!. I plan to
             change up the pictograms I use every month, but I started with this
-            one because it was my favorite.
+            one because it was the most recent.
           </em>
         </p>
         <p>
           <em>
             Because there are some sports on Strava that don't have a
-            corresponding Olympic sport (like rock climbing), I've taken the
-            artistic challenge to create them in the same style! Stay tuned to
-            see what I come up with :)
+            corresponding Olympic sport (like yoga), I've taken the artistic
+            challenge to create them in the same style! Stay tuned to see what I
+            come up with :)
           </em>
         </p>
       </article>
@@ -210,7 +211,8 @@ export default function Activities() {
         p {
           border: 1px solid black;
           border-radius: 8px;
-          background-color: #fff2de;
+          background-color: #ede5f8;
+          // background-color: #fff2de;
           padding: 32px;
         }
       `}</style>

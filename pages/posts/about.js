@@ -84,7 +84,7 @@ export default function About() {
           </ul> */}
 
           <h1 className={headerFont.className}>TV Shows</h1>
-          <p>Press the yellow dial on the TV for some surprises!</p>
+          {/* <p>Press the yellow dial on the TV for some surprises!</p> */}
           <GifTV />
 
           {/* <h1 className={headerFont.className}>Movies</h1>
