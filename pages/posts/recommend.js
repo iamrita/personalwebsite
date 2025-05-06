@@ -197,31 +197,6 @@ export default function Recommendation() {
               }}
             >
               {book}
-              <motion.span
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering the parent click
-                  removeBook(book);
-                }}
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 1 }}
-                style={{
-                  position: "absolute",
-                  top: "-5px",
-                  right: "-5px",
-                  backgroundColor: "#eb0000",
-                  color: "white",
-                  borderRadius: "8px",
-                  width: "20px",
-                  height: "20px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "12px",
-                  cursor: "pointer",
-                }}
-              >
-                X
-              </motion.span>
             </motion.div>
           );
         })}
