@@ -20,6 +20,7 @@ const client = new OpenAI({
 const BookRecommendation = z.object({
   title: z.string(),
   author: z.string(),
+  description: z.string(),
   link: z.string(),
 });
 
@@ -47,7 +48,7 @@ async function fetchResponse(input) {
       {
         role: "system",
         content:
-          "You are a helfpul assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, and the link to the Goodreads page. ",
+          "You are a helfpul assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page. ",
       },
       { role: "user", content: input },
     ],
@@ -83,6 +84,7 @@ export default function Recommendation() {
 
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [bookColors] = useState(() => generateBookColors(books)); // Generate once and persist
+  const [isLoading, setIsLoading] = useState(false); // Track loading state
   const [ref, { width }] = useMeasure();
 
   const getButtonBackgroundBlocks = () => {
@@ -95,7 +97,13 @@ export default function Recommendation() {
     }));
   };
 
+  const getAnimatedGradient = () => {
+    const colors = selectedBooks.map((book) => bookColors[book]);
+    return `linear-gradient(270deg, ${colors.join(", ")})`;
+  };
+
   async function getAIResponse() {
+    setIsLoading(true); // Set loading state to true
     try {
       const response = await fetchResponse(
         `Recommend me a book similar to the following books: ${selectedBooks.join(
@@ -116,6 +124,8 @@ export default function Recommendation() {
     } catch (error) {
       console.error("Error fetching AI response:", error);
       setGeneratedRecs([]); // Fallback to an empty array in case of error
+    } finally {
+      setIsLoading(false); // Reset loading state
     }
   }
 
@@ -226,8 +236,14 @@ export default function Recommendation() {
         <button
           ref={ref}
           style={{
-            border: "5px solid black", // Pastel pink border
-            backgroundColor: "white",
+            border: "2px solid black", // Pastel pink border
+            background: isLoading
+              ? getAnimatedGradient() // Animated gradient while loading
+              : "white", // Default background
+            backgroundSize: isLoading ? "400% 400%" : "auto", // Animate gradient
+            animation: isLoading
+              ? "gradientAnimation 3s ease infinite" // Gradient animation
+              : "none",
             color: "#333",
             padding: "10px 15px",
             borderRadius: "8px",
@@ -240,18 +256,19 @@ export default function Recommendation() {
           }}
           onClick={() => getAIResponse()}
         >
-          {getButtonBackgroundBlocks().map((block, index) => (
-            <animated.div
-              key={index}
-              style={{
-                position: "absolute",
-                top: 0,
-                height: "100%",
-                ...block, // Apply block-specific styles
-                zIndex: 1,
-              }}
-            />
-          ))}
+          {!isLoading &&
+            getButtonBackgroundBlocks().map((block, index) => (
+              <animated.div
+                key={index}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  height: "100%",
+                  ...block, // Apply block-specific styles
+                  zIndex: 1,
+                }}
+              />
+            ))}
           <animated.div
             className={styles.content}
             style={{
@@ -261,7 +278,7 @@ export default function Recommendation() {
               textAlign: "center",
             }}
           >
-            Recommend me a book!
+            {isLoading ? "Finding..." : "Recommend me a book!"}
           </animated.div>
         </button>
       </div>
@@ -305,6 +322,17 @@ export default function Recommendation() {
           background-color: #fff2de;
           padding: 32px;
           margin-bottom: 50px;
+        }
+        @keyframes gradientAnimation {
+          0% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+          100% {
+            background-position: 0% 50%;
+          }
         }
       `}</style>
     </Layout>
