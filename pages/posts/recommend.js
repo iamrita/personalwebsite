@@ -120,6 +120,7 @@ export default function Recommendation() {
         response.output_parsed &&
         Array.isArray(response.output_parsed.books)
       ) {
+        console.log(response.output_parsed.books);
         setGeneratedRecs(response.output_parsed.books); // Set the books array
       } else {
         console.error("Unexpected response format:", response);
@@ -280,13 +281,16 @@ export default function Recommendation() {
           style={{
             marginTop: "20px",
             display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: "20px",
+            flexWrap: "wrap",
+            padding: "20px",
           }}
         >
           {generatedRecs.map((book) => (
             <motion.div
-              key={book.title} // Use a unique key
+              key={book.title}
               whileHover={{ scale: 1.15 }}
               onClick={() => handleRecommendationClick(book.link)}
               style={{
@@ -294,16 +298,16 @@ export default function Recommendation() {
                 border: `2px solid black`,
                 backgroundColor: "white",
                 color: "black",
-                margin: "10px",
                 padding: "10px 15px",
                 borderRadius: "8px",
                 cursor: "pointer",
                 fontSize: "14px",
-                width: "300px",
+                width: "200px",
                 textAlign: "center",
               }}
             >
               {book.title}
+              {/*book.description*/}
             </motion.div>
           ))}
         </div>
