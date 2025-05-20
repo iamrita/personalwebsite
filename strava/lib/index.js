@@ -45,6 +45,7 @@ const dotenv = __importStar(require("dotenv"));
 const openai_1 = __importDefault(require("openai"));
 const zod_1 = require("zod");
 const zod_2 = require("openai/helpers/zod");
+const cors_1 = __importDefault(require("cors"));
 dotenv.config();
 /**
  * To test the strava webhook locally you need to run
@@ -79,6 +80,15 @@ const recommendations = zod_1.z.object({
     books: zod_1.z.array(BookRecommendation),
 });
 const openai = new openai_1.default({ apiKey: process.env.OPENAI_API_KEY });
+const corsHandler = (0, cors_1.default)({
+    origin: [
+        "https://amrita-website--pr25-av-book-recommender-amnp7sy9.web.app",
+        "http://localhost:3000",
+    ],
+    methods: ["GET", "POST", "OPTIONS"],
+    credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+});
 /* =====================================================================
  * 1.  /helloWorld  – Strava Webhook (handshake + activity POST)
  * =================================================================== */
@@ -183,50 +193,48 @@ async function getFreshAccessToken() {
     return data.access_token;
 }
 exports.bookRecommend = (0, https_1.onRequest)(async (req, res) => {
-    // Enable CORS
-    res.set('Access-Control-Allow-Origin', '*');
-    if (req.method === 'OPTIONS') {
-        // Send response to OPTIONS requests
-        res.set('Access-Control-Allow-Methods', 'POST');
-        res.set('Access-Control-Allow-Headers', 'Content-Type');
-        res.set('Access-Control-Max-Age', '3600');
-        res.status(204).send('');
-        return;
-    }
-    if (req.method !== 'POST') {
-        res.status(405).send('Method Not Allowed');
-        return;
-    }
-    try {
-        const { books } = req.body;
-        if (!Array.isArray(books) || books.length === 0) {
-            res.status(400).json({ error: 'Please provide an array of books' });
+    corsHandler(req, res, async () => {
+        if (req.method === "OPTIONS") {
+            res.status(204).send(""); // ✅ Handle preflight
             return;
         }
-        const response = await openai.responses.parse({
-            model: "gpt-4",
-            input: [
-                {
-                    role: "system",
-                    content: "You are a helpful assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page.",
-                },
-                {
-                    role: "user",
-                    content: `Recommend me a book similar to the following books: ${books.join(", ")}.`
-                },
-            ],
-            text: {
-                format: (0, zod_2.zodTextFormat)(recommendations, "book_recommendations"),
-            },
-        });
-        if (response.error != null) {
-            throw new Error(`Error: ${response.status}`);
+        if (req.method !== "POST") {
+            res.status(405).send("Method Not Allowed");
+            return;
         }
-        res.status(200).json(response.output_parsed);
-    }
-    catch (error) {
-        logger.error("Book recommendation failed", error);
-        res.status(500).json({ error: 'Failed to generate book recommendations' });
-    }
+        try {
+            const { books } = req.body;
+            if (!Array.isArray(books) || books.length === 0) {
+                res.status(400).json({ error: "Please provide an array of books" });
+                return;
+            }
+            const response = await openai.responses.parse({
+                model: "gpt-4",
+                input: [
+                    {
+                        role: "system",
+                        content: "You are a helpful assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page.",
+                    },
+                    {
+                        role: "user",
+                        content: `Recommend me a book similar to the following books: ${books.join(", ")}.`,
+                    },
+                ],
+                text: {
+                    format: (0, zod_2.zodTextFormat)(recommendations, "book_recommendations"),
+                },
+            });
+            if (response.error != null) {
+                throw new Error(`Error: ${response.status}`);
+            }
+            res.status(200).json(response.output_parsed);
+        }
+        catch (error) {
+            logger.error("Book recommendation failed", error);
+            res
+                .status(500)
+                .json({ error: "Failed to generate book recommendations" });
+        }
+    });
 });
 //# sourceMappingURL=index.js.map

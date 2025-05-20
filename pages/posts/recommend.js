@@ -29,18 +29,28 @@ async function fetchResponse(input) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
+        mode: "cors",
         body: JSON.stringify({ books: input.split(", ") }),
       }
     );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      throw new Error(
+        `HTTP error! status: ${response.status}, message: ${errorText}`
+      );
     }
 
     const data = await response.json();
     return { output_parsed: data };
   } catch (error) {
     console.error("Error:", error);
+    if (error.name === "TypeError" && error.message.includes("CORS")) {
+      throw new Error(
+        "CORS error: Unable to access the API. Please check if the API is properly configured for CORS."
+      );
+    }
     throw error;
   }
 }
