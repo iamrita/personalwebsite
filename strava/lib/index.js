@@ -213,7 +213,7 @@ exports.bookRecommend = (0, https_1.onRequest)(async (req, res) => {
                 return;
             }
             const response = await openai.responses.parse({
-                model: "gpt-4",
+                model: "gpt-4o-2024-08-06",
                 input: [
                     {
                         role: "system",

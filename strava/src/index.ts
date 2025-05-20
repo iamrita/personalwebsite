@@ -212,7 +212,7 @@ export const bookRecommend = onRequest(async (req, res): Promise<void> => {
       }
 
       const response = await openai.responses.parse({
-        model: "gpt-4",
+        model: "gpt-4o-2024-08-06",
         input: [
           {
             role: "system",
