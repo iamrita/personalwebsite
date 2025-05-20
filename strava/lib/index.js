@@ -84,10 +84,14 @@ const corsHandler = (0, cors_1.default)({
     origin: [
         "https://amrita-website--pr25-av-book-recommender-amnp7sy9.web.app",
         "http://localhost:3000",
+        "https://bookrecommend-77xzict4da-uc.a.run.app",
+        "https://amritav.com",
     ],
     methods: ["GET", "POST", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
 });
 /* =====================================================================
  * 1.  /helloWorld  – Strava Webhook (handshake + activity POST)
@@ -195,7 +199,7 @@ async function getFreshAccessToken() {
 exports.bookRecommend = (0, https_1.onRequest)(async (req, res) => {
     corsHandler(req, res, async () => {
         if (req.method === "OPTIONS") {
-            res.status(204).send(""); // ✅ Handle preflight
+            res.status(204).send("");
             return;
         }
         if (req.method !== "POST") {

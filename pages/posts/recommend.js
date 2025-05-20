@@ -31,7 +31,7 @@ async function fetchResponse(input) {
         },
         credentials: "include",
         mode: "cors",
-        body: JSON.stringify({ books: input.split(", ") }),
+        body: JSON.stringify({ books: input }),
       }
     );
 
@@ -96,11 +96,7 @@ export default function Recommendation() {
   async function getAIResponse() {
     setIsLoading(true); // Set loading state to true
     try {
-      const response = await fetchResponse(
-        `Recommend me a book similar to the following books: ${selectedBooks.join(
-          ", "
-        )}. `
-      );
+      const response = await fetchResponse(selectedBooks);
 
       // Ensure response contains the expected structure
       if (

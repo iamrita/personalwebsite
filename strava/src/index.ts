@@ -51,10 +51,14 @@ const corsHandler = cors({
   origin: [
     "https://amrita-website--pr25-av-book-recommender-amnp7sy9.web.app",
     "http://localhost:3000",
+    "https://bookrecommend-77xzict4da-uc.a.run.app",
+    "https://amritav.com",
   ],
   methods: ["GET", "POST", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 });
 
 /* =====================================================================
@@ -190,50 +194,53 @@ async function getFreshAccessToken(): Promise<string> {
 export const bookRecommend = onRequest(async (req, res): Promise<void> => {
   corsHandler(req, res, async () => {
     if (req.method === "OPTIONS") {
-      res.status(204).send(""); // ✅ Handle preflight
+      res.status(204).send("");
       return;
     }
-    
+
     if (req.method !== "POST") {
       res.status(405).send("Method Not Allowed");
       return;
     }
 
-  try {
-    const { books } = req.body;
+    try {
+      const { books } = req.body;
 
-    if (!Array.isArray(books) || books.length === 0) {
-      res.status(400).json({ error: "Please provide an array of books" });
-      return;
-    }
+      if (!Array.isArray(books) || books.length === 0) {
+        res.status(400).json({ error: "Please provide an array of books" });
+        return;
+      }
 
-    const response = await openai.responses.parse({
-      model: "gpt-4",
-      input: [
-        {
-          role: "system",
-          content:
-            "You are a helpful assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page.",
+      const response = await openai.responses.parse({
+        model: "gpt-4",
+        input: [
+          {
+            role: "system",
+            content:
+              "You are a helpful assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page.",
+          },
+          {
+            role: "user",
+            content: `Recommend me a book similar to the following books: ${books.join(
+              ", "
+            )}.`,
+          },
+        ],
+        text: {
+          format: zodTextFormat(recommendations, "book_recommendations"),
         },
-        {
-          role: "user",
-          content: `Recommend me a book similar to the following books: ${books.join(
-            ", "
-          )}.`,
-        },
-      ],
-      text: {
-        format: zodTextFormat(recommendations, "book_recommendations"),
-      },
-    });
+      });
 
-    if (response.error != null) {
-      throw new Error(`Error: ${response.status}`);
+      if (response.error != null) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      res.status(200).json(response.output_parsed);
+    } catch (error) {
+      logger.error("Book recommendation failed", error);
+      res
+        .status(500)
+        .json({ error: "Failed to generate book recommendations" });
     }
-
-    res.status(200).json(response.output_parsed);
-  } catch (error) {
-    logger.error("Book recommendation failed", error);
-    res.status(500).json({ error: "Failed to generate book recommendations" });
-  }
+  });
 });
