@@ -3,6 +3,11 @@ import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import axios from "axios";
 import * as dotenv from "dotenv";
+import OpenAI from "openai";
+import { z } from "zod";
+import { zodTextFormat } from "openai/helpers/zod";
+import cors from "cors";
+
 dotenv.config();
 
 /**
@@ -30,6 +35,32 @@ const db = admin.firestore();
 const CLIENT_ID = process.env.STRAVA_CLIENT_ID!;
 const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET!;
 
+const BookRecommendation = z.object({
+  title: z.string(),
+  author: z.string(),
+  description: z.string(),
+  link: z.string(),
+});
+
+const recommendations = z.object({
+  books: z.array(BookRecommendation),
+});
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const corsHandler = cors({
+  origin: [
+    "https://amrita-website--pr25-av-book-recommender-amnp7sy9.web.app",
+    "http://localhost:3000",
+    "https://bookrecommend-77xzict4da-uc.a.run.app",
+    "https://amritav.com",
+  ],
+  methods: ["GET", "POST", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
+});
+
 /* =====================================================================
  * 1.  /helloWorld  – Strava Webhook (handshake + activity POST)
  * =================================================================== */
@@ -53,7 +84,7 @@ export const helloWorld = onRequest(async (req, res): Promise<void> => {
     res.status(200).send("hooray"); // ACK first so Strava stops retrying
     try {
       const { object_id } = req.body;
-      logger.info(`Created activity with id ${object_id}`)
+      logger.info(`Created activity with id ${object_id}`);
       const token = await getFreshAccessToken();
       const { data: act } = await axios.get(
         `https://www.strava.com/api/v3/activities/${object_id}`,
@@ -159,3 +190,57 @@ async function getFreshAccessToken(): Promise<string> {
   await snap.ref.set(data);
   return data.access_token;
 }
+
+export const bookRecommend = onRequest(async (req, res): Promise<void> => {
+  corsHandler(req, res, async () => {
+    if (req.method === "OPTIONS") {
+      res.status(204).send("");
+      return;
+    }
+
+    if (req.method !== "POST") {
+      res.status(405).send("Method Not Allowed");
+      return;
+    }
+
+    try {
+      const { books } = req.body;
+
+      if (!Array.isArray(books) || books.length === 0) {
+        res.status(400).json({ error: "Please provide an array of books" });
+        return;
+      }
+
+      const response = await openai.responses.parse({
+        model: "gpt-4o-2024-08-06",
+        input: [
+          {
+            role: "system",
+            content:
+              "You are a helpful assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page.",
+          },
+          {
+            role: "user",
+            content: `Recommend me a book similar to the following books: ${books.join(
+              ", "
+            )}.`,
+          },
+        ],
+        text: {
+          format: zodTextFormat(recommendations, "book_recommendations"),
+        },
+      });
+
+      if (response.error != null) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      res.status(200).json(response.output_parsed);
+    } catch (error) {
+      logger.error("Book recommendation failed", error);
+      res
+        .status(500)
+        .json({ error: "Failed to generate book recommendations" });
+    }
+  });
+});
