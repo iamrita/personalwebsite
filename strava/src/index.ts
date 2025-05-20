@@ -3,6 +3,9 @@ import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import axios from "axios";
 import * as dotenv from "dotenv";
+import OpenAI from "openai";
+import { z } from "zod";
+import { zodTextFormat } from "openai/helpers/zod";
 dotenv.config();
 
 /**
@@ -29,6 +32,19 @@ const db = admin.firestore();
 
 const CLIENT_ID = process.env.STRAVA_CLIENT_ID!;
 const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET!;
+
+const BookRecommendation = z.object({
+  title: z.string(),
+  author: z.string(),
+  description: z.string(),
+  link: z.string(),
+});
+
+const recommendations = z.object({
+  books: z.array(BookRecommendation),
+});
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 /* =====================================================================
  * 1.  /helloWorld  – Strava Webhook (handshake + activity POST)
@@ -159,3 +175,57 @@ async function getFreshAccessToken(): Promise<string> {
   await snap.ref.set(data);
   return data.access_token;
 }
+
+export const bookRecommend = onRequest(async (req, res): Promise<void> => {
+  // Enable CORS
+  res.set('Access-Control-Allow-Origin', '*');
+  
+  if (req.method === 'OPTIONS') {
+    // Send response to OPTIONS requests
+    res.set('Access-Control-Allow-Methods', 'POST');
+    res.set('Access-Control-Allow-Headers', 'Content-Type');
+    res.set('Access-Control-Max-Age', '3600');
+    res.status(204).send('');
+    return;
+  }
+
+  if (req.method !== 'POST') {
+    res.status(405).send('Method Not Allowed');
+    return;
+  }
+
+  try {
+    const { books } = req.body;
+    
+    if (!Array.isArray(books) || books.length === 0) {
+      res.status(400).json({ error: 'Please provide an array of books' });
+      return;
+    }
+
+    const response = await openai.responses.parse({
+      model: "gpt-4",
+      input: [
+        {
+          role: "system",
+          content: "You are a helpful assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page.",
+        },
+        { 
+          role: "user", 
+          content: `Recommend me a book similar to the following books: ${books.join(", ")}.`
+        },
+      ],
+      text: {
+        format: zodTextFormat(recommendations, "book_recommendations"),
+      },
+    });
+
+    if (response.error != null) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
+    res.status(200).json(response.output_parsed);
+  } catch (error) {
+    logger.error("Book recommendation failed", error);
+    res.status(500).json({ error: 'Failed to generate book recommendations' });
+  }
+});

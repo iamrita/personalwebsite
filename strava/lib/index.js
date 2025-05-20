@@ -36,25 +36,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.stravaOAuth = exports.helloWorld = void 0;
+exports.bookRecommend = exports.stravaOAuth = exports.helloWorld = void 0;
 const https_1 = require("firebase-functions/v2/https");
 const admin = __importStar(require("firebase-admin"));
 const logger = __importStar(require("firebase-functions/logger"));
 const axios_1 = __importDefault(require("axios"));
+const dotenv = __importStar(require("dotenv"));
+const openai_1 = __importDefault(require("openai"));
+const zod_1 = require("zod");
+const zod_2 = require("openai/helpers/zod");
+dotenv.config();
 /**
  * To test the strava webhook locally you need to run
  * (first compile the typescript using npm run build)
  * then run firebase emulators:start --only functions, firestore
  * then to get the grok you want to run npx ngrok http 5001
- * then go to this link: https://www.strava.com/oauth/authorize?client_id=157704&response_type=code&redirect_uri=https://4307-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force to authorize strava
+ * then go to this link: https://www.strava.com/oauth/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=https://4307-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force to authorize strava
  *
  * also make sure that your subscription is live
  * curl -G https://www.strava.com/api/v3/push_subscriptions \
-     -d client_id=157704 -d client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 | jq
+     -d client_id=CLIENT_ID -d client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 | jq
 
-     curl -X DELETE https://www.strava.com/api/v3/push_subscriptions/281111?client_id=157704& client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396
+     curl -X DELETE https://www.strava.com/api/v3/push_subscriptions/281111?client_id=CLIENT_ID& client_secret=CLIENT_SECRET
 curl -X POST https://www.strava.com/api/v3/push_subscriptions \
-     -F client_id=157704 \
+     -F client_id=CLIENT_ID \
      -F client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 \
      -F callback_url=https://55ff-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/helloWorld \
      -F verify_token=myVerifyToken
@@ -62,6 +67,18 @@ curl -X POST https://www.strava.com/api/v3/push_subscriptions \
  */
 admin.initializeApp();
 const db = admin.firestore();
+const CLIENT_ID = process.env.STRAVA_CLIENT_ID;
+const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET;
+const BookRecommendation = zod_1.z.object({
+    title: zod_1.z.string(),
+    author: zod_1.z.string(),
+    description: zod_1.z.string(),
+    link: zod_1.z.string(),
+});
+const recommendations = zod_1.z.object({
+    books: zod_1.z.array(BookRecommendation),
+});
+const openai = new openai_1.default({ apiKey: process.env.OPENAI_API_KEY });
 /* =====================================================================
  * 1.  /helloWorld  – Strava Webhook (handshake + activity POST)
  * =================================================================== */
@@ -83,6 +100,7 @@ exports.helloWorld = (0, https_1.onRequest)(async (req, res) => {
         res.status(200).send("hooray"); // ACK first so Strava stops retrying
         try {
             const { object_id } = req.body;
+            logger.info(`Created activity with id ${object_id}`);
             const token = await getFreshAccessToken();
             const { data: act } = await axios_1.default.get(`https://www.strava.com/api/v3/activities/${object_id}`, { headers: { Authorization: `Bearer ${token}` } });
             logger.info(`Fetched activity ${object_id}: ${act.name} ${act.sport_type}`);
@@ -118,8 +136,8 @@ exports.stravaOAuth = (0, https_1.onRequest)(async (req, res) => {
     }
     try {
         const body = new URLSearchParams({
-            client_id: "157704",
-            client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
             grant_type: "authorization_code",
             code: authCode,
             /* redirect_uri is optional as long as host matched */
@@ -156,12 +174,59 @@ async function getFreshAccessToken() {
     if (Date.now() / 1000 < tokens.expires_at - 60)
         return tokens.access_token;
     const { data } = await axios_1.default.post("https://www.strava.com/api/v3/oauth/token", {
-        client_id: "157704",
-        client_secret: "b04ce64a75ce2efc21d0064da105ceb710a66396",
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
         grant_type: "refresh_token",
         refresh_token: tokens.refresh_token,
     });
     await snap.ref.set(data);
     return data.access_token;
 }
+exports.bookRecommend = (0, https_1.onRequest)(async (req, res) => {
+    // Enable CORS
+    res.set('Access-Control-Allow-Origin', '*');
+    if (req.method === 'OPTIONS') {
+        // Send response to OPTIONS requests
+        res.set('Access-Control-Allow-Methods', 'POST');
+        res.set('Access-Control-Allow-Headers', 'Content-Type');
+        res.set('Access-Control-Max-Age', '3600');
+        res.status(204).send('');
+        return;
+    }
+    if (req.method !== 'POST') {
+        res.status(405).send('Method Not Allowed');
+        return;
+    }
+    try {
+        const { books } = req.body;
+        if (!Array.isArray(books) || books.length === 0) {
+            res.status(400).json({ error: 'Please provide an array of books' });
+            return;
+        }
+        const response = await openai.responses.parse({
+            model: "gpt-4",
+            input: [
+                {
+                    role: "system",
+                    content: "You are a helpful assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page.",
+                },
+                {
+                    role: "user",
+                    content: `Recommend me a book similar to the following books: ${books.join(", ")}.`
+                },
+            ],
+            text: {
+                format: (0, zod_2.zodTextFormat)(recommendations, "book_recommendations"),
+            },
+        });
+        if (response.error != null) {
+            throw new Error(`Error: ${response.status}`);
+        }
+        res.status(200).json(response.output_parsed);
+    }
+    catch (error) {
+        logger.error("Book recommendation failed", error);
+        res.status(500).json({ error: 'Failed to generate book recommendations' });
+    }
+});
 //# sourceMappingURL=index.js.map
