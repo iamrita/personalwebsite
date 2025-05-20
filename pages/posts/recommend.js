@@ -5,32 +5,7 @@ import { motion } from "motion/react";
 import useMeasure from "react-use-measure";
 import { useSpring, animated } from "@react-spring/web";
 import styles from "../../styles/bookshelf.module.css";
-import OpenAI from "openai";
-import { zodTextFormat } from "openai/helpers/zod";
-import { z } from "zod";
 import headerFont from "../../components/Font";
-
-dotenv.config();
-
-/**
- * Good for testing, but I can't deploy with this
- * because the apiKey will be publicly accessible in the browser
- */
-const client = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPEN_AI_KEY,
-  dangerouslyAllowBrowser: true,
-});
-
-const BookRecommendation = z.object({
-  title: z.string(),
-  author: z.string(),
-  description: z.string(),
-  link: z.string(),
-});
-
-const recommendations = z.object({
-  books: z.array(BookRecommendation),
-});
 
 // Generate random pastel colors for each book
 const generateBookColors = (books) => {
@@ -46,26 +21,28 @@ const generateBookColors = (books) => {
 };
 
 async function fetchResponse(input) {
-  const response = await client.responses.parse({
-    model: "gpt-4.1",
-    input: [
+  try {
+    const response = await fetch(
+      "https://bookrecommend-77xzict4da-uc.a.run.app",
       {
-        role: "system",
-        content:
-          "You are a helfpul assistant tasked with giving 3 book recommendations based on the books the user gives. Make sure the book recommendations include the title, author, a brief description, and the link to the Goodreads page. ",
-      },
-      { role: "user", content: input },
-    ],
-    text: {
-      format: zodTextFormat(recommendations, "book_recommendations"),
-    },
-  });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ books: input.split(", ") }),
+      }
+    );
 
-  if (response.error != null) {
-    throw new Error(`Error: ${response.statusText}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return { output_parsed: data };
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
   }
-
-  return await response;
 }
 
 export default function Recommendation() {
@@ -132,11 +109,6 @@ export default function Recommendation() {
     } finally {
       setIsLoading(false); // Reset loading state
     }
-  }
-
-  function removeBook(bookToRemove) {
-    setBooks(books.filter((book) => book !== bookToRemove));
-    setSelectedBooks(selectedBooks.filter((book) => book !== bookToRemove));
   }
 
   const handleRecommendationClick = (link) => {
