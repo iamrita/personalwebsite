@@ -61,10 +61,9 @@ export default function About() {
             contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
-            Currently, I am reading Careless People by Sarah Wynn-Wililams,
-            listening to a lot of Harry Styles, and watching The Last of Us 2 on
-            HBO Max. My partner and I are also playing Split Fiction on the
-            Playstation 5.
+            Currently, I am reading The Original Daughter by Jemimah Wei and
+            listening to a lot of Amy Winehouse. My partner and I are also
+            playing Split Fiction on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
