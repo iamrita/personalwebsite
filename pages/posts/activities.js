@@ -2,6 +2,7 @@ import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "../../components/firebase";
 import Layout, { siteTitle } from "../../components/layout";
 import utilStyles from "../../styles/utils.module.css";
+import styles from "../../styles/activities.module.css";
 
 import Head from "next/head";
 import { useState, useEffect } from "react";
@@ -88,18 +89,18 @@ export default function Activities() {
 
       <article>
         <h1 className={headerFont.className}>May 2025</h1>
-        <div className="calendar">
-          <div className="week">
+        <div className={styles.calendar}>
+          <div className={styles.week}>
             {daysOfWeek.map((day, idx) => (
-              <div key={idx} className="cell header">
+              <div key={idx} className={`${styles.cell} ${styles.header}`}>
                 {day}
               </div>
             ))}
           </div>
           {weeks.map((week, wi) => (
-            <div key={wi} className="week">
+            <div key={wi} className={styles.week}>
               {week.map((day, di) => (
-                <div key={di} className="cell">
+                <div key={di} className={styles.cell}>
                   {day &&
                     sports
                       .filter(
@@ -113,7 +114,7 @@ export default function Activities() {
                           key={idx}
                           src={sportsMap[activity.sportType]}
                           alt={activity.sportType}
-                          className="activity-img"
+                          className={styles.activityImg}
                           style={{
                             zIndex:
                               (idx -
@@ -132,7 +133,7 @@ export default function Activities() {
             </div>
           ))}
         </div>
-        <p>
+        <p className={styles.description}>
           The goal of this page was three fold - to experiment with Firebase
           cloud functions, to try out the Strava Webhook API, and to have a fun
           way of tracking all the different activities I do throughout the
@@ -143,7 +144,7 @@ export default function Activities() {
           calendar. If I happen to do multiple activities on the same day (not
           often), I can click on the image to cycle through them.
         </p>
-        <p>
+        <p className={styles.description}>
           <em>
             Curious where these beautiful images come from? They're the official
             pictograms from the 2024 Paris Olympic Games. If you love great
@@ -166,7 +167,7 @@ export default function Activities() {
             one because it was the most recent.
           </em>
         </p>
-        <p>
+        <p className={styles.description}>
           <em>
             Because there are some sports on Strava that don't have a
             corresponding Olympic sport (like yoga), I've taken the artistic
@@ -175,47 +176,6 @@ export default function Activities() {
           </em>
         </p>
       </article>
-      <style jsx>{`
-        .calendar {
-          display: grid;
-          grid-template-rows: auto repeat(${weeks.length}, auto);
-          gap: 8px;
-        }
-        .week {
-          display: grid;
-          grid-template-columns: repeat(7, 1fr);
-          gap: 4px;
-        }
-        .cell {
-          min-height: 80px;
-          padding: 4px;
-          position: relative;
-        }
-        .cell.header {
-          min-height: 20px;
-          font-weight: bold;
-          text-align: center;
-          background-color: transparent;
-          padding-bottom: 2px; /* Reduced padding at the bottom */
-        }
-        .activity-img {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 70px;
-          height: 70px;
-          cursor: pointer;
-          transition: transform 0.2s, z-index 0.2s;
-        }
-        p {
-          border: 1px solid black;
-          border-radius: 8px;
-          background-color: #ede5f8;
-          // background-color: #fff2de;
-          padding: 32px;
-        }
-      `}</style>
     </Layout>
   );
 }
