@@ -4,7 +4,7 @@ import * as dotenv from "dotenv";
 import { motion } from "motion/react";
 import useMeasure from "react-use-measure";
 import { useSpring, animated } from "@react-spring/web";
-import styles from "../../styles/bookshelf.module.css";
+import styles from "../../styles/recommend.module.css";
 import headerFont from "../../components/Font";
 
 // Generate random pastel colors for each book
@@ -134,7 +134,7 @@ export default function Recommendation() {
   return (
     <Layout>
       <h1 className={headerFont.className}>Book Recommender</h1>
-      <p>
+      <p className={styles.description}>
         There's so many great books out there that finding out what to read next
         can be hard, and I've found that Goodreads isn't great in using my past
         books to inform what I would like. I created the interaction below to
@@ -147,17 +147,9 @@ export default function Recommendation() {
           read next!
         </b>
       </p>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap", // Allow wrapping to the next line
-          gap: "10px",
-          marginBottom: "20px",
-          justifyContent: "center", // Center the pills
-        }}
-      >
+      <div className={styles.container}>
         {books.map((book) => {
-          const pastelColor = bookColors[book]; // Ensure consistent color mapping
+          const pastelColor = bookColors[book];
           const isSelected = selectedBooks.includes(book);
           return (
             <motion.div
@@ -166,15 +158,10 @@ export default function Recommendation() {
               onClick={() => {
                 handleBookClick(book);
               }}
+              className={styles.bookPill}
               style={{
-                border: `2px solid black`,
                 backgroundColor: isSelected ? "black" : pastelColor,
                 color: isSelected ? "white" : "black",
-                margin: "2px",
-                padding: "10px 15px",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "14px",
               }}
             >
               {book}
@@ -184,47 +171,21 @@ export default function Recommendation() {
         <motion.div
           whileHover={{ scale: 1.15 }}
           whileTap={{ width: "200px" }}
-          style={{
-            border: `2px solid black`,
-            backgroundColor: "white",
-            color: "black",
-            margin: "2px",
-            padding: "10px 15px",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "14px",
-          }}
+          className={styles.addBookPill}
         >
           +
         </motion.div>
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center", // Center horizontally
-          alignItems: "center", // Center vertically
-        }}
-      >
+      <div className={styles.buttonContainer}>
         <button
           ref={ref}
+          className={styles.recommendButton}
           style={{
-            border: "2px solid black", // Pastel pink border
-            background: isLoading
-              ? getAnimatedGradient() // Animated gradient while loading
-              : "white", // Default background
-            backgroundSize: isLoading ? "400% 400%" : "auto", // Animate gradient
+            background: isLoading ? getAnimatedGradient() : "white",
+            backgroundSize: isLoading ? "400% 400%" : "auto",
             animation: isLoading
-              ? "gradientAnimation 3s ease infinite" // Gradient animation
+              ? "gradientAnimation 3s ease infinite"
               : "none",
-            color: "#333",
-            padding: "10px 15px",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "14px",
-            position: "relative",
-            overflow: "hidden",
-            width: "200px",
-            height: "50px",
           }}
           onClick={() => getAIResponse()}
         >
@@ -236,80 +197,30 @@ export default function Recommendation() {
                   position: "absolute",
                   top: 0,
                   height: "100%",
-                  ...block, // Apply block-specific styles
+                  ...block,
                   zIndex: 1,
                 }}
               />
             ))}
-          <animated.div
-            className={styles.content}
-            style={{
-              position: "relative",
-              zIndex: 2,
-              color: "#333",
-              textAlign: "center",
-            }}
-          >
+          <animated.div className={styles.buttonContent}>
             <b>{isLoading ? "Finding..." : "Recommend me a book!"}</b>
           </animated.div>
         </button>
       </div>
       {generatedRecs.length > 0 && (
-        <div
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            gap: "20px",
-            flexWrap: "wrap",
-            padding: "20px",
-          }}
-        >
+        <div className={styles.recommendationsContainer}>
           {generatedRecs.map((book) => (
             <motion.div
               key={book.title}
               whileHover={{ scale: 1.15 }}
               onClick={() => handleRecommendationClick(book.link)}
-              style={{
-                position: "relative",
-                border: `2px solid black`,
-                backgroundColor: "white",
-                color: "black",
-                padding: "10px 15px",
-                borderRadius: "8px",
-                cursor: "pointer",
-                fontSize: "14px",
-                width: "200px",
-                textAlign: "center",
-              }}
+              className={styles.recommendationCard}
             >
               {book.title}
-              {/*book.description*/}
             </motion.div>
           ))}
         </div>
       )}
-      <style jsx>{`
-        p {
-          border: 1px solid black;
-          border-radius: 8px;
-          background-color: #fff2de;
-          padding: 32px;
-          margin-bottom: 50px;
-        }
-        @keyframes gradientAnimation {
-          0% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-          100% {
-            background-position: 0% 50%;
-          }
-        }
-      `}</style>
     </Layout>
   );
 }
