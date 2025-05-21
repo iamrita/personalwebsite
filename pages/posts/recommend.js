@@ -151,17 +151,18 @@ export default function Recommendation() {
 
       try {
         const response = await openai.images.edit({
-          model: "dall-e-2",
+          model: "gpt-image-1",
           image: file,
           prompt: "Create a fashion designer sketch inspired by this image",
           n: 1,
           size: "1024x1024",
         });
 
-        if (response.data && response.data[0].url) {
-          setGeneratedSketch(response.data[0].url);
+        if (response.data && response.data[0].b64_json) {
+          const base64Data = response.data[0].b64_json;
+          setGeneratedSketch(`data:image/png;base64,${base64Data}`);
         } else {
-          throw new Error("No image URL in response");
+          throw new Error("No base64 data in response");
         }
       } catch (error) {
         console.error("Error generating sketch:", error);
