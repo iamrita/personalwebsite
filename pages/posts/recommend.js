@@ -6,6 +6,14 @@ import useMeasure from "react-use-measure";
 import { useSpring, animated } from "@react-spring/web";
 import styles from "../../styles/bookshelf.module.css";
 import headerFont from "../../components/Font";
+import OpenAI from "openai";
+
+dotenv.config();
+
+const openai = new OpenAI({
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true, // Note: This is required for browser usage
+});
 
 // Generate random pastel colors for each book
 const generateBookColors = (books) => {
@@ -78,6 +86,10 @@ export default function Recommendation() {
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const [ref, { width }] = useMeasure();
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [generatedSketch, setGeneratedSketch] = useState(null);
+  const [isGeneratingSketch, setIsGeneratingSketch] = useState(false);
+
   const getButtonBackgroundBlocks = () => {
     const colors = selectedBooks.map((book) => bookColors[book]); // Use consistent colors from `bookColors`
     const blockWidth = 100 / colors.length; // Divide button width equally
@@ -128,6 +140,35 @@ export default function Recommendation() {
       );
     } else {
       setSelectedBooks([...selectedBooks, book]);
+    }
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+      setIsGeneratingSketch(true);
+
+      try {
+        const response = await openai.images.edit({
+          model: "dall-e-2",
+          image: file,
+          prompt: "Create a fashion designer sketch inspired by this image",
+          n: 1,
+          size: "1024x1024",
+        });
+
+        if (response.data && response.data[0].url) {
+          setGeneratedSketch(response.data[0].url);
+        } else {
+          throw new Error("No image URL in response");
+        }
+      } catch (error) {
+        console.error("Error generating sketch:", error);
+        alert("Failed to generate sketch. Please try again.");
+      } finally {
+        setIsGeneratingSketch(false);
+      }
     }
   };
 
@@ -290,6 +331,76 @@ export default function Recommendation() {
           ))}
         </div>
       )}
+
+      <div style={{ marginTop: "40px", textAlign: "center" }}>
+        <h2 className={headerFont.className}>Fashion Sketch Generator</h2>
+        <p style={{ marginBottom: "20px" }}>
+          Upload an image to generate a fashion designer sketch inspired by it!
+        </p>
+
+        <div style={{ marginBottom: "20px" }}>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: "none" }}
+            id="image-upload"
+          />
+          <label
+            htmlFor="image-upload"
+            style={{
+              border: "2px solid black",
+              padding: "10px 20px",
+              borderRadius: "8px",
+              cursor: "pointer",
+              display: "inline-block",
+              backgroundColor: "white",
+            }}
+          >
+            {isGeneratingSketch ? "Generating..." : "Upload Image"}
+          </label>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "20px",
+            flexWrap: "wrap",
+          }}
+        >
+          {selectedImage && (
+            <div style={{ textAlign: "center" }}>
+              <h3>Original Image</h3>
+              <img
+                src={selectedImage}
+                alt="Original"
+                style={{
+                  maxWidth: "300px",
+                  border: "2px solid black",
+                  borderRadius: "8px",
+                }}
+              />
+            </div>
+          )}
+
+          {generatedSketch && (
+            <div style={{ textAlign: "center" }}>
+              <h3>Generated Sketch</h3>
+              <img
+                src={generatedSketch}
+                alt="Generated Sketch"
+                style={{
+                  maxWidth: "300px",
+                  border: "2px solid black",
+                  borderRadius: "8px",
+                }}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
       <style jsx>{`
         p {
           border: 1px solid black;
