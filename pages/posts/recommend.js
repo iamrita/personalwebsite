@@ -153,9 +153,10 @@ export default function Recommendation() {
         const response = await openai.images.edit({
           model: "gpt-image-1",
           image: file,
-          prompt: "Create a fashion designer sketch inspired by this image",
+          prompt:
+            "Using this image, create a sketch that a fashion designer would make using a model that has light brown skin. Include the details and colors of the clothes. Make sure the generated image has a transparent background.",
           n: 1,
-          size: "1024x1024",
+          size: "1024x1536",
         });
 
         if (response.data && response.data[0].b64_json) {
@@ -393,6 +394,7 @@ export default function Recommendation() {
                 alt="Generated Sketch"
                 style={{
                   maxWidth: "300px",
+                  maxHeight: "500px",
                   border: "2px solid black",
                   borderRadius: "8px",
                 }}
