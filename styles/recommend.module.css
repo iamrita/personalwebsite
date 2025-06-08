@@ -1,0 +1,96 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.bookPill {
+  border: 2px solid black;
+  margin: 2px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.addBookPill {
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  margin: 2px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.recommendButton {
+  border: 2px solid black;
+  color: #333;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  height: 50px;
+}
+
+.buttonContent {
+  position: relative;
+  z-index: 2;
+  color: #333;
+  text-align: center;
+}
+
+.recommendationsContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.recommendationCard {
+  position: relative;
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 200px;
+  text-align: center;
+}
+
+.description {
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: #fff2de;
+  padding: 32px;
+  margin-bottom: 50px;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} 
