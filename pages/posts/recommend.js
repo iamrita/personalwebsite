@@ -71,6 +71,7 @@ export default function Recommendation() {
     "Tomorrow, Tomorrow, and Tomorrow",
     "Between Two Kingdoms",
     "The Great Believers",
+    "Careless People",
   ]);
 
   const [selectedBooks, setSelectedBooks] = useState([]);
@@ -181,22 +182,6 @@ export default function Recommendation() {
             </motion.div>
           );
         })}
-        <motion.div
-          whileHover={{ scale: 1.15 }}
-          whileTap={{ width: "200px" }}
-          style={{
-            border: `2px solid black`,
-            backgroundColor: "white",
-            color: "black",
-            margin: "2px",
-            padding: "10px 15px",
-            borderRadius: "8px",
-            cursor: "pointer",
-            fontSize: "14px",
-          }}
-        >
-          +
-        </motion.div>
       </div>
       <div
         style={{

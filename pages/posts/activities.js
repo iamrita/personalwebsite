@@ -45,7 +45,7 @@ const sportsMap = {
   Tennis: "/images/tennis-paris.png",
   Volleyball: "/images/volleyball-paris.png",
 };
-
+// test
 const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
 
 export default function Activities() {
