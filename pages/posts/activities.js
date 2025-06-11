@@ -51,6 +51,8 @@ const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
 export default function Activities() {
   const [sports, setSports] = useState([]);
   const [selectedIndices, setSelectedIndices] = useState({});
+  const [currentDate, setCurrentDate] = useState(new Date());
+
   useEffect(() => {
     // Query the most recent activity
     const q = query(collection(db, "activities"), orderBy("timestamp", "asc"));
@@ -70,10 +72,17 @@ export default function Activities() {
     return () => unsub();
   }, []);
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
   const weeks = generateCalendar(year, month);
+
+  const handlePrevMonth = () => {
+    setCurrentDate(new Date(year, month - 1, 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentDate(new Date(year, month + 1, 1));
+  };
 
   const handleClick = (dateKey, length) => {
     setSelectedIndices((prev) => ({
@@ -81,6 +90,7 @@ export default function Activities() {
       [dateKey]: ((prev[dateKey] || 0) + 1) % length,
     }));
   };
+
   return (
     <Layout>
       <Head>
@@ -88,7 +98,17 @@ export default function Activities() {
       </Head>
 
       <article>
-        <h1 className={headerFont.className}>May 2025</h1>
+        <div className="month-navigation">
+          <button onClick={handlePrevMonth} className="nav-button">
+            ←
+          </button>
+          <h1 className={headerFont.className}>
+            {currentDate.toLocaleString("default", { month: "long" })} {year}
+          </h1>
+          <button onClick={handleNextMonth} className="nav-button">
+            →
+          </button>
+        </div>
         <div className="calendar">
           <div className="week">
             {daysOfWeek.map((day, idx) => (
@@ -177,10 +197,30 @@ export default function Activities() {
         </p>
       </article>
       <style jsx>{`
+        .month-navigation {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 20px;
+          margin-bottom: 20px;
+        }
+        .nav-button {
+          background: none;
+          border: none;
+          font-size: 24px;
+          cursor: pointer;
+          padding: 8px 16px;
+          border-radius: 4px;
+          transition: background-color 0.2s;
+        }
+        .nav-button:hover {
+          background-color: #f0f0f0;
+        }
         .calendar {
           display: grid;
           grid-template-rows: auto repeat(${weeks.length}, auto);
           gap: 8px;
+          padding-bottom: 30px;
         }
         .week {
           display: grid;
