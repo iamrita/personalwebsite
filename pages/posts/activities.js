@@ -122,32 +122,41 @@ export default function Activities() {
               {week.map((day, di) => (
                 <div key={di} className="cell">
                   {day &&
-                    sports
-                      .filter(
-                        (activity) =>
-                          activity.date.getFullYear() === year &&
-                          activity.date.getMonth() === month &&
-                          activity.date.getDate() === day
-                      )
-                      .map((activity, idx, arr) => (
+                    (() => {
+                      const dayActivities = sports
+                        .filter(
+                          (activity) =>
+                            activity.date.getFullYear() === year &&
+                            activity.date.getMonth() === month &&
+                            activity.date.getDate() === day
+                        )
+                        .sort((a, b) => a.date.getTime() - b.date.getTime());
+
+                      if (dayActivities.length === 0) return null;
+
+                      const selectedIndex =
+                        selectedIndices[`${year}-${month}-${day}`] || 0;
+                      const currentActivity = dayActivities[selectedIndex];
+
+                      return (
                         <img
-                          key={idx}
-                          src={sportsMap[activity.sportType]}
-                          alt={activity.sportType}
+                          src={sportsMap[currentActivity.sportType]}
+                          alt={currentActivity.sportType}
                           className="activity-img"
                           style={{
-                            zIndex:
-                              (idx -
-                                (selectedIndices[`${year}-${month}-${day}`] ||
-                                  0) +
-                                arr.length) %
-                              arr.length,
+                            cursor:
+                              dayActivities.length > 1 ? "pointer" : "default",
                           }}
                           onClick={() =>
-                            handleClick(`${year}-${month}-${day}`, arr.length)
+                            dayActivities.length > 1 &&
+                            handleClick(
+                              `${year}-${month}-${day}`,
+                              dayActivities.length
+                            )
                           }
                         />
-                      ))}
+                      );
+                    })()}
                 </div>
               ))}
             </div>
@@ -246,7 +255,6 @@ export default function Activities() {
           transform: translate(-50%, -50%);
           width: 70px;
           height: 70px;
-          cursor: pointer;
           transition: transform 0.2s, z-index 0.2s;
         }
         p {
