@@ -45,7 +45,8 @@ export default function Home({ allPostsData }) {
           <br />
           <br />
           When I'm not working or volunteering, I'm usually doing yoga,
-          top-roping, or playing tennis. Check out this little{" "}
+          top-roping, or walking around San Francisco's beautiful parks. Check
+          out this little{" "}
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
