@@ -61,9 +61,9 @@ export default function About() {
             contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
-            Currently, I am reading The Original Daughter by Jemimah Wei and
-            listening to a lot of Amy Winehouse. My partner and I are also
-            playing Split Fiction on the Playstation 5.
+            Currently, I am reading Drive Your Plow Over the Bones of the Dead
+            by Olga Tokarczuk and listening to a lot of Lana Del Rey. My partner
+            and I are also playing Split Fiction on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
