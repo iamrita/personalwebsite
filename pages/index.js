@@ -52,18 +52,12 @@ export default function Home({ allPostsData }) {
           I made for myself!
         </p>
         <p>
-          I also have a minor obsession with the{" "}
-          <a
-            href="https://www.nytimes.com/games/connections"
-            className={utilStyles.link}
-          >
-            NY Times Connections
-          </a>
-          , so much so that I've made my own{" "}
-          <Link href={`/posts/connections`} className={utilStyles.link}>
+          Looking for a book recommendation? Check out my little recommender
+          game{" "}
+          <Link href={`/posts/recommend`} className={utilStyles.link}>
             here
           </Link>
-          . I post a new board every day!
+          .
         </p>
         <p>
           You can find me on{" "}
@@ -81,12 +75,18 @@ export default function Home({ allPostsData }) {
           .
         </p>
         <p>
-          Looking for a book recommendation? Check out my little recommender
-          game{" "}
-          <Link href={`/posts/recommend`} className={utilStyles.link}>
+          I also have a minor obsession with the{" "}
+          <a
+            href="https://www.nytimes.com/games/connections"
+            className={utilStyles.link}
+          >
+            NY Times Connections
+          </a>
+          , so much so that I've made my own{" "}
+          <Link href={`/posts/connections`} className={utilStyles.link}>
             here
           </Link>
-          .
+          . I post a new board every day!
         </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
