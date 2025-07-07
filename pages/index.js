@@ -67,7 +67,7 @@ export default function Home({ allPostsData }) {
           </a>{" "}
           or check out my{" "}
           <a
-            href="/files/resume_feb_2024.pdf"
+            href="/files/resume_jul_2025.pdf"
             download
             className={utilStyles.link}
           >
