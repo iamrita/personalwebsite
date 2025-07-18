@@ -31,7 +31,7 @@ function generateCalendar(year, month) {
   return weeks;
 }
 const sportsMap = {
-  Workout: "/images/running-paris.png",
+  Workout: "/images/weightlifting-paris.png",
   Walk: "/images/running-paris.png",
   Run: "/images/running-paris.png",
   Hike: "/images/hiking-paris.png",
