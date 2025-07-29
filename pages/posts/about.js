@@ -18,30 +18,6 @@ const books = [
   "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577090827l/51791252.jpg",
 ];
 
-// Helper to generate calendar grid for current month
-function generateCalendar(year, month) {
-  const firstDayIndex = new Date(year, month, 1).getDay();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const totalSlots = firstDayIndex + daysInMonth;
-  const weeks = [];
-  let current = 0;
-
-  while (current < totalSlots) {
-    const week = [];
-    for (let d = 0; d < 7; d++) {
-      const dayIndex = current - firstDayIndex + 1;
-      if (current < firstDayIndex || dayIndex > daysInMonth) {
-        week.push(null);
-      } else {
-        week.push(dayIndex);
-      }
-      current++;
-    }
-    weeks.push(week);
-  }
-  return weeks;
-}
-
 export default function About() {
   return (
     <Layout>
@@ -61,9 +37,9 @@ export default function About() {
             contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
-            Currently, I am reading Drive Your Plow Over the Bones of the Dead
-            by Olga Tokarczuk and listening to a lot of Lana Del Rey. My partner
-            and I are also playing Split Fiction on the Playstation 5.
+            Currently, I am reading The Other Americans by Laila Lalami and
+            listening to a lot of Jessie Reyez. My partner and I are also
+            playing Split Fiction on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />

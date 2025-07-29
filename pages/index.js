@@ -44,9 +44,9 @@ export default function Home({ allPostsData }) {
           eviction and displacement.
           <br />
           <br />
-          When I'm not working or volunteering, I'm usually doing yoga,
-          top-roping, or walking around San Francisco's beautiful parks. Check
-          out this little{" "}
+          When I'm not working or volunteering, I'm usually top-roping at the
+          climbing gym, reading, or walking around San Francisco's beautiful
+          parks. Check out this little{" "}
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
