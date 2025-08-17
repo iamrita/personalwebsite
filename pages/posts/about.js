@@ -37,8 +37,8 @@ export default function About() {
             contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
-            Currently, I am reading The Other Americans by Laila Lalami and
-            listening to a lot of Jessie Reyez. My partner and I are also
+            Currently, I am reading Indian Country by Shobha Roa and
+            listening to a lot of Alabama Shakes. My partner and I are also
             playing Split Fiction on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
