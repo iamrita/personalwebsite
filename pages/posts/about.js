@@ -37,9 +37,9 @@ export default function About() {
             contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
-            Currently, I am reading Indian Country by Shobha Roa and
-            listening to a lot of Alabama Shakes. My partner and I are also
-            playing Split Fiction on the Playstation 5.
+            Currently, I am reading The Seven Husbands of Evelyn Hugo by Taylor
+            Jenkins Reid and listening to a lot of Alabama Shakes. My partner
+            and I are also playing Blue Prince on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
