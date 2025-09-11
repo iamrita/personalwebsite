@@ -154,7 +154,7 @@ export default function Recommendation() {
           model: "gpt-image-1",
           image: file,
           prompt:
-            "Using this image, create a sketch that a fashion designer would make using a model that has light brown skin. Include the details and colors of the clothes. Make sure the generated image has a transparent background.",
+            "Using this image, create a sketch that a professional fashion designer would create. Details of the face are not super necessary, just focus on the clothing. Include the details and colors of the clothes. Make sure the generated image has a transparent background.",
           n: 1,
           size: "1024x1536",
         });
@@ -371,22 +371,36 @@ export default function Recommendation() {
             flexWrap: "wrap",
           }}
         >
-          {selectedImage && (
+          {isGeneratingSketch && (
             <div style={{ textAlign: "center" }}>
-              <h3>Original Image</h3>
-              <img
-                src={selectedImage}
-                alt="Original"
+              <h3>Generating Sketch...</h3>
+              <div
                 style={{
-                  maxWidth: "300px",
+                  width: "300px",
+                  height: "300px",
                   border: "2px solid black",
                   borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#f8f8f8",
                 }}
-              />
+              >
+                <div
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    border: "4px solid #ddd",
+                    borderTop: "4px solid #333",
+                    borderRadius: "50%",
+                    animation: "spin 1s linear infinite",
+                  }}
+                />
+              </div>
             </div>
           )}
 
-          {generatedSketch && (
+          {generatedSketch && !isGeneratingSketch && (
             <div style={{ textAlign: "center" }}>
               <h3>Generated Sketch</h3>
               <img
@@ -421,6 +435,14 @@ export default function Recommendation() {
           }
           100% {
             background-position: 0% 50%;
+          }
+        }
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
           }
         }
       `}</style>
