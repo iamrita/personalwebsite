@@ -37,8 +37,7 @@ export default function About() {
             contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
-            Currently, I am reading The Seven Husbands of Evelyn Hugo by Taylor
-            Jenkins Reid and listening to a lot of Alabama Shakes. My partner
+            Currently, I am reading Empire of Pain by Patrick Radden Keefe and listening to a lot of Beyoncé. My partner
             and I are also playing Blue Prince on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
