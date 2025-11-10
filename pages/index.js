@@ -45,20 +45,12 @@ export default function Home({ allPostsData }) {
           <br />
           <br />
           When I'm not working or volunteering, I'm usually top-roping at the
-          climbing gym, reading, or walking around San Francisco's beautiful
+          climbing gym, <Link href={`/posts/recommend`} className={utilStyles.link}>reading</Link>, or walking around San Francisco's beautiful
           parks. Check out this little{" "}
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
           I made for myself!
-        </p>
-        <p>
-          Looking for a book recommendation? Check out my little recommender
-          game{" "}
-          <Link href={`/posts/recommend`} className={utilStyles.link}>
-            here
-          </Link>
-          .
         </p>
         <p>
           You can find me on{" "}
