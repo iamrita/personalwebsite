@@ -45,15 +45,19 @@ export default function Home({ allPostsData }) {
           <br />
           <br />
           When I'm not working or volunteering, I'm usually top-roping at the
-          climbing gym, <Link href={`/posts/recommend`} className={utilStyles.link}>reading</Link>, or walking around San Francisco's beautiful
-          parks. Check out this little{" "}
+          climbing gym,{" "}
+          <Link href={`/posts/recommend`} className={utilStyles.link}>
+            reading
+          </Link>
+          , or playing{" "}
+          <Link href={`/posts/connections`} className={utilStyles.link}>
+            puzzle games
+          </Link>
+          . Check out my{" "}
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
-          I made for myself!
-        </p>
-        <p>
-          You can find me on{" "}
+          I made for myself! You can find me on{" "}
           <a href="https://twitter.com/iamrita98" className={utilStyles.link}>
             Twitter
           </a>{" "}
@@ -66,20 +70,6 @@ export default function Home({ allPostsData }) {
             resume
           </a>
           .
-        </p>
-        <p>
-          I also have a minor obsession with the{" "}
-          <a
-            href="https://www.nytimes.com/games/connections"
-            className={utilStyles.link}
-          >
-            NY Times Connections
-          </a>
-          , so much so that I've made my own{" "}
-          <Link href={`/posts/connections`} className={utilStyles.link}>
-            here
-          </Link>
-          . I post a new board every day!
         </p>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>

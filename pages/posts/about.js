@@ -37,8 +37,9 @@ export default function About() {
             contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
-            Currently, I am reading Empire of Pain by Patrick Radden Keefe and listening to a lot of Beyoncé. My partner
-            and I are also playing Blue Prince on the Playstation 5.
+            Currently, I am reading How To Solve Your Own Murder by Kristen
+            Perrin and listening to a lot of badbadnotgood. My partner and I are
+            also playing Blue Prince on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
