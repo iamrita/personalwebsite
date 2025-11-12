@@ -39,7 +39,7 @@ export default function About() {
           <p>
             Currently, I am reading How To Solve Your Own Murder by Kristen
             Perrin and listening to a lot of badbadnotgood. My partner and I are
-            also playing Blue Prince on the Playstation 5.
+            also playing Chants of Sennaar on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
