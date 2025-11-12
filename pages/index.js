@@ -5,7 +5,6 @@ import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
 import "../components/firebase";
-// import localFont from "next/font/local";
 import headerFont from "../components/Font";
 
 export async function getStaticProps() {
@@ -17,12 +16,6 @@ export async function getStaticProps() {
     },
   };
 }
-
-// const yourFont = localFont({
-//   src: "../fonts/test-domaine-text-bold.woff2", // path relative to this file
-//   display: "swap",
-//   variable: "--font-yourfont",
-// });
 
 export default function Home({ allPostsData }) {
   return (
