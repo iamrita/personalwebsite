@@ -11,22 +11,34 @@ import cors from "cors";
 dotenv.config();
 
 /**
- * To test the strava webhook locally you need to run
- * (first compile the typescript using npm run build)
- * then run firebase emulators:start --only functions, firestore
- * then to get the grok you want to run npx ngrok http 5001
- * then go to this link: https://www.strava.com/oauth/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=https://4307-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force to authorize strava 
- * 
- * also make sure that your subscription is live 
- * curl -G https://www.strava.com/api/v3/push_subscriptions \
-     -d client_id=CLIENT_ID -d client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 | jq
+ * Local Testing Instructions for Strava Webhook
+ *
+ * 1. Build the TypeScript code:
+ *    npm run build
+ *
+ * 2. Start Firebase emulators:
+ *    firebase emulators:start --only functions,firestore
+ *
+ * 3. Start ngrok tunnel:
+ *    npx ngrok http 5001
+ *
+ * 4. Authorize Strava OAuth:
+ *    Visit: https://www.strava.com/oauth/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=YOUR_NGROK_URL/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force
+ *
+ * 5. Manage webhook subscription:
+ *    - Check existing subscriptions:
+ *      curl -G https://www.strava.com/api/v3/push_subscriptions \
+ *        -d client_id=CLIENT_ID \
+ *        -d client_secret=CLIENT_SECRET | jq
 
-     curl -X DELETE https://www.strava.com/api/v3/push_subscriptions/281111?client_id=CLIENT_ID& client_secret=CLIENT_SECRET
-curl -X POST https://www.strava.com/api/v3/push_subscriptions \
-     -F client_id=CLIENT_ID \
-     -F client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 \
-     -F callback_url=https://55ff-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/helloWorld \
-     -F verify_token=myVerifyToken
+ *    - Delete a subscription:
+ *      curl -X DELETE "https://www.strava.com/api/v3/push_subscriptions/SUBSCRIPTION_ID?client_id=CLIENT_ID&client_secret=CLIENT_SECRET"
+ *    - Create a new subscription:
+ *      curl -X POST https://www.strava.com/api/v3/push_subscriptions \
+ *        -F client_id=CLIENT_ID \
+ *        -F client_secret=CLIENT_SECRET \
+ *        -F callback_url=YOUR_NGROK_URL/amrita-website/us-central1/helloWorld \
+ *        -F verify_token=myVerifyToken
 
  */
 admin.initializeApp();
