@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import Head from "next/head";
 import Layout from "../../components/layout";
 import * as dotenv from "dotenv";
 import { motion } from "motion/react";
@@ -134,7 +135,10 @@ export default function Recommendation() {
 
   return (
     <Layout>
-      <h1 className={headerFont.className}>Book Recommender</h1>
+      <Head>
+        <title>Book Recommendations</title>
+      </Head>
+      <h1 className={headerFont.className}>Book Recommendations</h1>
       <p>
         There's so many great books out there that finding out what to read next
         can be hard, and I've found that Goodreads isn't great in using my past
