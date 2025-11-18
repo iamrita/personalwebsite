@@ -7,6 +7,14 @@ import useMeasure from "react-use-measure";
 import { useSpring, animated } from "@react-spring/web";
 import styles from "../../styles/bookshelf.module.css";
 import headerFont from "../../components/Font";
+import OpenAI from "openai";
+
+dotenv.config();
+
+const openai = new OpenAI({
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true, // Note: This is required for browser usage
+});
 
 // Generate random pastel colors for each book
 const generateBookColors = (books) => {
@@ -80,6 +88,10 @@ export default function Recommendation() {
   const [isLoading, setIsLoading] = useState(false); // Track loading state
   const [ref, { width }] = useMeasure();
 
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [generatedSketch, setGeneratedSketch] = useState(null);
+  const [isGeneratingSketch, setIsGeneratingSketch] = useState(false);
+
   const getButtonBackgroundBlocks = () => {
     const colors = selectedBooks.map((book) => bookColors[book]); // Use consistent colors from `bookColors`
     const blockWidth = 100 / colors.length; // Divide button width equally
@@ -130,6 +142,37 @@ export default function Recommendation() {
       );
     } else {
       setSelectedBooks([...selectedBooks, book]);
+    }
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setSelectedImage(URL.createObjectURL(file));
+      setIsGeneratingSketch(true);
+
+      try {
+        const response = await openai.images.edit({
+          model: "gpt-image-1",
+          image: file,
+          prompt:
+            "Using this image, create a sketch that a professional fashion designer would create. Details of the face are not super necessary, just focus on the clothing. Include the details and colors of the clothes. Make sure the generated image has a transparent background.",
+          n: 1,
+          size: "1024x1536",
+        });
+
+        if (response.data && response.data[0].b64_json) {
+          const base64Data = response.data[0].b64_json;
+          setGeneratedSketch(`data:image/png;base64,${base64Data}`);
+        } else {
+          throw new Error("No base64 data in response");
+        }
+      } catch (error) {
+        console.error("Error generating sketch:", error);
+        alert("Failed to generate sketch. Please try again.");
+      } finally {
+        setIsGeneratingSketch(false);
+      }
     }
   };
 
@@ -279,6 +322,91 @@ export default function Recommendation() {
           ))}
         </div>
       )}
+
+      <div style={{ marginTop: "40px", textAlign: "center" }}>
+        <h2 className={headerFont.className}>Fashion Sketch Generator</h2>
+        <p style={{ marginBottom: "20px" }}>
+          Upload an image to generate a fashion designer sketch inspired by it!
+        </p>
+
+        <div style={{ marginBottom: "20px" }}>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            style={{ display: "none" }}
+            id="image-upload"
+          />
+          <label
+            htmlFor="image-upload"
+            style={{
+              border: "2px solid black",
+              padding: "10px 20px",
+              borderRadius: "8px",
+              cursor: "pointer",
+              display: "inline-block",
+              backgroundColor: "white",
+            }}
+          >
+            {isGeneratingSketch ? "Generating..." : "Upload Image"}
+          </label>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            gap: "20px",
+            flexWrap: "wrap",
+          }}
+        >
+          {isGeneratingSketch && (
+            <div style={{ textAlign: "center" }}>
+              <h3>Generating Sketch...</h3>
+              <div
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  border: "2px solid black",
+                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "#f8f8f8",
+                }}
+              >
+                <div
+                  style={{
+                    width: "40px",
+                    height: "40px",
+                    border: "4px solid #ddd",
+                    borderTop: "4px solid #333",
+                    borderRadius: "50%",
+                    animation: "spin 1s linear infinite",
+                  }}
+                />
+              </div>
+            </div>
+          )}
+
+          {generatedSketch && !isGeneratingSketch && (
+            <div style={{ textAlign: "center" }}>
+              <h3>Generated Sketch</h3>
+              <img
+                src={generatedSketch}
+                alt="Generated Sketch"
+                style={{
+                  maxWidth: "300px",
+                  maxHeight: "500px",
+                  border: "2px solid black",
+                  borderRadius: "8px",
+                }}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+
       <style jsx>{`
         p {
           border: 1px solid black;
@@ -296,6 +424,14 @@ export default function Recommendation() {
           }
           100% {
             background-position: 0% 50%;
+          }
+        }
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
           }
         }
       `}</style>
