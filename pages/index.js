@@ -48,11 +48,7 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
-          I made for myself! You can also check out my{" "}
-          <Link href={`/posts/bingo`} className={utilStyles.link}>
-            New Year&apos;s bingo card
-          </Link>
-          . You can find me on{" "}
+          I made for myself! You can find me on{" "}
           <a href="https://twitter.com/iamrita98" className={utilStyles.link}>
             Twitter
           </a>{" "}
