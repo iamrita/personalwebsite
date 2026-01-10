@@ -30,9 +30,7 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/about`} className={utilStyles.link}>
             Amrita
           </Link>
-          . I currently live in San Francisco, California and work as a senior
-          software engineer for Maven Clinic, a virtual clinic for women and
-          families. I recently have been volunteering at the San Francisco
+          . I currently live in San Francisco, California and work as a Field Engineer at Cursor. I recently have been volunteering at the San Francisco
           Tenants Union, where I help tenants learn about their rights against
           eviction and displacement.
           <br />
@@ -50,7 +48,11 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
-          I made for myself! You can find me on{" "}
+          I made for myself! You can also check out my{" "}
+          <Link href={`/posts/bingo`} className={utilStyles.link}>
+            New Year&apos;s bingo card
+          </Link>
+          . You can find me on{" "}
           <a href="https://twitter.com/iamrita98" className={utilStyles.link}>
             Twitter
           </a>{" "}
