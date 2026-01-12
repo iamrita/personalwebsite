@@ -1,0 +1,105 @@
+/* Recommend (Book Recommendations) page styles */
+
+.bookPillsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+/* --book-color is set inline for dynamic pastel color per book */
+.bookPill {
+  border: 2px solid black;
+  background-color: var(--book-color);
+  color: black;
+  margin: 2px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.bookPillSelected {
+  background-color: black !important;
+  color: white !important;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Base button styles - background/animation set inline when loading */
+.recommendButton {
+  border: 2px solid black;
+  background: white;
+  color: #333;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  height: 50px;
+}
+
+/* backgroundColor, width, left are set inline from getButtonBackgroundBlocks() */
+.buttonBackgroundBlock {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: 1;
+}
+
+.buttonContent {
+  position: relative;
+  z-index: 2;
+  color: #333;
+  text-align: center;
+}
+
+.recommendationsGrid {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.recommendationCard {
+  position: relative;
+  border: 2px solid black;
+  background-color: white;
+  color: black;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 200px;
+  text-align: center;
+}
+
+.paragraph {
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: #fff2de;
+  padding: 32px;
+  margin-bottom: 50px;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

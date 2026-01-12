@@ -240,6 +240,10 @@
   padding: 1vw;
 }
 
+.fontWeightNormal {
+  font-weight: normal;
+}
+
 .link {
   color: #1e65e5;
 }

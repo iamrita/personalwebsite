@@ -347,9 +347,9 @@ export default function Connections() {
                 {oneAway && <div className={utilStyles.content}>You're one away!</div>}
                 {alreadyGuessed && <div className={utilStyles.content}>You already guessed it!</div>}
                 {colors.map((color, colorIndex) => (
-                    <div className={`${utilStyles.square} ${color.style}`}>
-                        <div style={{}}>{color.categoryName}</div>
-                        <div style={{ fontWeight: 'normal' }}>{toDisplay(color.categoryValues)}</div>
+                    <div key={colorIndex} className={`${utilStyles.square} ${color.style}`}>
+                        <div>{color.categoryName}</div>
+                        <div className={utilStyles.fontWeightNormal}>{toDisplay(color.categoryValues)}</div>
                     </div>
                 ))}
                 <div className={utilStyles.grid}>

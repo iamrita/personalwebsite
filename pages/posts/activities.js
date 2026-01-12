@@ -2,6 +2,7 @@ import { collection, query, orderBy, onSnapshot } from "firebase/firestore";
 import { db } from "../../components/firebase";
 import Layout, { siteTitle } from "../../components/layout";
 import utilStyles from "../../styles/utils.module.css";
+import styles from "../../styles/activities.module.css";
 
 import Head from "next/head";
 import { useState, useEffect } from "react";
@@ -99,29 +100,32 @@ export default function Activities() {
       </Head>
 
       <article>
-        <div className="month-navigation">
-          <button onClick={handlePrevMonth} className="nav-button">
+        <div className={styles.monthNavigation}>
+          <button onClick={handlePrevMonth} className={styles.navButton}>
             ←
           </button>
           <h1 className={headerFont.className}>
             {currentDate.toLocaleString("default", { month: "long" })} {year}
           </h1>
-          <button onClick={handleNextMonth} className="nav-button">
+          <button onClick={handleNextMonth} className={styles.navButton}>
             →
           </button>
         </div>
-        <div className="calendar">
-          <div className="week">
+        <div
+          className={styles.calendar}
+          style={{ "--weeks-count": weeks.length }}
+        >
+          <div className={styles.week}>
             {daysOfWeek.map((day, idx) => (
-              <div key={idx} className="cell header">
+              <div key={idx} className={`${styles.cell} ${styles.cellHeader}`}>
                 {day}
               </div>
             ))}
           </div>
           {weeks.map((week, wi) => (
-            <div key={wi} className="week">
+            <div key={wi} className={styles.week}>
               {week.map((day, di) => (
-                <div key={di} className="cell">
+                <div key={di} className={styles.cell}>
                   {day &&
                     (() => {
                       const dayActivities = sports
@@ -138,18 +142,17 @@ export default function Activities() {
                       const selectedIndex =
                         selectedIndices[`${year}-${month}-${day}`] || 0;
                       const currentActivity = dayActivities[selectedIndex];
+                      const isClickable = dayActivities.length > 1;
 
                       return (
                         <img
                           src={sportsMap[currentActivity.sportType]}
                           alt={currentActivity.sportType}
-                          className="activity-img"
-                          style={{
-                            cursor:
-                              dayActivities.length > 1 ? "pointer" : "default",
-                          }}
+                          className={`${styles.activityImg} ${
+                            isClickable ? styles.activityImgClickable : ""
+                          }`}
                           onClick={() =>
-                            dayActivities.length > 1 &&
+                            isClickable &&
                             handleClick(
                               `${year}-${month}-${day}`,
                               dayActivities.length
@@ -163,7 +166,7 @@ export default function Activities() {
             </div>
           ))}
         </div>
-        <p>
+        <p className={styles.paragraph}>
           The goal of this page was three fold - to experiment with Firebase
           cloud functions, to try out the Strava Webhook API, and to have a fun
           way of tracking all the different activities I do throughout the
@@ -174,7 +177,7 @@ export default function Activities() {
           calendar. If I happen to do multiple activities on the same day (not
           often), I can click on the image to cycle through them.
         </p>
-        <p>
+        <p className={styles.paragraph}>
           <em>
             Curious where these beautiful images come from? They're the official
             pictograms from the 2024 Paris Olympic Games. If you love great
@@ -197,7 +200,7 @@ export default function Activities() {
             one because it was the most recent.
           </em>
         </p>
-        <p>
+        <p className={styles.paragraph}>
           <em>
             Because there are some sports on Strava that don't have a
             corresponding Olympic sport (like yoga), I've taken the artistic
@@ -206,91 +209,6 @@ export default function Activities() {
           </em>
         </p>
       </article>
-      <style jsx>{`
-        .month-navigation {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 20px;
-          margin-bottom: 20px;
-        }
-        .nav-button {
-          background: none;
-          border: none;
-          font-size: 24px;
-          cursor: pointer;
-          padding: 8px 16px;
-          border-radius: 4px;
-          transition: background-color 0.2s;
-        }
-        .nav-button:hover {
-          background-color: #f0f0f0;
-        }
-        .calendar {
-          display: grid;
-          grid-template-rows: auto repeat(${weeks.length}, auto);
-          gap: 8px;
-          padding-bottom: 30px;
-        }
-        .week {
-          display: grid;
-          grid-template-columns: repeat(7, 1fr);
-          gap: 4px;
-        }
-        .cell {
-          min-height: 80px;
-          padding: 4px;
-          position: relative;
-        }
-        .cell.header {
-          min-height: 20px;
-          font-weight: bold;
-          text-align: center;
-          background-color: transparent;
-          padding-bottom: 2px; /* Reduced padding at the bottom */
-        }
-        .activity-img {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          width: 70px;
-          height: 70px;
-          /* Prevent squishing on small screens: preserve aspect ratio
-             when max-width/max-height constrain the image in narrow cells */
-          max-width: 100%;
-          max-height: 100%;
-          object-fit: contain;
-          transition: transform 0.2s, z-index 0.2s;
-        }
-        /* On mobile: smaller cells + smaller images = proportional scaling.
-           On ~320px screens: 7 columns ≈ 33–40px/cell, so we use 50px base images
-           that scale down with object-fit: contain (no squishing). */
-        @media (max-width: 600px) {
-          .calendar {
-            gap: 4px;
-            padding-bottom: 20px;
-          }
-          .week {
-            gap: 2px;
-          }
-          .cell {
-            min-height: 60px;
-            padding: 2px;
-          }
-          .activity-img {
-            width: 50px;
-            height: 50px;
-          }
-        }
-        p {
-          border: 1px solid black;
-          border-radius: 8px;
-          background-color: #ede5f8;
-          // background-color: #fff2de;
-          padding: 32px;
-        }
-      `}</style>
     </Layout>
   );
 }

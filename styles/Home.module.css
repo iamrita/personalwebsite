@@ -89,3 +89,12 @@
     flex-direction: column;
   }
 }
+
+/* Home page paragraph styling (moved from styled-jsx) */
+.homeParagraph {
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: #f1f5fd;
+  padding: 32px;
+}

@@ -2,6 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
+import styles from "../styles/home.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
 import "../components/firebase";
@@ -24,7 +25,7 @@ export default function Home({ allPostsData }) {
         <title>{siteTitle}</title>
       </Head>
       <section className={utilStyles.headingMd}>
-        <p>
+        <p className={styles.homeParagraph}>
           {" "}
           Hi! My name is{" "}
           <Link href={`/posts/about`} className={utilStyles.link}>
@@ -81,17 +82,6 @@ export default function Home({ allPostsData }) {
           </ul>
         </div>
       </section>
-      <style jsx>
-        {`
-          p {
-            border: 1px solid black;
-            font-size: 18px;
-            border-radius: 8px;
-            background-color: #f1f5fd;
-            padding: 32px;
-          }
-        `}
-      </style>
     </Layout>
   );
 }

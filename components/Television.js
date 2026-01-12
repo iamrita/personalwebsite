@@ -59,13 +59,7 @@ const GifTV = () => {
         <div className={styles.gifTv}>
           <div ref={viewportRef} className={styles.viewport}>
             <img ref={videoRef} className={styles.video} alt="GIF TV" />
-            <div
-              ref={pixelsRef}
-              className={styles.pixels}
-              style={{
-                backgroundImage: `url('https://res.cloudinary.com/cyborgspaceviking/image/upload/v1571119227/vhs-overlay_zpzs7x.png')`,
-              }}
-            />
+            <div ref={pixelsRef} className={styles.pixels} />
             <div className={styles.metaLeft}>
               {message.left.map((msg, i) => (
                 <span

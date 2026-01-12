@@ -1,6 +1,7 @@
 import Layout, { siteTitle } from "../../components/layout";
 import Head from "next/head";
 import utilStyles from "../../styles/utils.module.css";
+import styles from "../../styles/about.module.css";
 import { useState, useEffect } from "react";
 import "../../components/firebase";
 import headerFont from "../../components/Font";
@@ -30,16 +31,16 @@ export default function About() {
       <MusicSticker /> */}
       <article>
         <h1 className={headerFont.className}>About Me</h1>
-        <div className={utilStyles.aboutText}>
+        <div className={`${utilStyles.aboutText} ${styles.aboutContent}`}>
           <p>
             Below, I've compiled a list of my favorites - specifically books, TV
             shows, and music. I try to keep them updated when I can. Please
             contact me if you'd like to geek out over anything listed together!
           </p>
           <p>
-            Currently, I am reading How To Solve Your Own Murder by Kristen
-            Perrin and listening to a lot of badbadnotgood. My partner and I are
-            also playing Chants of Sennaar on the Playstation 5.
+            Currently, I am reading Project Hail Mary by Andy Weir and listening
+            to a lot of Olviia Dean. My partner and I are also playing Call of
+            the Sea on the Playstation 5.
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
@@ -78,18 +79,6 @@ export default function About() {
           <SpotifyEmbed />
         </div>
       </article>
-      <style jsx>
-        {`
-          p,
-          ul {
-            border: 1px solid black;
-            font-size: 18px;
-            border-radius: 8px;
-            background-color: #e9f4e9;
-            padding: 32px;
-          }
-        `}
-      </style>
     </Layout>
   );
 }

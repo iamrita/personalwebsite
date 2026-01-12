@@ -1,0 +1,10 @@
+/* About page styles */
+
+.aboutContent p,
+.aboutContent ul {
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: #e9f4e9;
+  padding: 32px;
+}
