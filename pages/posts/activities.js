@@ -256,7 +256,32 @@ export default function Activities() {
           transform: translate(-50%, -50%);
           width: 70px;
           height: 70px;
+          /* Prevent squishing on small screens: preserve aspect ratio
+             when max-width/max-height constrain the image in narrow cells */
+          max-width: 100%;
+          max-height: 100%;
+          object-fit: contain;
           transition: transform 0.2s, z-index 0.2s;
+        }
+        /* On mobile: smaller cells + smaller images = proportional scaling.
+           On ~320px screens: 7 columns ≈ 33–40px/cell, so we use 50px base images
+           that scale down with object-fit: contain (no squishing). */
+        @media (max-width: 600px) {
+          .calendar {
+            gap: 4px;
+            padding-bottom: 20px;
+          }
+          .week {
+            gap: 2px;
+          }
+          .cell {
+            min-height: 60px;
+            padding: 2px;
+          }
+          .activity-img {
+            width: 50px;
+            height: 50px;
+          }
         }
         p {
           border: 1px solid black;
