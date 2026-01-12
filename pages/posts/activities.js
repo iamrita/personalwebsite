@@ -37,6 +37,7 @@ const sportsMap = {
   Hike: "/images/hiking-paris.png",
   Yoga: "/images/yoga-paris.png",
   Ride: "/images/cycling-paris.png",
+  EBikeRide: "/images/cycling-paris.png",
   VirtualRide: "/images/cycling-paris.png",
   HighIntensityIntervalTraining: "/images/boxing-paris.png",
   Swim: "/images/swimming-paris.png",
