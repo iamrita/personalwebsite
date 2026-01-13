@@ -26,15 +26,6 @@ export default function Layout({ children, home }) {
       <header className={styles.header}>
         {home ? (
           <>
-            {/* <Image
-              priority
-              unoptimized
-              src="/images/profile.jpg"
-              className={utilStyles.borderCircle}
-              height={175}
-              width={144}
-              alt=""
-            /> */}
             <h1 className={yourFont.className}>{name}</h1>
 
             <div className={styles.row}>

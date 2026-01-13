@@ -1,4 +1,3 @@
-// pages/api/data.js
 import fs from 'fs';
 
 export default function handler(req, res) {

@@ -368,9 +368,6 @@ export default function Connections() {
                     >Submit</button>
                     <button className={utilStyles.square} onClick={handleShuffle}>Shuffle</button>
                 </div>
-                {/* {(mistakes === 0) && 
-                    <div className={utilStyles.content}>{renderGrid(guesses)}</div>
-                }  -- this is counting mistakes properly */}
                 {isGameOver &&
                     <div className={utilStyles.content}>{renderGrid(guesses)}</div>
                 }

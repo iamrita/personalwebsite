@@ -207,7 +207,6 @@ export default function Recommendation() {
               className={styles.recommendationCard}
             >
               {book.title}
-              {/*book.description*/}
             </motion.div>
           ))}
         </div>

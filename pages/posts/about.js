@@ -2,7 +2,6 @@ import Layout, { siteTitle } from "../../components/layout";
 import Head from "next/head";
 import utilStyles from "../../styles/utils.module.css";
 import styles from "../../styles/about.module.css";
-import { useState, useEffect } from "react";
 import "../../components/firebase";
 import headerFont from "../../components/Font";
 import Bookshelf from "../../components/Bookshelf";
@@ -25,10 +24,6 @@ export default function About() {
       <Head>
         <title>About</title>
       </Head>
-      {/* <MovieSticker />
-      <BookSticker />
-      <VideoGameSticker />
-      <MusicSticker /> */}
       <article>
         <h1 className={headerFont.className}>About Me</h1>
         <div className={`${utilStyles.aboutText} ${styles.aboutContent}`}>
@@ -44,36 +39,9 @@ export default function About() {
           </p>
           <h1 className={headerFont.className}>Books</h1>
           <Bookshelf books={books} />
-          {/* <Bookshelf /> */}
-
-          {/* <ul>
-            <li>The Storied Life of A.J. Fikry by Gabrielle Zevin</li>
-            <li>Different by Franz de Waal</li>
-            <li>Maximum City by Suketu Mehta</li>
-            <li>Unaccustomed Earth by Jhumpa Lahiri</li>
-            <li>Good Material by Dolly Alderton</li>
-            <li>Homegoing by Yaa Gyasi</li>
-            <li>The Vanishing Half by Brit Bennett</li>
-            <li>Pachinko by Min Jin Lee</li>
-            <li>The Interestings by Meg Wolitzer</li>
-            <li>Martyr! By Kaveh Akbar</li>
-          </ul> */}
 
           <h1 className={headerFont.className}>TV Shows</h1>
-          {/* <p>Press the yellow dial on the TV for some surprises!</p> */}
           <GifTV />
-
-          {/* <h1 className={headerFont.className}>Movies</h1>
-          <ul>
-            <li>The Devil Wears Prada</li>
-            <li>The Farewell</li>
-            <li>Marcel the Shell With Shoes On</li>
-            <li>Spotlight</li>
-            <li>Pride and Prejudice (Keira Knightley version)</li>
-            <li>Zindagi Na Milegi Dobara</li>
-            <li>A Real Pain</li>
-            <li>Freaky Friday</li>
-          </ul> */}
 
           <h1 className={headerFont.className}>Albums</h1>
           <SpotifyEmbed />
