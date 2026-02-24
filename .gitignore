@@ -70,3 +70,6 @@ node_modules/
 out
 
 .pack
+
+# Case-sensitivity symlink for Linux dev environments
+styles/home.module.css
