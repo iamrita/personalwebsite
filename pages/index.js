@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
 import "../components/firebase";
@@ -49,6 +49,11 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
+          or my{" "}
+          <Link href={`/travel`} className={utilStyles.link}>
+            travel schedule
+          </Link>
+          .
           I made for myself! You can find me on{" "}
           <a href="https://twitter.com/iamrita98" className={utilStyles.link}>
             Twitter
