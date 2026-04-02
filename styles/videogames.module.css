@@ -1,0 +1,105 @@
+.paragraph {
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: #f3e8ff;
+  padding: 32px;
+}
+
+.gameList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.gameCard {
+  border: 1px solid black;
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.gameCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.gameEmoji {
+  font-size: 2.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.gameInfo {
+  flex: 1;
+}
+
+.gameTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.gamePlatform {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.gameDescription {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+.statusBadge {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.statusPlaying {
+  background-color: #d4f5d4;
+  color: #1a7a1a;
+}
+
+.statusCompleted {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.statusOnHold {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.sectionLabel {
+  margin-top: 32px;
+  margin-bottom: 12px;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .gameCard {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .paragraph {
+    padding: 20px;
+  }
+}
