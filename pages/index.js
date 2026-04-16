@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Layout, { siteTitle } from "../components/layout";
 import utilStyles from "../styles/utils.module.css";
-import styles from "../styles/home.module.css";
+import styles from "../styles/Home.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
 import "../components/firebase";
@@ -45,7 +45,11 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/connections`} className={utilStyles.link}>
             puzzle games
           </Link>
-          . Check out my{" "}
+          . I keep a list of my{" "}
+          <Link href={`/posts/sf-spots`} className={utilStyles.link}>
+            favorite SF spots
+          </Link>{" "}
+          and my{" "}
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}

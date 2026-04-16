@@ -1,0 +1,50 @@
+.intro {
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: #fff2de;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  font-size: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: #f1f5fd;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.type {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+}
+
+.neighborhood {
+  margin: 0;
+  font-weight: 600;
+}
+
+.copy {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.order {
+  margin: 0;
+}
