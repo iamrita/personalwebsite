@@ -1,0 +1,43 @@
+/* Favorite music page */
+
+.intro {
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: #f8f0ff;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.albumList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.albumListItem {
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: #fff8e8;
+  padding: 16px 20px;
+}
+
+.albumLink {
+  text-decoration: underline;
+}
+
+.albumMeta {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.embedSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
