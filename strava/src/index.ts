@@ -1,4 +1,5 @@
 import { onRequest } from "firebase-functions/v2/https";
+import { onSchedule } from "firebase-functions/v2/scheduler";
 import * as admin from "firebase-admin";
 import * as logger from "firebase-functions/logger";
 import axios from "axios";
@@ -46,6 +47,13 @@ const db = admin.firestore();
 
 const CLIENT_ID = process.env.STRAVA_CLIENT_ID!;
 const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET!;
+
+const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID ?? "";
+const SPOTIFY_CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET ?? "";
+const SPOTIFY_REDIRECT_URI =
+  process.env.SPOTIFY_REDIRECT_URI ??
+  "https://us-central1-amrita-website.cloudfunctions.net/spotifyOAuth";
+
 
 const BookRecommendation = z.object({
   title: z.string(),
@@ -202,6 +210,174 @@ async function getFreshAccessToken(): Promise<string> {
   await snap.ref.set(data);
   return data.access_token;
 }
+
+type SpotifyTokens = {
+  access_token: string;
+  refresh_token: string;
+  expires_at: number;
+};
+
+async function getFreshSpotifyAccessToken(): Promise<string> {
+  const snap = await db.doc("config/spotifyTokens").get();
+  const tokens = snap.data() as SpotifyTokens | undefined;
+
+  if (!tokens) {
+    throw new Error("Spotify tokens not found; run spotifyOAuth first");
+  }
+
+  if (Date.now() / 1000 < tokens.expires_at - 60) {
+    return tokens.access_token;
+  }
+
+  const body = new URLSearchParams({
+    grant_type: "refresh_token",
+    refresh_token: tokens.refresh_token,
+    client_id: SPOTIFY_CLIENT_ID,
+    client_secret: SPOTIFY_CLIENT_SECRET,
+  });
+
+  const { data } = await axios.post(
+    "https://accounts.spotify.com/api/token",
+    body.toString(),
+    { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+  );
+
+  const refreshed: SpotifyTokens = {
+    access_token: data.access_token,
+    refresh_token: tokens.refresh_token,
+    expires_at: Math.floor(Date.now() / 1000) + data.expires_in,
+  };
+
+  await snap.ref.set(refreshed);
+  return refreshed.access_token;
+}
+
+async function syncRecentlyPlayedToFirestore(): Promise<number> {
+  const token = await getFreshSpotifyAccessToken();
+  const { data } = await axios.get(
+    "https://api.spotify.com/v1/me/player/recently-played",
+    {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { limit: 50 },
+    }
+  );
+
+  const batch = db.batch();
+  let written = 0;
+
+  for (const item of data.items ?? []) {
+    const track = item.track;
+    if (!track?.id || !item.played_at) continue;
+
+    const playedAt = new Date(item.played_at);
+    const docId = `${track.id}_${playedAt.getTime()}`;
+    const docRef = db.collection("recentTracks").doc(docId);
+
+    batch.set(
+      docRef,
+      {
+        trackId: track.id,
+        trackName: track.name,
+        artistName:
+          track.artists?.map((a: { name: string }) => a.name).join(", ") ?? "",
+        albumName: track.album?.name ?? "",
+        albumImageUrl: track.album?.images?.[0]?.url ?? "",
+        spotifyUrl: track.external_urls?.spotify ?? "",
+        playedAt: admin.firestore.Timestamp.fromDate(playedAt),
+      },
+      { merge: true }
+    );
+    written++;
+  }
+
+  if (written > 0) {
+    await batch.commit();
+  }
+
+  return written;
+}
+
+export const spotifyOAuth = onRequest(async (req, res): Promise<void> => {
+  const authCode = req.query.code as string | undefined;
+  if (!authCode) {
+    res.status(400).send("Missing ?code param");
+    return;
+  }
+
+  if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
+    res.status(500).send("Spotify client credentials are not configured");
+    return;
+  }
+
+  try {
+    const body = new URLSearchParams({
+      grant_type: "authorization_code",
+      code: authCode,
+      redirect_uri: SPOTIFY_REDIRECT_URI,
+      client_id: SPOTIFY_CLIENT_ID,
+      client_secret: SPOTIFY_CLIENT_SECRET,
+    });
+
+    const { data } = await axios.post(
+      "https://accounts.spotify.com/api/token",
+      body.toString(),
+      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+    );
+
+    const tokens: SpotifyTokens = {
+      access_token: data.access_token,
+      refresh_token: data.refresh_token,
+      expires_at: Math.floor(Date.now() / 1000) + data.expires_in,
+    };
+
+    await db.doc("config/spotifyTokens").set(tokens);
+    logger.info("Stored new Spotify tokens");
+
+    try {
+      const count = await syncRecentlyPlayedToFirestore();
+      res
+        .status(200)
+        .send(
+          `✅ Spotify authorised! Synced ${count} recent tracks. You can close this tab.`
+        );
+    } catch (syncError) {
+      logger.error("Initial Spotify sync failed", syncError);
+      res
+        .status(200)
+        .send(
+          "✅ Spotify authorised, but the initial sync failed. Try syncSpotifyListening manually."
+        );
+    }
+  } catch (err) {
+    logger.error("Spotify OAuth exchange failed", err);
+    res.status(500).send("Spotify OAuth token exchange failed – see logs.");
+  }
+});
+
+export const syncSpotifyListening = onRequest(async (req, res): Promise<void> => {
+  if (req.method !== "POST" && req.method !== "GET") {
+    res.status(405).send("Method not allowed");
+    return;
+  }
+
+  try {
+    const count = await syncRecentlyPlayedToFirestore();
+    res.status(200).json({ synced: count });
+  } catch (err) {
+    logger.error("Spotify sync failed", err);
+    res.status(500).json({ error: "Spotify sync failed – see logs." });
+  }
+});
+
+export const scheduledSpotifySync = onSchedule("every 30 minutes", async () => {
+  try {
+    const count = await syncRecentlyPlayedToFirestore();
+    logger.info(`Spotify scheduled sync wrote ${count} tracks`);
+  } catch (err) {
+    logger.warn("Spotify scheduled sync skipped or failed", err);
+  }
+});
+
 
 export const bookRecommend = onRequest(async (req, res): Promise<void> => {
   corsHandler(req, res, async () => {

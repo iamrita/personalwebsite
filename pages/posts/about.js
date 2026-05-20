@@ -29,8 +29,13 @@ export default function About() {
         <div className={`${utilStyles.aboutText} ${styles.aboutContent}`}>
           <p>
             Below, I've compiled a list of my favorites - specifically books, TV
-            shows, and music. I try to keep them updated when I can. Please
-            contact me if you'd like to geek out over anything listed together!
+            shows, and music. I try to keep them updated when I can. See what
+            I&apos;ve been listening to lately on my{" "}
+            <a href="/posts/recent-music" className={utilStyles.link}>
+              recent music page
+            </a>
+            . Please contact me if you'd like to geek out over anything listed
+            together!
           </p>
           <p>
             Currently, I am reading Project Hail Mary by Andy Weir and listening
