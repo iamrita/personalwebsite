@@ -30,6 +30,14 @@ const favoriteSpots = [
     link: "https://www.kantinesf.com/",
   },
   {
+    name: "The Mill",
+    neighborhood: "Divisadero",
+    type: "Cafe",
+    favoriteOrder: "Thick-cut cinnamon toast and a cappuccino",
+    note: "A reliable spot for excellent coffee, house-milled flour, and warm toast.",
+    link: "https://www.themillsf.com/",
+  },
+  {
     name: "B. Patisserie",
     neighborhood: "Pacific Heights",
     type: "Bakery",
