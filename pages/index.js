@@ -49,6 +49,10 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
+          and{" "}
+          <Link href={`/posts/recent-music`} className={utilStyles.link}>
+            recent music
+          </Link>{" "}
           I made for myself! You can find me on{" "}
           <a href="https://twitter.com/iamrita98" className={utilStyles.link}>
             Twitter

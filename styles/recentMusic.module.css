@@ -1,0 +1,81 @@
+.intro {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.trackList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: #f1f5fd;
+  overflow: hidden;
+}
+
+.trackItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.trackItem:last-child {
+  border-bottom: none;
+}
+
+.albumArt {
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: #e8ecf4;
+}
+
+.trackDetails {
+  flex: 1;
+  min-width: 0;
+}
+
+.trackName {
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.trackMeta {
+  margin: 0;
+  color: #444;
+  font-size: 0.95rem;
+}
+
+.playedAt {
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: #666;
+  text-align: right;
+}
+
+.emptyState {
+  padding: 24px;
+  text-align: center;
+  color: #555;
+}
+
+.paragraph {
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+@media (max-width: 600px) {
+  .trackItem {
+    flex-wrap: wrap;
+  }
+
+  .playedAt {
+    width: 100%;
+    text-align: left;
+    padding-left: 72px;
+  }
+}

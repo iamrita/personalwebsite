@@ -35,9 +35,11 @@ var __importStar = (this && this.__importStar) || (function () {
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bookRecommend = exports.stravaOAuth = exports.helloWorld = void 0;
+exports.bookRecommend = exports.scheduledSpotifySync = exports.syncSpotifyListening = exports.spotifyOAuth = exports.stravaOAuth = exports.helloWorld = void 0;
 const https_1 = require("firebase-functions/v2/https");
+const scheduler_1 = require("firebase-functions/v2/scheduler");
 const admin = __importStar(require("firebase-admin"));
 const logger = __importStar(require("firebase-functions/logger"));
 const axios_1 = __importDefault(require("axios"));
@@ -48,28 +50,43 @@ const zod_2 = require("openai/helpers/zod");
 const cors_1 = __importDefault(require("cors"));
 dotenv.config();
 /**
- * To test the strava webhook locally you need to run
- * (first compile the typescript using npm run build)
- * then run firebase emulators:start --only functions, firestore
- * then to get the grok you want to run npx ngrok http 5001
- * then go to this link: https://www.strava.com/oauth/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=https://4307-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force to authorize strava
+ * Local Testing Instructions for Strava Webhook
  *
- * also make sure that your subscription is live
- * curl -G https://www.strava.com/api/v3/push_subscriptions \
-     -d client_id=CLIENT_ID -d client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 | jq
+ * 1. Build the TypeScript code:
+ *    npm run build
+ *
+ * 2. Start Firebase emulators:
+ *    firebase emulators:start --only functions,firestore
+ *
+ * 3. Start ngrok tunnel:
+ *    npx ngrok http 5001
+ *
+ * 4. Authorize Strava OAuth:
+ *    Visit: https://www.strava.com/oauth/authorize?client_id=CLIENT_ID&response_type=code&redirect_uri=YOUR_NGROK_URL/amrita-website/us-central1/stravaOAuth&scope=activity:read_all&approval_prompt=force
+ *
+ * 5. Manage webhook subscription:
+ *    - Check existing subscriptions:
+ *      curl -G https://www.strava.com/api/v3/push_subscriptions \
+ *        -d client_id=CLIENT_ID \
+ *        -d client_secret=CLIENT_SECRET | jq
 
-     curl -X DELETE https://www.strava.com/api/v3/push_subscriptions/281111?client_id=CLIENT_ID& client_secret=CLIENT_SECRET
-curl -X POST https://www.strava.com/api/v3/push_subscriptions \
-     -F client_id=CLIENT_ID \
-     -F client_secret=b04ce64a75ce2efc21d0064da105ceb710a66396 \
-     -F callback_url=https://55ff-2601-645-c601-69b0-19fb-96dd-a24f-878f.ngrok-free.app/amrita-website/us-central1/helloWorld \
-     -F verify_token=myVerifyToken
+ *    - Delete a subscription:
+ *      curl -X DELETE "https://www.strava.com/api/v3/push_subscriptions/SUBSCRIPTION_ID?client_id=CLIENT_ID&client_secret=CLIENT_SECRET"
+ *    - Create a new subscription:
+ *      curl -X POST https://www.strava.com/api/v3/push_subscriptions \
+ *        -F client_id=CLIENT_ID \
+ *        -F client_secret=CLIENT_SECRET \
+ *        -F callback_url=YOUR_NGROK_URL/amrita-website/us-central1/helloWorld \
+ *        -F verify_token=myVerifyToken
 
  */
 admin.initializeApp();
 const db = admin.firestore();
 const CLIENT_ID = process.env.STRAVA_CLIENT_ID;
 const CLIENT_SECRET = process.env.STRAVA_CLIENT_SECRET;
+const SPOTIFY_CLIENT_ID = (_a = process.env.SPOTIFY_CLIENT_ID) !== null && _a !== void 0 ? _a : "";
+const SPOTIFY_CLIENT_SECRET = (_b = process.env.SPOTIFY_CLIENT_SECRET) !== null && _b !== void 0 ? _b : "";
+const SPOTIFY_REDIRECT_URI = (_c = process.env.SPOTIFY_REDIRECT_URI) !== null && _c !== void 0 ? _c : "https://us-central1-amrita-website.cloudfunctions.net/spotifyOAuth";
 const BookRecommendation = zod_1.z.object({
     title: zod_1.z.string(),
     author: zod_1.z.string(),
@@ -196,6 +213,129 @@ async function getFreshAccessToken() {
     await snap.ref.set(data);
     return data.access_token;
 }
+async function getFreshSpotifyAccessToken() {
+    const snap = await db.doc("config/spotifyTokens").get();
+    const tokens = snap.data();
+    if (!tokens) {
+        throw new Error("Spotify tokens not found; run spotifyOAuth first");
+    }
+    if (Date.now() / 1000 < tokens.expires_at - 60) {
+        return tokens.access_token;
+    }
+    const body = new URLSearchParams({
+        grant_type: "refresh_token",
+        refresh_token: tokens.refresh_token,
+        client_id: SPOTIFY_CLIENT_ID,
+        client_secret: SPOTIFY_CLIENT_SECRET,
+    });
+    const { data } = await axios_1.default.post("https://accounts.spotify.com/api/token", body.toString(), { headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+    const refreshed = {
+        access_token: data.access_token,
+        refresh_token: tokens.refresh_token,
+        expires_at: Math.floor(Date.now() / 1000) + data.expires_in,
+    };
+    await snap.ref.set(refreshed);
+    return refreshed.access_token;
+}
+async function syncRecentlyPlayedToFirestore() {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
+    const token = await getFreshSpotifyAccessToken();
+    const { data } = await axios_1.default.get("https://api.spotify.com/v1/me/player/recently-played", {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { limit: 50 },
+    });
+    const batch = db.batch();
+    let written = 0;
+    for (const item of (_a = data.items) !== null && _a !== void 0 ? _a : []) {
+        const track = item.track;
+        if (!(track === null || track === void 0 ? void 0 : track.id) || !item.played_at)
+            continue;
+        const playedAt = new Date(item.played_at);
+        const docId = `${track.id}_${playedAt.getTime()}`;
+        const docRef = db.collection("recentTracks").doc(docId);
+        batch.set(docRef, {
+            trackId: track.id,
+            trackName: track.name,
+            artistName: (_c = (_b = track.artists) === null || _b === void 0 ? void 0 : _b.map((a) => a.name).join(", ")) !== null && _c !== void 0 ? _c : "",
+            albumName: (_e = (_d = track.album) === null || _d === void 0 ? void 0 : _d.name) !== null && _e !== void 0 ? _e : "",
+            albumImageUrl: (_j = (_h = (_g = (_f = track.album) === null || _f === void 0 ? void 0 : _f.images) === null || _g === void 0 ? void 0 : _g[0]) === null || _h === void 0 ? void 0 : _h.url) !== null && _j !== void 0 ? _j : "",
+            spotifyUrl: (_l = (_k = track.external_urls) === null || _k === void 0 ? void 0 : _k.spotify) !== null && _l !== void 0 ? _l : "",
+            playedAt: admin.firestore.Timestamp.fromDate(playedAt),
+        }, { merge: true });
+        written++;
+    }
+    if (written > 0) {
+        await batch.commit();
+    }
+    return written;
+}
+exports.spotifyOAuth = (0, https_1.onRequest)(async (req, res) => {
+    const authCode = req.query.code;
+    if (!authCode) {
+        res.status(400).send("Missing ?code param");
+        return;
+    }
+    if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
+        res.status(500).send("Spotify client credentials are not configured");
+        return;
+    }
+    try {
+        const body = new URLSearchParams({
+            grant_type: "authorization_code",
+            code: authCode,
+            redirect_uri: SPOTIFY_REDIRECT_URI,
+            client_id: SPOTIFY_CLIENT_ID,
+            client_secret: SPOTIFY_CLIENT_SECRET,
+        });
+        const { data } = await axios_1.default.post("https://accounts.spotify.com/api/token", body.toString(), { headers: { "Content-Type": "application/x-www-form-urlencoded" } });
+        const tokens = {
+            access_token: data.access_token,
+            refresh_token: data.refresh_token,
+            expires_at: Math.floor(Date.now() / 1000) + data.expires_in,
+        };
+        await db.doc("config/spotifyTokens").set(tokens);
+        logger.info("Stored new Spotify tokens");
+        try {
+            const count = await syncRecentlyPlayedToFirestore();
+            res
+                .status(200)
+                .send(`✅ Spotify authorised! Synced ${count} recent tracks. You can close this tab.`);
+        }
+        catch (syncError) {
+            logger.error("Initial Spotify sync failed", syncError);
+            res
+                .status(200)
+                .send("✅ Spotify authorised, but the initial sync failed. Try syncSpotifyListening manually.");
+        }
+    }
+    catch (err) {
+        logger.error("Spotify OAuth exchange failed", err);
+        res.status(500).send("Spotify OAuth token exchange failed – see logs.");
+    }
+});
+exports.syncSpotifyListening = (0, https_1.onRequest)(async (req, res) => {
+    if (req.method !== "POST" && req.method !== "GET") {
+        res.status(405).send("Method not allowed");
+        return;
+    }
+    try {
+        const count = await syncRecentlyPlayedToFirestore();
+        res.status(200).json({ synced: count });
+    }
+    catch (err) {
+        logger.error("Spotify sync failed", err);
+        res.status(500).json({ error: "Spotify sync failed – see logs." });
+    }
+});
+exports.scheduledSpotifySync = (0, scheduler_1.onSchedule)("every 30 minutes", async () => {
+    try {
+        const count = await syncRecentlyPlayedToFirestore();
+        logger.info(`Spotify scheduled sync wrote ${count} tracks`);
+    }
+    catch (err) {
+        logger.warn("Spotify scheduled sync skipped or failed", err);
+    }
+});
 exports.bookRecommend = (0, https_1.onRequest)(async (req, res) => {
     corsHandler(req, res, async () => {
         if (req.method === "OPTIONS") {
