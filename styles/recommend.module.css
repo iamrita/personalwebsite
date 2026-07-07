@@ -92,6 +92,16 @@
   margin-bottom: 50px;
 }
 
+.errorMessage {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid #f54e00;
+  border-radius: 8px;
+  background-color: #fff2de;
+  color: #26251e;
+  text-align: center;
+}
+
 @keyframes gradientAnimation {
   0% {
     background-position: 0% 50%;
