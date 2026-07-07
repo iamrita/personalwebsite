@@ -79,6 +79,7 @@ export default function Recommendation() {
   const [selectedBooks, setSelectedBooks] = useState([]);
   const [bookColors] = useState(() => generateBookColors(books)); // Generate once and persist
   const [isLoading, setIsLoading] = useState(false); // Track loading state
+  const [errorMessage, setErrorMessage] = useState("");
   const [ref, { width }] = useMeasure();
 
   const getButtonBackgroundBlocks = () => {
@@ -97,7 +98,13 @@ export default function Recommendation() {
   };
 
   async function getAIResponse() {
-    setIsLoading(true); // Set loading state to true
+    if (selectedBooks.length === 0) {
+      setErrorMessage("Select at least one book before asking for recommendations.");
+      return;
+    }
+
+    setIsLoading(true);
+    setErrorMessage("");
     try {
       const response = await fetchResponse(selectedBooks);
 
@@ -111,10 +118,16 @@ export default function Recommendation() {
       } else {
         console.error("Unexpected response format:", response);
         setGeneratedRecs([]); // Fallback to an empty array
+        setErrorMessage("Received an unexpected response from the recommendation service.");
       }
     } catch (error) {
       console.error("Error fetching AI response:", error);
       setGeneratedRecs([]); // Fallback to an empty array in case of error
+      setErrorMessage(
+        error.message?.includes("Failed to generate book recommendations")
+          ? "Failed to generate book recommendations. The backend could not reach OpenAI."
+          : error.message || "Something went wrong while fetching recommendations."
+      );
     } finally {
       setIsLoading(false); // Reset loading state
     }
@@ -198,6 +211,9 @@ export default function Recommendation() {
           </animated.div>
         </button>
       </div>
+      {errorMessage && (
+        <p className={styles.errorMessage}>{errorMessage}</p>
+      )}
       {generatedRecs.length > 0 && (
         <div className={styles.recommendationsGrid}>
           {generatedRecs.map((book) => (
