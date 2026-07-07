@@ -45,7 +45,11 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/connections`} className={utilStyles.link}>
             puzzle games
           </Link>
-          . Check out my{" "}
+          . I keep a list of my{" "}
+          <Link href={`/posts/sf-spots`} className={utilStyles.link}>
+            favorite SF spots
+          </Link>{" "}
+          and my{" "}
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
