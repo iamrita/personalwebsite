@@ -49,7 +49,11 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/activities`} className={utilStyles.link}>
             activity calendar
           </Link>{" "}
-          I made for myself! You can find me on{" "}
+          I made for myself, or browse my{" "}
+          <Link href={`/posts/mexico-city`} className={utilStyles.link}>
+            favorite spots in Mexico City
+          </Link>
+          . You can find me on{" "}
           <a href="https://twitter.com/iamrita98" className={utilStyles.link}>
             Twitter
           </a>{" "}
