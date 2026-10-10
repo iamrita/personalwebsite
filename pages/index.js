@@ -7,6 +7,7 @@ import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/date";
 import "../components/firebase";
 import headerFont from "../components/Font";
+import ReadingShelf from "../components/ReadingShelf";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
@@ -63,6 +64,10 @@ export default function Home({ allPostsData }) {
           </a>
           .
         </p>
+      </section>
+      <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
+        <h2 className={headerFont.className}>Reading</h2>
+        <ReadingShelf />
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={headerFont.className}>Blog</h2>

@@ -1,0 +1,95 @@
+.card {
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: #f1f5fd;
+  padding: 32px;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.shelfTitle {
+  font-size: 1.15rem;
+  line-height: 1.3;
+  margin: 0 0 12px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.book {
+  display: flex;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.book:last-child {
+  margin-bottom: 0;
+}
+
+.cover {
+  width: 58px;
+  height: auto;
+  flex-shrink: 0;
+  border-radius: 2px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+.author,
+.meta,
+.empty,
+.status {
+  margin: 0;
+}
+
+.author {
+  margin-top: 2px;
+}
+
+.meta,
+.empty,
+.status {
+  color: #333;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.meta {
+  margin-top: 2px;
+}
+
+.error,
+.warning {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 6px;
+  line-height: 1.4;
+}
+
+.error {
+  border: 1px solid #9b1c1c;
+  background: #fdecec;
+}
+
+.warning {
+  margin-bottom: 16px;
+  border: 1px solid #8a5a00;
+  background: #fff6e5;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 20px;
+  }
+
+  .columns {
+    grid-template-columns: 1fr;
+  }
+}

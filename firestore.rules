@@ -12,6 +12,14 @@ service cloud.firestore {
     // Make sure to write security rules for your app before that time, or else
     // all client requests to your Firestore database will be denied until you Update
     // your rules
+    // Goodreads shelf written by functions/goodreads (Admin SDK bypasses rules).
+    // Public read, no client writes. Keep this match when merging the
+    // least-privilege rules change; do not drop it with the expired test-mode rule.
+    match /reading/{bookId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
     match /{document=**} {
       allow read, write: if request.time < timestamp.date(2025, 5, 30);
     }
