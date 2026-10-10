@@ -54,23 +54,34 @@ export default function Activities() {
   const [sports, setSports] = useState([]);
   const [selectedIndices, setSelectedIndices] = useState({});
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [loadError, setLoadError] = useState("");
 
   useEffect(() => {
-    // Query the most recent activity
     const q = query(collection(db, "activities"), orderBy("timestamp", "asc"));
 
-    // Real-time:
-    const unsub = onSnapshot(q, (snap) => {
-      const items = snap.docs.map((doc) => {
-        const data = doc.data();
-        const dateObj = data.timestamp.toDate();
-        return {
-          date: dateObj,
-          sportType: data.sportType,
-        };
-      });
-      setSports(items);
-    });
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const items = snap.docs.map((doc) => {
+          const data = doc.data();
+          const dateObj = data.timestamp.toDate();
+          return {
+            date: dateObj,
+            sportType: data.sportType,
+          };
+        });
+        setLoadError("");
+        setSports(items);
+      },
+      (error) => {
+        // Listener errors are terminal; without this the calendar stays blank.
+        console.error("Failed to load activities:", error);
+        setSports([]);
+        setLoadError(
+          "Couldn't load activities right now. The calendar will fill in once the database is readable again."
+        );
+      }
+    );
     return () => unsub();
   }, []);
 
@@ -111,6 +122,11 @@ export default function Activities() {
             →
           </button>
         </div>
+        {loadError ? (
+          <p className={styles.loadError} role="alert">
+            {loadError}
+          </p>
+        ) : null}
         <div
           className={styles.calendar}
           style={{ "--weeks-count": weeks.length }}
