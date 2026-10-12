@@ -74,6 +74,14 @@
   cursor: default;
 }
 
+.loadError {
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: #ede5f8;
+  padding: 16px 20px;
+  margin: 0 0 20px;
+}
+
 .paragraph {
   border: 1px solid black;
   border-radius: 8px;
