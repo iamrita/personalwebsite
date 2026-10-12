@@ -1,0 +1,21 @@
+{
+  "name": "goodreads",
+  "private": true,
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "node --experimental-strip-types --test src/rss.test.ts"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "dependencies": {
+    "fast-xml-parser": "^4.5.3",
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "typescript": "^5.8.3"
+  }
+}

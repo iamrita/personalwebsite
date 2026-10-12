@@ -1,7 +1,7 @@
 import { getApps, initializeApp } from "firebase/app" // this is the new format for importing app from firebase as of version 9
 // online documentation might show something different, it's because it probably has not been updated 
 // I used this website: https://www.youtube.com/watch?v=GkdHUX2Xxvk&ab_channel=DailyWebCoding for reference 
-import { getFirestore } from "firebase/firestore";
+import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
 import { getAnalytics } from 'firebase/analytics'
 
@@ -30,6 +30,16 @@ if (!getApps.length) {
   firebaseApp = getApp()
 }
 const db = getFirestore(firebaseApp);
+
+// Local QA only. Production builds do not set this, so the hosted site keeps
+// talking to the amrita-website project. next dev: NEXT_PUBLIC_USE_FIREBASE_EMULATORS=1
+if (
+  process.env.NODE_ENV === "development" &&
+  process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATORS === "1" &&
+  typeof window !== "undefined"
+) {
+  connectFirestoreEmulator(db, "127.0.0.1", 8080);
+}
 
 export { firebaseApp, db };
 
