@@ -1,0 +1,225 @@
+.container {
+  max-width: 100%;
+}
+
+.signInContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.signInContainer p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 24px;
+  max-width: 400px;
+}
+
+.signInButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #1e65e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.signInButton:hover {
+  background-color: #1550b8;
+}
+
+.signInButton:active {
+  transform: scale(0.98);
+}
+
+.signOutButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  color: #666;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.signOutButton:hover {
+  background-color: #e0e0e0;
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.weekendLabel {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 24px;
+}
+
+.daySection {
+  margin-bottom: 32px;
+}
+
+.dayHeading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e8e0f4;
+}
+
+.eventCard {
+  display: flex;
+  gap: 16px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+  border: 1px solid #e0dce8;
+  border-radius: 10px;
+  background-color: #f8f5fd;
+  transition: box-shadow 0.2s;
+}
+
+.eventCard:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.eventTime {
+  flex-shrink: 0;
+  min-width: 90px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e65e5;
+  padding-top: 2px;
+}
+
+.eventDetails {
+  flex: 1;
+}
+
+.eventTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 4px;
+  color: #222;
+}
+
+.eventLocation {
+  font-size: 0.85rem;
+  color: #777;
+  margin: 0;
+}
+
+.eventDescription {
+  font-size: 0.85rem;
+  color: #555;
+  margin: 4px 0 0;
+  line-height: 1.4;
+}
+
+.allDayBadge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #9b59b6;
+  background: #f0e6f6;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.emptyDay {
+  padding: 24px 20px;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  border: 1px dashed #ddd;
+  border-radius: 10px;
+  background-color: #fafafa;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  color: #888;
+  font-size: 1rem;
+}
+
+.spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #1e65e5;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-right: 10px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.errorBox {
+  padding: 16px 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 8px;
+  background-color: #fff5f5;
+  color: #721c24;
+  font-size: 0.95rem;
+}
+
+.infoBox {
+  padding: 20px;
+  border: 1px solid #e0dce8;
+  border-radius: 10px;
+  background-color: #f8f5fd;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 24px;
+}
+
+.infoBox code {
+  background: #eee;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 600px) {
+  .eventCard {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .eventTime {
+    min-width: unset;
+  }
+
+  .headerRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+}
