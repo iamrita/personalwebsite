@@ -2,26 +2,28 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // The activity calendar reads this collection in the browser.
+    // The Strava webhook writes it with the Admin SDK, which bypasses rules.
+    match /activities/{activityId} {
+      allow read: if true;
+      allow write: if false;
+    }
 
-    // This rule allows anyone with your Firestore database reference to view, edit,
-    // and delete all data in your Firestore database. It is useful for getting
-    // started, but it is configured to expire after 30 days because it
-    // leaves your app open to attackers. At that time, all client
-    // requests to your Firestore database will be denied.
-    //
-    // Make sure to write security rules for your app before that time, or else
-    // all client requests to your Firestore database will be denied until you Update
-    // your rules
+    // Strava OAuth tokens (config/stravaTokens). Admin SDK only.
+    // allow if false does not override a broader allow; do not add one that matches this path.
+    match /config/{document} {
+      allow read, write: if false;
+    }
+
     // Goodreads shelf written by functions/goodreads (Admin SDK bypasses rules).
-    // Public read, no client writes. Keep this match when merging the
-    // least-privilege rules change; do not drop it with the expired test-mode rule.
     match /reading/{bookId} {
       allow read: if true;
       allow write: if false;
     }
 
+    // Deny every other path. Unmatched paths are already denied; this keeps that explicit.
     match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2025, 5, 30);
+      allow read, write: if false;
     }
   }
 }
