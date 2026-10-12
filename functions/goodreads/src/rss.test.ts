@@ -180,6 +180,10 @@ describe("selectShelfBooks", () => {
       ["2", "3", "1"]
     );
     assert.deepEqual(
+      selectShelfBooks([], finished, 2).map((book) => book.bookId),
+      ["2", "3"]
+    );
+    assert.deepEqual(
       selected.map((book) => book.position),
       [0, 1, 2]
     );

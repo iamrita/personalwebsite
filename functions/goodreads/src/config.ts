@@ -12,5 +12,6 @@ export const goodreadsUserId = defineString("GOODREADS_USER_ID", {
 
 export const READING_COLLECTION = "reading";
 export const STATUS_DOC_ID = "status";
-export const RECENTLY_READ_LIMIT = 3;
+/** How many finished books to keep. The homepage shows every stored one. */
+export const RECENTLY_READ_LIMIT = 2;
 export const SYNC_SCHEDULE = "every 6 hours";
