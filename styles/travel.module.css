@@ -1,0 +1,38 @@
+.paragraph,
+.schedule {
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 8px;
+  background-color: #f1f5fd;
+  padding: 32px;
+}
+
+.schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dayRow {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.date {
+  font-weight: 700;
+}
+
+.location {
+  font-weight: 700;
+}
+
+.details {
+  margin-top: 4px;
+  opacity: 0.9;
+}
+
+.muted {
+  opacity: 0.75;
+}
