@@ -1,5 +1,6 @@
 import Layout, { siteTitle } from "../../components/layout";
 import Head from "next/head";
+import Link from "next/link";
 import utilStyles from "../../styles/utils.module.css";
 import styles from "../../styles/about.module.css";
 import "../../components/firebase";
@@ -44,6 +45,13 @@ export default function About() {
           <GifTV />
 
           <h1 className={headerFont.className}>Albums</h1>
+          <p>
+            See my full{" "}
+            <Link href="/posts/music" className={utilStyles.link}>
+              favorite music
+            </Link>{" "}
+            page for the complete list and Spotify previews.
+          </p>
           <SpotifyEmbed />
         </div>
       </article>

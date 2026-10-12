@@ -41,6 +41,10 @@ export default function Home({ allPostsData }) {
           <Link href={`/posts/recommend`} className={utilStyles.link}>
             reading
           </Link>
+          , listening to{" "}
+          <Link href={`/posts/music`} className={utilStyles.link}>
+            music
+          </Link>
           , or playing{" "}
           <Link href={`/posts/connections`} className={utilStyles.link}>
             puzzle games
