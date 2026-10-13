@@ -58,13 +58,21 @@ const recommendations = z.object({
   books: z.array(BookRecommendation),
 });
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+function getOpenAIClient(): OpenAI {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY is not configured");
+  }
+  return new OpenAI({ apiKey });
+}
+
 const corsHandler = cors({
   origin: [
     "https://amrita-website--pr25-av-book-recommender-amnp7sy9.web.app",
     "http://localhost:3000",
     "https://bookrecommend-77xzict4da-uc.a.run.app",
     "https://amritav.com",
+    "https://www.amritav.com",
   ],
   methods: ["GET", "POST", "OPTIONS"],
   credentials: true,
@@ -203,7 +211,9 @@ async function getFreshAccessToken(): Promise<string> {
   return data.access_token;
 }
 
-export const bookRecommend = onRequest(async (req, res): Promise<void> => {
+export const bookRecommend = onRequest(
+  { secrets: ["OPENAI_API_KEY"] },
+  async (req, res): Promise<void> => {
   corsHandler(req, res, async () => {
     if (req.method === "OPTIONS") {
       res.status(204).send("");
@@ -223,7 +233,7 @@ export const bookRecommend = onRequest(async (req, res): Promise<void> => {
         return;
       }
 
-      const response = await openai.responses.parse({
+      const response = await getOpenAIClient().responses.parse({
         model: "gpt-4o-2024-08-06",
         input: [
           {
@@ -250,9 +260,15 @@ export const bookRecommend = onRequest(async (req, res): Promise<void> => {
       res.status(200).json(response.output_parsed);
     } catch (error) {
       logger.error("Book recommendation failed", error);
-      res
-        .status(500)
-        .json({ error: "Failed to generate book recommendations" });
+      const message =
+        error instanceof Error ? error.message : "Unknown error";
+      res.status(500).json({
+        error: "Failed to generate book recommendations",
+        details:
+          message === "OPENAI_API_KEY is not configured"
+            ? "The OpenAI API key is missing from the deployed function."
+            : undefined,
+      });
     }
   });
 });
