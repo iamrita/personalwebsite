@@ -1,0 +1,84 @@
+/* Mexico City favorites page styles */
+
+.intro {
+  border: 1px solid black;
+  border-radius: 8px;
+  background-color: #fff2de;
+  padding: 32px;
+  margin-bottom: 32px;
+  font-size: 18px;
+}
+
+.categorySection {
+  margin-bottom: 40px;
+}
+
+.categoryTitle {
+  margin-bottom: 16px;
+}
+
+.spotsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.spotCard {
+  border: 1px solid black;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s ease;
+}
+
+.spotCard:hover {
+  transform: translateY(-2px);
+}
+
+.spotName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.neighborhood {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+
+.spotDescription {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.food {
+  background-color: #fde8e8;
+}
+
+.coffee {
+  background-color: #f5ead6;
+}
+
+.neighborhoodCard {
+  background-color: #e9f4e9;
+}
+
+.culture {
+  background-color: #f1f5fd;
+}
+
+.outdoors {
+  background-color: #ede5f8;
+}
+
+@media (max-width: 600px) {
+  .spotsGrid {
+    grid-template-columns: 1fr;
+  }
+}
